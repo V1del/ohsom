@@ -1,0 +1,18 @@
+package db;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class OhsomDBDAOImpl {
+	
+	private Connection con;
+	private ResultSet result;
+
+	OhsomDBDAOImpl() throws ClassNotFoundException, SQLException
+	{
+		Class.forName("jdbc.odbc.JdbcOdbcDriver");
+		DriverManager.getConnection("jdbc:odbc:Ohsom", "root", "");
+		
+	}
+}

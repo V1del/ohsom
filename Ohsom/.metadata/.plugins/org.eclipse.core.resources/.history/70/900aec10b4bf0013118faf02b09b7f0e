@@ -1,0 +1,10 @@
+package db;
+
+public interface DAONachrichten {
+
+	public boolean addNachricht(Nachricht n)
+	{
+		return false;
+	}
+	
+}

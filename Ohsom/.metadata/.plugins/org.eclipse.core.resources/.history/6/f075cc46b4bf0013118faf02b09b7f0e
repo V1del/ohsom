@@ -1,0 +1,10 @@
+package db;
+
+import bo.*;
+
+public interface DAOUser {
+
+	public boolean addConfigData(TamagotchiConfig TamagotchiConfig);
+	
+	
+}
