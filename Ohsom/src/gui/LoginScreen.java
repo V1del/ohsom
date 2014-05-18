@@ -8,12 +8,19 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
+
 import javax.swing.border.TitledBorder;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
@@ -21,15 +28,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import bl.BLUser;
+
 public class LoginScreen extends JFrame implements ActionListener  {
 	
 	private JPanel loginGroup;
 	private JTextField account, password;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtNickname;
+	private JPasswordField txtPasswort;
 	private JTable table;
+	private JLabel lblFehlermeldung;
+	private JButton btnLogin;
+	private BLUser blU = new BLUser();
 	
-	LoginScreen() {
+	public LoginScreen() {
 		super("Ohsom - Anmelden");
 		
 		JPanel panel = new JPanel();
@@ -50,14 +62,14 @@ public class LoginScreen extends JFrame implements ActionListener  {
 		gbc_lblLogin.gridy = 2;
 		panel.add(lblLogin, gbc_lblLogin);
 		
-		textField = new JTextField();
+		txtNickname = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 2;
-		panel.add(textField, gbc_textField);
-		textField.setColumns(10);
+		panel.add(txtNickname, gbc_textField);
+		txtNickname.setColumns(10);
 		
 		JLabel lblPasswort = new JLabel("Passwort:");
 		GridBagConstraints gbc_lblPasswort = new GridBagConstraints();
@@ -67,15 +79,18 @@ public class LoginScreen extends JFrame implements ActionListener  {
 		gbc_lblPasswort.gridy = 3;
 		panel.add(lblPasswort, gbc_lblPasswort);
 		
-		passwordField = new JPasswordField();
+		txtPasswort = new JPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 3;
-		panel.add(passwordField, gbc_passwordField);
+		panel.add(txtPasswort, gbc_passwordField);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
+		
+		btnLogin.addActionListener(this);
+		
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
 		gbc_btnLogin.insets = new Insets(0, 0, 5, 0);
 		gbc_btnLogin.anchor = GridBagConstraints.EAST;
@@ -83,12 +98,14 @@ public class LoginScreen extends JFrame implements ActionListener  {
 		gbc_btnLogin.gridy = 4;
 		panel.add(btnLogin, gbc_btnLogin);
 		
-		JLabel lblFehlerFehler = new JLabel("Fehler! Fehler!");
+		lblFehlermeldung = new JLabel("");
+		lblFehlermeldung.setForeground(Color.RED);
+		
 		GridBagConstraints gbc_lblFehlerFehler = new GridBagConstraints();
 		gbc_lblFehlerFehler.gridwidth = 2;
 		gbc_lblFehlerFehler.gridx = 0;
 		gbc_lblFehlerFehler.gridy = 5;
-		panel.add(lblFehlerFehler, gbc_lblFehlerFehler);
+		panel.add(lblFehlermeldung, gbc_lblFehlerFehler);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Highscore", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -148,8 +165,34 @@ public class LoginScreen extends JFrame implements ActionListener  {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource() == btnLogin)
+		{
+			validateInput();
+		}
+	}
+
+	public void validateInput()
+	{
+		if(!isUserInputValid())
+		{
+			lblFehlermeldung.setText("Passwort und Nickname, du Idiot!");
+		}
+		else
+		{
+			if(!blU.isUserDataValid(txtNickname.getText(), txtPasswort.getText()))
+			{
+				lblFehlermeldung.setText("Falsches Passwort f�r diesen Nickname.");
+			}
+			else
+			{
+				TamagotchiGUI tGui = new TamagotchiGUI(blU.getCurrentUser());
+			}
+		}
+	}
+
+	public boolean isUserInputValid()
+	{
+		return !(txtPasswort.getText().equals("") || txtNickname.getText().equals(""));
 	}
 	
 

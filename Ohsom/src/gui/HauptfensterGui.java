@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,7 +28,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JLabel lblNickname = new JLabel("Nickname:");
 	JTextField txtNickname = new JTextField();
 	JLabel lblPasswort = new JLabel("Passwort:");
-	JTextField txtPasswort = new JTextField();
+	JPasswordField txtPasswort = new JPasswordField();
 	JButton btnLogin = new JButton("Login");
 	JLabel lblFehlermeldung = new JLabel("");	
 	JPanel pnlHighscore = new JPanel();
@@ -76,8 +77,12 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		pnlLogin.add(btnLogin, c);
 
 		lblFehlermeldung.setForeground(Color.red);
+		
+		c.gridx = 1;
+		c.gridy = 3;
+		c.gridwidth = 2;
 
-		pnlLogin.add(lblFehlermeldung);
+		pnlLogin.add(lblFehlermeldung, c);
 
 		pnlLogin.setBorder(new TitledBorder("Login"));
 		this.add(pnlLogin, BorderLayout.CENTER);
