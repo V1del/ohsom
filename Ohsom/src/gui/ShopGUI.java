@@ -15,6 +15,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.JToggleButton;
 
 public class ShopGUI {
 
@@ -118,21 +121,21 @@ public class ShopGUI {
 		gbc_lblWieVielMedizin.gridy = 0;
 		panel_1.add(lblWieVielMedizin, gbc_lblWieVielMedizin);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(15), new Integer(0), null, new Integer(1)));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 0;
-		gbc_spinner.gridy = 1;
-		panel_1.add(spinner, gbc_spinner);
+		JSpinner spAnzahl = new JSpinner();
+		spAnzahl.setModel(new SpinnerNumberModel(new Integer(15), new Integer(0), null, new Integer(1)));
+		GridBagConstraints gbc_spAnzahl = new GridBagConstraints();
+		gbc_spAnzahl.insets = new Insets(0, 0, 5, 5);
+		gbc_spAnzahl.gridx = 0;
+		gbc_spAnzahl.gridy = 1;
+		panel_1.add(spAnzahl, gbc_spAnzahl);
 		
-		JButton btnNewButton = new JButton("Kaufen");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.anchor = GridBagConstraints.WEST;
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 1;
-		panel_1.add(btnNewButton, gbc_btnNewButton);
+		JButton btnKaufen = new JButton("Kaufen");
+		GridBagConstraints gbc_btnKaufen = new GridBagConstraints();
+		gbc_btnKaufen.insets = new Insets(0, 0, 5, 0);
+		gbc_btnKaufen.anchor = GridBagConstraints.WEST;
+		gbc_btnKaufen.gridx = 1;
+		gbc_btnKaufen.gridy = 1;
+		panel_1.add(btnKaufen, gbc_btnKaufen);
 		
 		JLabel lblKosten = new JLabel("Kosten: ");
 		GridBagConstraints gbc_lblKosten = new GridBagConstraints();
@@ -161,8 +164,165 @@ public class ShopGUI {
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Essen", null, panel_2, null);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{35, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
+		
+		JLabel lblGeld2 = new JLabel("Geld: ");
+		GridBagConstraints gbc_lblGold = new GridBagConstraints();
+		gbc_lblGold.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGold.gridx = 2;
+		gbc_lblGold.gridy = 1;
+		panel_2.add(lblGeld2, gbc_lblGold);
+		
+		JLabel label_2 = new JLabel("10");
+		GridBagConstraints gbc_label_2 = new GridBagConstraints();
+		gbc_label_2.insets = new Insets(0, 0, 5, 5);
+		gbc_label_2.gridx = 3;
+		gbc_label_2.gridy = 1;
+		panel_2.add(label_2, gbc_label_2);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_4.gridwidth = 12;
+		gbc_panel_4.anchor = GridBagConstraints.NORTH;
+		gbc_panel_4.gridx = 1;
+		gbc_panel_4.gridy = 2;
+		panel_2.add(panel_4, gbc_panel_4);
+		
+		JToggleButton btnEssen1 = new JToggleButton("?");
+		panel_4.add(btnEssen1);
+		
+		JToggleButton btnEssen2 = new JToggleButton("?");
+		panel_4.add(btnEssen2);
+		
+		JToggleButton btnEssen3 = new JToggleButton("?");
+		panel_4.add(btnEssen3);
+		
+		JToggleButton btnEssen4 = new JToggleButton("?");
+		panel_4.add(btnEssen4);
+		
+		JToggleButton btnEssen5 = new JToggleButton("?");
+		panel_4.add(btnEssen5);
+		
+		JButton btnNewButton = new JButton("Essen kaufen");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 6;
+		gbc_btnNewButton.gridy = 4;
+		panel_2.add(btnNewButton, gbc_btnNewButton);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.gridwidth = 6;
+		gbc_panel_5.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_5.gridx = 4;
+		gbc_panel_5.gridy = 6;
+		panel_2.add(panel_5, gbc_panel_5);
+		
+		JButton button = new JButton("?");
+		panel_5.add(button);
+		
+		JButton button_1 = new JButton("?");
+		panel_5.add(button_1);
+		
+		JButton button_2 = new JButton("?");
+		panel_5.add(button_2);
+		
+		JButton button_3 = new JButton("?");
+		panel_5.add(button_3);
+		
+		JButton button_4 = new JButton("?");
+		panel_5.add(button_4);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Getränke", null, panel_3, null);
+		
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
+		GridBagLayout gbl_panel_6 = new GridBagLayout();
+		gbl_panel_6.columnWidths = new int[]{35, 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_6.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_6.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_6.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		panel_6.setLayout(gbl_panel_6);
+		
+		JLabel label_3 = new JLabel("Geld: ");
+		GridBagConstraints gbc_label_3 = new GridBagConstraints();
+		gbc_label_3.insets = new Insets(0, 0, 5, 5);
+		gbc_label_3.gridx = 2;
+		gbc_label_3.gridy = 1;
+		panel_6.add(label_3, gbc_label_3);
+		
+		JLabel label_4 = new JLabel("10");
+		GridBagConstraints gbc_label_4 = new GridBagConstraints();
+		gbc_label_4.insets = new Insets(0, 0, 5, 5);
+		gbc_label_4.gridx = 3;
+		gbc_label_4.gridy = 1;
+		panel_6.add(label_4, gbc_label_4);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
+		gbc_panel_7.anchor = GridBagConstraints.NORTH;
+		gbc_panel_7.gridwidth = 6;
+		gbc_panel_7.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_7.gridx = 4;
+		gbc_panel_7.gridy = 2;
+		panel_6.add(panel_7, gbc_panel_7);
+		
+		JToggleButton button_5 = new JToggleButton("?");
+		panel_7.add(button_5);
+		
+		JToggleButton button_6 = new JToggleButton("?");
+		panel_7.add(button_6);
+		
+		JToggleButton button_7 = new JToggleButton("?");
+		panel_7.add(button_7);
+		
+		JToggleButton button_8 = new JToggleButton("?");
+		panel_7.add(button_8);
+		
+		JToggleButton button_9 = new JToggleButton("?");
+		panel_7.add(button_9);
+		
+		JButton btnTrinkenKaufen = new JButton("Getränk kaufen");
+		GridBagConstraints gbc_btnTrinkenKaufen = new GridBagConstraints();
+		gbc_btnTrinkenKaufen.insets = new Insets(0, 0, 5, 5);
+		gbc_btnTrinkenKaufen.gridx = 8;
+		gbc_btnTrinkenKaufen.gridy = 4;
+		panel_6.add(btnTrinkenKaufen, gbc_btnTrinkenKaufen);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
+		gbc_panel_8.fill = GridBagConstraints.BOTH;
+		gbc_panel_8.gridwidth = 4;
+		gbc_panel_8.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_8.gridx = 5;
+		gbc_panel_8.gridy = 6;
+		panel_6.add(panel_8, gbc_panel_8);
+		
+		JButton button_11 = new JButton("?");
+		panel_8.add(button_11);
+		
+		JButton button_12 = new JButton("?");
+		panel_8.add(button_12);
+		
+		JButton button_13 = new JButton("?");
+		panel_8.add(button_13);
+		
+		JButton button_14 = new JButton("?");
+		panel_8.add(button_14);
+		
+		JButton button_15 = new JButton("?");
+		panel_8.add(button_15);
 	}
 }
