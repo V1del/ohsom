@@ -1,0 +1,15 @@
+import gui.HauptfensterGui;
+import gui.LoginScreen;
+import gui.AnmeldeGUI;
+
+public class MainProgram {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+	//	HauptfensterGui fenster = new HauptfensterGui();
+		AnmeldeGUI login = new AnmeldeGUI();
+	}
+
+}
