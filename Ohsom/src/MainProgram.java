@@ -8,7 +8,7 @@ public class MainProgram {
 	 */
 	public static void main(String[] args) {
 		HauptfensterGui fenster = new HauptfensterGui();
-		LoginScreen login = new LoginScreen();
+		//LoginScreen login = new LoginScreen();
 	}
 
 }

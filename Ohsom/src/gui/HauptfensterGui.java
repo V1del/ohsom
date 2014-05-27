@@ -15,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,11 +35,11 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JLabel lblFehlermeldung = new JLabel("");	
 	JPanel pnlHighscore = new JPanel();
 	JTable tblHighscore = new JTable();
-	JLabel lblCreate = new JLabel("Create Account");
+	JButton btnCreate = new JButton("Create Account");
 
 	public HauptfensterGui() {
 		super("Ohsom");
-		//this.setSize(600, 400);
+		this.setSize(750, 300);
 		this.setLayout(new BorderLayout(20,20));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -47,6 +49,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.anchor = GridBagConstraints.LINE_START;
+		c.insets = new Insets(0, 0, 5, 5);
 		pnlLogin.add(lblNickname, c);
 		
 		c.gridx = 1;
@@ -81,6 +84,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		c.gridx = 1;
 		c.gridy = 3;
 		c.gridwidth = 2;
+		
 
 		pnlLogin.add(lblFehlermeldung, c);
 
@@ -88,23 +92,34 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		this.add(pnlLogin, BorderLayout.CENTER);
 		
 		tblHighscore.setEnabled(false);
-		tblHighscore.setFillsViewportHeight(false);
 		
 		tblHighscore.setModel(new DefaultTableModel(new String[] {"Platz", "Name", "Highscore"}, 
 				10));
 		
 		
 		JScrollPane scrollPane = new JScrollPane(tblHighscore);
-//		tblHighscore.setFillsViewportHeight(true);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+
 		pnlHighscore.setBorder(new TitledBorder("Highscore"));
 		pnlHighscore.add(scrollPane);
 
 		this.add(pnlHighscore,BorderLayout.EAST);
+		
+		//Modify Button L'n'F to look like a Label
+        btnCreate.setMargin(new Insets(0, 0, 0, 0));
+        btnCreate.setContentAreaFilled(false);
+        btnCreate.setBorderPainted(false);
+        btnCreate.setOpaque(false);
+        btnCreate.setHorizontalAlignment(SwingConstants.LEADING);
+        
+        btnCreate.addActionListener(this);
 
-		this.add(lblCreate, BorderLayout.SOUTH);
+		this.add(btnCreate, BorderLayout.SOUTH);
+		
 		//lbCreate.action(arg0, arg1)n(arg0, arg1); // f�llen :D
 		
-		this.pack();
+		//this.pack();
 		this.setVisible(true);
 	}
 
@@ -113,6 +128,11 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		{
 			validateInput();
 		}
+		else 
+		{
+			new AnmeldeGUI();
+		}
+		
 	}
 
 	public void validateInput()

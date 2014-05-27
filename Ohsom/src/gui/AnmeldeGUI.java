@@ -17,8 +17,10 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class AnmeldeGUI extends JFrame {
+public class AnmeldeGUI extends JFrame implements ActionListener {
 	
 	JButton btnHelp = new JButton(); //TODO: Add help icon
 	JPanel pnlNewAccount = new JPanel(new GridBagLayout());
@@ -26,11 +28,13 @@ public class AnmeldeGUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JButton btnCancel;
 	
 	
 	public AnmeldeGUI() {
 		super("Account erstellen");
 		getContentPane().setLayout(new BorderLayout(20,20));
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Neuer Account", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -115,19 +119,21 @@ public class AnmeldeGUI extends JFrame {
 		panel_1.add(textField_3, gbc_textField_3);
 		textField_3.setColumns(10);
 		
-		JButton btnCreate_1 = new JButton("Create");
-		GridBagConstraints gbc_btnCreate_1 = new GridBagConstraints();
-		gbc_btnCreate_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCreate_1.gridx = 1;
-		gbc_btnCreate_1.gridy = 6;
-		panel_1.add(btnCreate_1, gbc_btnCreate_1);
-		
-		JButton btnCreate = new JButton("Cancel");
+		JButton btnCreate = new JButton("Create");
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
-		gbc_btnCreate.insets = new Insets(0, 0, 5, 0);
-		gbc_btnCreate.gridx = 2;
+		gbc_btnCreate.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCreate.gridx = 1;
 		gbc_btnCreate.gridy = 6;
 		panel_1.add(btnCreate, gbc_btnCreate);
+		
+		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(this);
+		
+		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+		gbc_btnCancel.insets = new Insets(0, 0, 5, 0);
+		gbc_btnCancel.gridx = 2;
+		gbc_btnCancel.gridy = 6;
+		panel_1.add(btnCancel, gbc_btnCancel);
 		
 		JLabel lblFehlermeldung = new JLabel("Fehlermeldung");
 		lblFehlermeldung.setForeground(Color.RED);
@@ -178,11 +184,17 @@ public class AnmeldeGUI extends JFrame {
 		gbc_progressBar.gridx = 0;
 		gbc_progressBar.gridy = 1;
 		panel_3.add(progressBar, gbc_progressBar);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.pack();
 		this.setVisible(true);
 		
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel)
+		{
+			this.dispose();
+		}
 	}
 
 }

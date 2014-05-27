@@ -21,12 +21,19 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 
 import java.awt.Canvas;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TamagotchiGUI {
+public class TamagotchiGUI implements ActionListener{
 	
 	private BLTamagotchi blT = null;
 
 	private JFrame frmOhsom;
+	private JButton lblNeueNachrichten = new JButton("Neue Nachrichten");
+
+	private JButton btnPref = new JButton("pref");
+
+	
 
 	/**
 	 * Launch the application.
@@ -81,14 +88,24 @@ public class TamagotchiGUI {
 		gbc_button.gridy = 0;
 		panel.add(button, gbc_button);
 		
-		JButton btnPref = new JButton("pref");
+		btnPref.addActionListener(this);
+		
 		GridBagConstraints gbc_btnPref = new GridBagConstraints();
 		gbc_btnPref.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPref.gridx = 1;
 		gbc_btnPref.gridy = 0;
 		panel.add(btnPref, gbc_btnPref);
 		
-		JLabel lblNeueNachrichten = new JLabel("Neue Nachrichten");
+		
+
+		//Modify Button L'n'F to look like a Label
+        lblNeueNachrichten.setMargin(new Insets(0, 0, 0, 0));
+        lblNeueNachrichten.setContentAreaFilled(false);
+        lblNeueNachrichten.setBorderPainted(false);
+        lblNeueNachrichten.setOpaque(false);
+        
+        lblNeueNachrichten.addActionListener(this);
+        
 		GridBagConstraints gbc_lblNeueNachrichten = new GridBagConstraints();
 		gbc_lblNeueNachrichten.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNeueNachrichten.gridwidth = 2;
@@ -118,6 +135,15 @@ public class TamagotchiGUI {
 		
 		Canvas canvas = new Canvas();
 		panel_1.add(canvas);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == lblNeueNachrichten)
+			new NewMessageGUI();
+		else if (e.getSource() == btnPref)
+			new ConfigurationGUI();
+		
 	}
 
 }

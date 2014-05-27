@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import bl.BLUser;
+import javax.swing.SwingConstants;
 
 public class LoginScreen extends JFrame implements ActionListener  {
 	
@@ -154,7 +155,8 @@ public class LoginScreen extends JFrame implements ActionListener  {
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(1).setPreferredWidth(220);
 		
-		JLabel lblCreate = new JLabel("Account erstellen");
+		JButton lblCreate = new JButton("Account erstellen");
+		lblCreate.setHorizontalAlignment(SwingConstants.LEFT);
 		getContentPane().add(lblCreate, BorderLayout.SOUTH);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
