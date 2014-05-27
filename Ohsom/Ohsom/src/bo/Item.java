@@ -20,7 +20,7 @@ public class Item {
 	Item(Shopartikel Shopartikel, Date Kaufdatum)
 	{
 		this.Shopartikel = Shopartikel;
-		this.Kaufdatum = Kaufdatum;
+		this.setKaufdatum(Kaufdatum);
 	}
 	
 	/**
@@ -47,5 +47,13 @@ public class Item {
 	public String getShopartikel()
 	{
 		return Shopartikel.getArtikelname();
+	}
+
+	public Date getKaufdatum() {
+		return Kaufdatum;
+	}
+
+	public void setKaufdatum(Date kaufdatum) {
+		Kaufdatum = kaufdatum;
 	}
 }

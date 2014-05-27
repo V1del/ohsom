@@ -1,0 +1,35 @@
+package bl;
+
+import bo.*;
+
+public class BLTamagotchi {
+
+	private Tamagotchi currentTamagotchi;
+	private DAOTamagotchiImpl DAOT;
+	
+	public BLTamagotchi(User currentUser) {
+		super();
+		this.setCurrentTamagotchi(currentUser.getTamagotchi());
+	}
+
+	public Tamagotchi getCurrentTamagotchi() {
+		return currentTamagotchi;
+	}
+
+	public void setCurrentTamagotchi(Tamagotchi currentTamagotchi) {
+		this.currentTamagotchi = currentTamagotchi;
+	}
+	
+	public boolean kaufeMedizin(int Menge)
+	{
+		boolean KaufErfolgreich = false;
+		
+		if(currentTamagotchi.GibGeldAus(Menge * 10) & currentTamagotchi.kaufeMedizin(Menge))
+		{
+			
+		}
+		
+		return KaufErfolgreich;
+	}
+
+}

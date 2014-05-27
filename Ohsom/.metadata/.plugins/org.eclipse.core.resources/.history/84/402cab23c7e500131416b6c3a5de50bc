@@ -1,0 +1,44 @@
+package db;
+
+import java.sql.*;
+
+public class OhsomDBDAOImpl {
+	
+	private Connection con;
+
+	OhsomDBDAOImpl() throws ClassNotFoundException, SQLException
+	{
+		Class.forName("jdbc.odbc.JdbcOdbcDriver");
+		con = DriverManager.getConnection("jdbc:odbc:Tamagotchi", "root", "");
+	}
+	
+	public Connection getConnection()
+	{
+		return con;
+	}
+	
+	public ResultSet SelectStatement(PreparedStatement pstmt) throws SQLException
+	{
+		ResultSet rs = null;
+		try {
+		
+		rs = ((Statement) con).execute(pstmt);
+		
+		}
+		catch(SQLException ex)
+		{
+			
+		}
+		finally {
+			if(pstmt == null) { pstmt.close(); }
+		}
+		
+		return rs;
+	}
+	
+	public boolean SuccessfullInsertingChangingDeleting(String Statement)
+	{
+		return false;
+	}
+
+}

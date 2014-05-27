@@ -1,0 +1,14 @@
+import gui.LoginScreen;
+import gui.AnmeldeGUI;
+import gui.ShopGUI;
+
+public class MainProgram {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+	AnmeldeGUI.main(args);
+	}
+
+}

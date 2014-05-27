@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import bl.BLUser;
+import bo.Highscore;
 
 public class LoginScreen extends JFrame implements ActionListener  {
 	
@@ -120,18 +121,7 @@ public class LoginScreen extends JFrame implements ActionListener  {
 		scrollPane.setViewportView(table);
 		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-			},
+				getHighscoreData(),
 			new String[] {
 				"Name", "Highscore"
 			}
@@ -180,7 +170,7 @@ public class LoginScreen extends JFrame implements ActionListener  {
 		{
 			if(!blU.isUserDataValid(txtNickname.getText(), txtPasswort.getText()))
 			{
-				lblFehlermeldung.setText("Falsches Passwort fï¿½r diesen Nickname.");
+				lblFehlermeldung.setText("Falsches Passwort für diesen Nickname.");
 			}
 			else
 			{
@@ -192,6 +182,21 @@ public class LoginScreen extends JFrame implements ActionListener  {
 	public boolean isUserInputValid()
 	{
 		return !(txtPasswort.getText().equals("") || txtNickname.getText().equals(""));
+	}
+	
+	@SuppressWarnings("null")
+	public Object[][] getHighscoreData()
+	{
+		Object[][] ObjectList = null;
+		int i = 0;
+		for(Highscore h : blU.getAllHighscores())
+			{
+				ObjectList[i][0] = h.getUser();
+				ObjectList[i][1] = h.getPunkte();
+				i++;
+			};
+			
+			return ObjectList;
 	}
 	
 

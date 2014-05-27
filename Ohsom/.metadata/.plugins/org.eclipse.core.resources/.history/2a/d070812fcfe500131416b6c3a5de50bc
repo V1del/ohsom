@@ -1,0 +1,30 @@
+import java.sql.SQLException;
+
+import bl.BLUser;
+import gui.HauptfensterGui;
+import gui.LoginScreen;
+import gui.AnmeldeGUI;
+import gui.ShopGUI;
+
+public class MainProgram {
+
+	/**
+	 * @param args
+	 * @throws SQLException 
+	 */
+	public static void main(String[] args) throws SQLException {
+		/* BLUser blU = new BLUser();
+		
+		if(blU.isUserDataValid("Snatsch", "hallo"))
+		{
+			System.out.println("Test erfolgreich");
+		}*/
+		
+		/*AnmeldeGUI.main(args);
+		ShopGUI.main(args);
+		 HauptfensterGui.main(args);*/
+		
+		
+	}
+
+}

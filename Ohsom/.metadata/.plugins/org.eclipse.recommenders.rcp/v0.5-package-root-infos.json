@@ -117,6 +117,19 @@
     "javaRuntime": true
   },
   {
+    "symbolicName": "swt",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "f7842d7b9dfafd552711a6e38cb3280bbec52fd9",
+    "jarFileModificationDate": "2010-09-09T11:59:50+02:00",
+    "location": "C:\\Git\\ohsom\\Ohsom\\org.eclipse.swt\\swt.jar",
+    "javaRuntime": false
+  },
+  {
     "symbolicName": "jre",
     "version": {
       "major": 1,
@@ -232,5 +245,18 @@
     "jarFileModificationDate": "2014-03-22T18:21:39.869+01:00",
     "location": "C:\\Program Files\\Java\\jre8\\lib\\ext\\jaccess.jar",
     "javaRuntime": true
+  },
+  {
+    "symbolicName": "com.mysql.jdbc",
+    "version": {
+      "major": 5,
+      "minor": 1,
+      "micro": 30,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "50aa5073896609b6b8c5e484c7671449daccf94c",
+    "jarFileModificationDate": "2014-05-27T22:02:14.429+02:00",
+    "location": "C:\\Git\\ohsom\\Ohsom\\Ohsom\\lib\\mysql-connector-java-5.1.30-bin.jar",
+    "javaRuntime": false
   }
 ]

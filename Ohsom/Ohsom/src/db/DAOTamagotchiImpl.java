@@ -7,8 +7,15 @@ import bo.Tamagotchi;
 
 public class DAOTamagotchiImpl implements DAOTamagotchi{
 
+	
+	
 	public boolean addTamagotchi(Tamagotchi Tamagotchi) {
 		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public boolean changeTamagotchi(Tamagotchi Tamagotchi)
+	{
 		return false;
 	}
 

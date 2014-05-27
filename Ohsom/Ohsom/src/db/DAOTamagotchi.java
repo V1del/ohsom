@@ -10,6 +10,8 @@ public interface DAOTamagotchi {
 	
 	public boolean addItem(Item Item);
 	
+	public boolean changeTamagotchi(Tamagotchi Tamagotchi);
+	
 	public boolean deleteTamagotchi(Tamagotchi Tamagotchi);
 	
 	public ArrayList<Item> getInventar(int idTamagotchi);

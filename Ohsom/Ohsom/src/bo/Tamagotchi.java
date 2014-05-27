@@ -171,8 +171,15 @@ public class Tamagotchi {
 	 * Setter 1 Geld Tamagotchi zur Senkung des Geldstands
 	 * @param geld
 	 */
-	public void GibGeldAus(int geld) {
-		Geld -= geld;
+	public boolean GibGeldAus(int geld) {
+	boolean AusgabeErfolgreich = false;	
+		if(geld <= Geld)
+		{
+			Geld -= geld;
+			AusgabeErfolgreich = true;
+		}
+		
+		return AusgabeErfolgreich;
 	}
 	
 	/**
@@ -196,10 +203,31 @@ public class Tamagotchi {
 	 * Setter Medizin (erhöhen der Medizin um angegebene Menge)
 	 * @param medizin
 	 */
-	public void kaufeMedizin(int medizin) {
-		Medizin += medizin;
+	public boolean kaufeMedizin(int medizin) {
+		boolean KaufErfolgreich = false;
+		
+		if(Medizin + medizin <= 50)
+		{
+			Medizin += medizin;
+			KaufErfolgreich = true;
+		}
+		
+		return KaufErfolgreich;
+		
 	}
 	
+	public boolean verwendeMedizin()
+	{
+		boolean VerwendungErfolgreich = false;
+		
+		if(Medizin >= 1)
+		{
+			Medizin--;
+			VerwendungErfolgreich = true;
+		}
+		return VerwendungErfolgreich;
+	}
+
 	/**
 	 * 
 	 * @return
