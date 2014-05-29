@@ -80,13 +80,6 @@ public class DAOUserImpl implements DAOUser {
 		return false;
 	}
 
-	public User getUser(String Nickname) throws SQLException
-	{
-		return null;
-		
-	}
-	
-	
 	public User getUser(String Nickname, String Passwort) throws SQLException {
 		PreparedStatement Userpstmt = null;
 		String UserSQL = "SELECT NICKNAME, PASSWORT, EMAIL FROM USER WHERE NICKNAME = ? AND PASSWORT = ?";
