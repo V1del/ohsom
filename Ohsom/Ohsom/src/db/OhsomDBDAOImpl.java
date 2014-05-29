@@ -7,7 +7,7 @@ public class OhsomDBDAOImpl {
 	private Connection con = null;
 	
 	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-	//private static final String DB_CONNECTION = "jdbc:oracle:thin:@localhost:1521:TAMAGOTCHI";
+	private static final String DB_CONNECTION = "jdbc:mysql://localhost/tamagotchi";
 	private static final String DB_USER = "root";
 	private static final String DB_PASSWORD = "";
 	
@@ -35,7 +35,7 @@ public class OhsomDBDAOImpl {
 		try {
  
 			dbConnection = DriverManager
-			          .getConnection("jdbc:mysql://localhost/tamagotchi?"
+			          .getConnection(DB_CONNECTION + "?"
 			              + "user=" + DB_USER + "&password=" + DB_PASSWORD);
 			
 			return dbConnection;
@@ -77,9 +77,22 @@ public class OhsomDBDAOImpl {
 		return rs;
 	}
 	
-	public boolean SuccessfullInsertingChangingDeleting(String Statement)
+	public boolean SuccessfullInsertingChangingDeleting(PreparedStatement icdstmt) throws SQLException
 	{
-		return false;
+		boolean SuccessfullInsertingChangingDeleting = false;
+		
+		try {
+			SuccessfullInsertingChangingDeleting = icdstmt.execute();
+		}
+		catch(SQLException ex)
+		{
+			
+		}
+		finally{
+			if(icdstmt == null) { icdstmt.close(); }
+		}
+		
+		return SuccessfullInsertingChangingDeleting;
 	}
 
 }

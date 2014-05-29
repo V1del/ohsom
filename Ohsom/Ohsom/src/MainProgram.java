@@ -14,8 +14,8 @@ public class MainProgram {
 	 */
 	public static void main(String[] args) throws SQLException {
 				
-		/*AnmeldeGUI.main(args);
-		ShopGUI.main(args);
+		AnmeldeGUI fenster = new AnmeldeGUI();
+		/*ShopGUI.main(args);
 		 HauptfensterGui.main(args);*/
 		
 		

@@ -1,254 +1,3 @@
-package gui;
-
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.ProgressBar;
-
-import bo.User;
-
-
-public class AnmeldeGUI implements SelectionListener {
-
-	protected Shell shlCreateUser;
-	private Text txtUsername;
-	private Text txtPassword;
-	private Text txtPasswordSecurity;
-	private Text txtEMail;
-	private Button btnCancel, btnCreate;
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			AnmeldeGUI window = new AnmeldeGUI();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shlCreateUser.open();
-		shlCreateUser.layout();
-		while (!shlCreateUser.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-
-	/**
-	 * Create contents of the window.
-	 */
-	protected void createContents() {
-		shlCreateUser = new Shell();
-		shlCreateUser.setSize(613, 300);
-		shlCreateUser.setText("Create User");
-		
-		Group grpCreateAccount = new Group(shlCreateUser, SWT.NONE);
-		grpCreateAccount.setText("Create Account");
-		grpCreateAccount.setBounds(10, 10, 577, 241);
-		
-		Label lblNewLabel = new Label(grpCreateAccount, SWT.NONE);
-		lblNewLabel.setBounds(10, 35, 55, 15);
-		lblNewLabel.setText("Username:");
-		
-		Label lblPassword = new Label(grpCreateAccount, SWT.NONE);
-		lblPassword.setBounds(10, 63, 55, 15);
-		lblPassword.setText("Password:");
-		
-		txtUsername = new Text(grpCreateAccount, SWT.BORDER);
-		txtUsername.setBounds(71, 32, 183, 21);
-		
-		txtPassword = new Text(grpCreateAccount, SWT.BORDER);
-		txtPassword.setBounds(71, 60, 183, 21);
-		
-		Label lblPassword_1 = new Label(grpCreateAccount, SWT.NONE);
-		lblPassword_1.setBounds(10, 91, 55, 15);
-		lblPassword_1.setText("Password:");
-		
-		txtPasswordSecurity = new Text(grpCreateAccount, SWT.BORDER);
-		txtPasswordSecurity.setBounds(71, 87, 183, 21);
-		
-		Label lblEmail = new Label(grpCreateAccount, SWT.NONE);
-		lblEmail.setBounds(10, 119, 55, 15);
-		lblEmail.setText("EMail:");
-		
-		txtEMail = new Text(grpCreateAccount, SWT.BORDER);
-		txtEMail.setBounds(71, 116, 183, 21);
-		
-		btnCancel = new Button(grpCreateAccount, SWT.NONE);
-		btnCancel.setBounds(179, 143, 75, 25);
-		btnCancel.setText("Cancel");
-		
-		btnCreate = new Button(grpCreateAccount, SWT.NONE);
-		btnCreate.addSelectionListener(this);
-		btnCreate.setBounds(98, 143, 75, 25);
-		btnCreate.setText("Create");
-		
-		Group grpPasswordSafety = new Group(grpCreateAccount, SWT.NONE);
-		grpPasswordSafety.setText("Password safety");
-		grpPasswordSafety.setBounds(276, 24, 280, 110);
-		
-		Link lkSafetyDesc = new Link(grpPasswordSafety, SWT.NONE);
-		lkSafetyDesc.setBounds(10, 30, 49, 15);
-		lkSafetyDesc.setText("<a>Bad</a>");
-		
-		ProgressBar pbPWSafety = new ProgressBar(grpPasswordSafety, SWT.NONE);
-		pbPWSafety.setBounds(10, 51, 170, 17);
-	}
-
-	public void widgetSelected(SelectionEvent e) {
-		if(e.getSource() == btnCreate)
-		{
-			lblFehlermeldung.setText(ValidateUserFormData());
-			if(!lblFehlermeldung.getText().equals(""))
-			{
-				// User muss erfolgreich erstellt werden können
-				//TamagotchiGUI tGui = new TamagotchiGUI();
-				lblFehlermeldung.setVisible(true);
-			}
-			else
-			{	
-				User newUser = new User(txtUsername.getText(), txtPassword.getText(), txtEMail.getText());
-				
-				if(blU.createUser(newUser))
-				{
-					if(blU.isUserDataValid(newUser.getNickname(), newUser.getPasswort()))
-					{
-						
-					}
-				}
-			}
-		}
-		else
-		{
-			ClearForm();
-		}
-		
-	}
-
-	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void ClearForm()
-	{
-		txtUsername.setText("");
-		txtPassword.setText("");
-		txtPasswordSecurity.setText("");
-		txtEMail.setText("");
-	}
-	
-	public String ValidateUserFormData()
-	{
-		String UserFormDataValidateResult = "";
-		
-		if(!txtUsername.getText().equalsIgnoreCase("") && !txtPassword.getText().equalsIgnoreCase("") && !txtPasswordSecurity.getText().equalsIgnoreCase("") && !txtEMail.getText().equalsIgnoreCase(""))
-		{
-			if(txtPassword.getText().equals(txtPasswordSecurity.getText()))
-			{
-				if(!txtEMail.getText().contains(".") || !txtEMail.getText().contains("@"))
-				{
-					UserFormDataValidateResult += "Dies ist kein zulässiges Mailformat\n";
-				}
-			}
-			else
-			{
-				UserFormDataValidateResult += "Die beiden Passwörter stimmen nicht überein\n";				
-			}
-		
-		}
-		else
-		{
-			UserFormDataValidateResult += "Du hast nicht alle Felder ausgefüllt\n";
-		}
-			return UserFormDataValidateResult;
-	}	
-	}
-	
-	/*public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource() == btnCancel)
-		{
-			ClearForm();
-		}
-		else
-		{
-			lblFehlermeldung.setText(ValidateUserFormData());
-			if(!lblFehlermeldung.getText().equals(""))
-			{
-				// User muss erfolgreich erstellt werden können
-				//TamagotchiGUI tGui = new TamagotchiGUI();
-				lblFehlermeldung.setVisible(true);
-			}
-			else
-			{	
-				User newUser = new User(txtUsername.getText(), txtPassword.getText(), txtEmail.getText());
-				
-				if(blU.createUser(newUser))
-				{
-					if(blU.isUserDataValid(newUser.getNickname(), newUser.getPasswort()))
-					{
-						
-					}
-				}
-			}
-		}
-		
-	}
-
-	public void ClearForm()
-	{
-		txtUsername.setText("");
-		txtPassword.setText("");
-		txtPasswordSecurity.setText("");
-		txtEmail.setText("");
-	}
-	
-	public String ValidateUserFormData()
-	{
-		String UserFormDataValidateResult = "";
-		
-		if(!txtUsername.getText().equalsIgnoreCase("") && !txtPassword.getText().equalsIgnoreCase("") && !txtPasswordSecurity.getText().equalsIgnoreCase("") && !txtEmail.getText().equalsIgnoreCase(""))
-		{
-			if(txtPassword.getText().equals(txtPasswordSecurity.getText()))
-			{
-				if(!txtEmail.getText().contains(".") || !txtEmail.getText().contains("@"))
-				{
-					UserFormDataValidateResult += "Dies ist kein zulässiges Mailformat\n";
-				}
-			}
-			else
-			{
-				UserFormDataValidateResult += "Die beiden Passwörter stimmen nicht überein\n";				
-			}
-		
-		}
-		else
-		{
-			UserFormDataValidateResult += "Du hast nicht alle Felder ausgefüllt\n";
-		}
-			return UserFormDataValidateResult;
-	}
-}
 
 package gui;
 
@@ -260,6 +9,10 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -272,7 +25,7 @@ import javax.swing.border.TitledBorder;
 import bl.BLUser;
 import bo.User;
 
-public class AnmeldeGUI extends JFrame implements ActionListener {
+public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 
 	BLUser blU = new BLUser();
 	
@@ -285,11 +38,7 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 	private JButton btnCreate;
 	private JButton btnCancel;
 	private JLabel lblFehlermeldung;
-	
-	
-	
-	
-	
+	private JProgressBar progressBar;
 	
 	public AnmeldeGUI() {
 		super("Account erstellen");
@@ -336,6 +85,7 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		panel_1.add(lblPasswort, gbc_lblPasswort);
 		
 		txtPassword = new JTextField();
+		txtPassword.addKeyListener(this);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
@@ -437,7 +187,7 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		gbc_lblNichtVorhanden.gridy = 0;
 		panel_3.add(lblNichtVorhanden, gbc_lblNichtVorhanden);
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setMaximum(4);
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
 		gbc_progressBar.anchor = GridBagConstraints.NORTHWEST;
@@ -451,37 +201,52 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent event) {
 		
-		if(e.getSource() == btnCancel)
+		if(event.getSource() == btnCancel)
 		{
 			ClearForm();
 		}
 		else
 		{
-			lblFehlermeldung.setText(ValidateUserFormData());
-			if(!lblFehlermeldung.getText().equals(""))
-			{
-				// User muss erfolgreich erstellt werden können
-				//TamagotchiGUI tGui = new TamagotchiGUI();
-				lblFehlermeldung.setVisible(true);
-			}
-			else
-			{	
-				User newUser = new User(txtUsername.getText(), txtPassword.getText(), txtEmail.getText());
-				
-				if(blU.createUser(newUser))
-				{
-					if(blU.isUserDataValid(newUser.getNickname(), newUser.getPasswort()))
-					{
-						
-					}
-				}
+			try {
+				ValidateInput();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
 	}
 
+	public void ValidateInput() throws SQLException
+	{
+		lblFehlermeldung.setText(ValidateUserFormData());
+		if(!lblFehlermeldung.getText().equals(""))
+		{
+			// User muss erfolgreich erstellt werden können
+			//TamagotchiGUI tGui = new TamagotchiGUI();
+			lblFehlermeldung.setVisible(true);
+		}
+		else
+		{	
+			User newUser = new User(txtUsername.getText(), txtPassword.getText(), txtEmail.getText());
+			
+				if(blU.createUser(newUser))
+				{
+					if(blU.isUserDataValid(newUser.getNickname(), newUser.getPasswort()))
+					{
+						TamagotchiGUI.main(null);
+						this.dispose();
+					}
+				}
+				else
+				{
+					lblFehlermeldung.setText("Ein bis anhin unbekannter Fehler ist aufgetreten. \n Melde dich umgehend beim Administrator.");					
+				}
+		}
+	}
+	
 	public void ClearForm()
 	{
 		txtUsername.setText("");
@@ -515,6 +280,20 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		}
 			return UserFormDataValidateResult;
 	}
+
+	public void keyPressed(KeyEvent arg0) {
+		String Password = txtPassword.getText();
+		progressBar.setValue(blU.checkPasswordsStrength(Password));
+	}	
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
-*/

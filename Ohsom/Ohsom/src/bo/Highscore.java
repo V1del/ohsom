@@ -40,7 +40,7 @@ public class Highscore {
 	 * Getter User (Nickname)
 	 * @return
 	 */
-	public String getUser() {
-		return User.getNickname();
+	public User getUser() {
+		return User;
 	}
 }

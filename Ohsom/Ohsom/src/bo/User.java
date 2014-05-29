@@ -16,6 +16,7 @@ public class User {
 	public User(ResultSet UserRS) throws SQLException
 	{
 			if(UserRS.next()){
+				id = UserRS.getInt("UserId");
 				Nickname = UserRS.getString("Nickname");
 				Email = UserRS.getString("Email");
 				Passwort = UserRS.getString("Passwort");
@@ -74,6 +75,11 @@ public class User {
 
 	public Tamagotchi getTamagotchi() {
 		return Tamagotchi;
+	}
+	
+	public void setTamagotchi(Tamagotchi Tamagotchi)
+	{
+		this.Tamagotchi = Tamagotchi;
 	}
 
 	public ArrayList<TamagotchiConfig> getConfig() {
