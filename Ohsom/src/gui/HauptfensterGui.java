@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +14,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +31,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JPasswordField txtPasswort = new JPasswordField();
 	JButton btnLogin = new JButton("Login");
 	JLabel lblFehlermeldung = new JLabel("");	
-	JPanel pnlHighscore = new JPanel();
+	JPanel pnlHighscore = new JPanel(new BorderLayout());
 	JTable tblHighscore = new JTable();
 	JButton btnCreate = new JButton("Create Account");
 
@@ -98,11 +96,11 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		
 		
 		JScrollPane scrollPane = new JScrollPane(tblHighscore);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	
 		
 
 		pnlHighscore.setBorder(new TitledBorder("Highscore"));
-		pnlHighscore.add(scrollPane);
+		pnlHighscore.add(scrollPane, BorderLayout.CENTER);
 
 		this.add(pnlHighscore,BorderLayout.EAST);
 		
