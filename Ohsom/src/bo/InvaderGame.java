@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ public class InvaderGame extends Canvas {
 	
 	private BufferStrategy strategy;
 	private boolean gameRunning;
+	private ArrayList<InvaderObject> invobjects;
 	
 	public static void main(String[] args) {
 		new InvaderGame();
@@ -39,6 +41,9 @@ public class InvaderGame extends Canvas {
 		createBufferStrategy(2);
 		strategy = getBufferStrategy();
 		
+		
+		gameRunning = true;
+		
 		gameLoop();
 	}
 	
@@ -55,6 +60,16 @@ public class InvaderGame extends Canvas {
 			
 			g.dispose();
 			strategy.show();
+			
+			for(InvaderObject invobj : invobjects)
+			{
+					invobj.move(passedTime);
+			}
+			
+			for(InvaderObject invobj : invobjects)
+			{
+					invobj.draw(g);
+			}
 			
 			try 
 			{
