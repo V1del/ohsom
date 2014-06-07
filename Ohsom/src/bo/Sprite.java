@@ -25,8 +25,8 @@ public class Sprite {
 		return image.getHeight(null);
 	}
 	
-	public void draw(Graphics g, int x, int y) {
-		g.drawImage(image, x, y, null);
+	public void draw(Graphics g, double x, double y) {
+		g.drawImage(image,  (int) x, (int) y, null);
 	}
 	
 	

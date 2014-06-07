@@ -39,7 +39,8 @@ public class SpriteResources {
 			img = ImageIO.read(f);
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Couldn't load File \"" + fileLoc + "\"");
+			System.exit(0);
 		}
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
