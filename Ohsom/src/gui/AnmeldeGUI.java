@@ -1,6 +1,5 @@
+
 package gui;
-
-
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,6 +7,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,24 +21,28 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class AnmeldeGUI extends JFrame implements ActionListener {
+import bl.BLUser;
+import bo.User;
+
+public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
+
+	BLUser blU = new BLUser();
 	
 	JButton btnHelp = new JButton(); //TODO: Add help icon
 	JPanel pnlNewAccount = new JPanel(new GridBagLayout());
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtUsername;
+	private JTextField txtPassword;
+	private JTextField txtPasswordSecurity;
+	private JTextField txtEmail;
+	private JButton btnCreate;
 	private JButton btnCancel;
-	
+	private JLabel lblFehlermeldung;
+	private JProgressBar progressBar;
 	
 	public AnmeldeGUI() {
 		super("Account erstellen");
 		getContentPane().setLayout(new BorderLayout(20,20));
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Neuer Account", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -58,15 +66,15 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		gbc_lblNickname.gridy = 1;
 		panel_1.add(lblNickname, gbc_lblNickname);
 		
-		textField = new JTextField();
-		lblNickname.setLabelFor(textField);
+		txtUsername = new JTextField();
+		lblNickname.setLabelFor(txtUsername);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 2;
 		gbc_textField.gridy = 1;
-		panel_1.add(textField, gbc_textField);
-		textField.setColumns(10);
+		panel_1.add(txtUsername, gbc_textField);
+		txtUsername.setColumns(10);
 		
 		JLabel lblPasswort = new JLabel("Passwort:");
 		GridBagConstraints gbc_lblPasswort = new GridBagConstraints();
@@ -76,14 +84,15 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		gbc_lblPasswort.gridy = 2;
 		panel_1.add(lblPasswort, gbc_lblPasswort);
 		
-		textField_1 = new JTextField();
+		txtPassword = new JTextField();
+		txtPassword.addKeyListener(this);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 2;
 		gbc_textField_1.gridy = 2;
-		panel_1.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		panel_1.add(txtPassword, gbc_textField_1);
+		txtPassword.setColumns(10);
 		
 		JLabel lblPasswortWdh = new JLabel("Passwort wdh:");
 		GridBagConstraints gbc_lblPasswortWdh = new GridBagConstraints();
@@ -93,14 +102,14 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		gbc_lblPasswortWdh.gridy = 3;
 		panel_1.add(lblPasswortWdh, gbc_lblPasswortWdh);
 		
-		textField_2 = new JTextField();
+		txtPasswordSecurity = new JTextField();
 		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
 		gbc_textField_2.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_2.gridx = 2;
 		gbc_textField_2.gridy = 3;
-		panel_1.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
+		panel_1.add(txtPasswordSecurity, gbc_textField_2);
+		txtPasswordSecurity.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
@@ -110,33 +119,34 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		gbc_lblEmail.gridy = 4;
 		panel_1.add(lblEmail, gbc_lblEmail);
 		
-		textField_3 = new JTextField();
+		txtEmail = new JTextField();
 		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
 		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_3.gridx = 2;
 		gbc_textField_3.gridy = 4;
-		panel_1.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
+		panel_1.add(txtEmail, gbc_textField_3);
+		txtEmail.setColumns(10);
 		
-		JButton btnCreate = new JButton("Create");
-		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
-		gbc_btnCreate.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCreate.gridx = 1;
-		gbc_btnCreate.gridy = 6;
-		panel_1.add(btnCreate, gbc_btnCreate);
+		btnCreate = new JButton("Create");
+		btnCreate.addActionListener(this);
+		GridBagConstraints gbc_btnCreate_1 = new GridBagConstraints();
+		gbc_btnCreate_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCreate_1.gridx = 1;
+		gbc_btnCreate_1.gridy = 6;
+		panel_1.add(btnCreate, gbc_btnCreate_1);
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(this);
-		
-		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-		gbc_btnCancel.insets = new Insets(0, 0, 5, 0);
-		gbc_btnCancel.gridx = 2;
-		gbc_btnCancel.gridy = 6;
-		panel_1.add(btnCancel, gbc_btnCancel);
+		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
+		gbc_btnCreate.insets = new Insets(0, 0, 5, 0);
+		gbc_btnCreate.gridx = 2;
+		gbc_btnCreate.gridy = 6;
+		panel_1.add(btnCreate, gbc_btnCreate);
 		
 		JLabel lblFehlermeldung = new JLabel("Fehlermeldung");
 		lblFehlermeldung.setForeground(Color.RED);
+		lblFehlermeldung.setVisible(false);
 		GridBagConstraints gbc_lblFehlermeldung = new GridBagConstraints();
 		gbc_lblFehlermeldung.anchor = GridBagConstraints.WEST;
 		gbc_lblFehlermeldung.gridwidth = 2;
@@ -177,24 +187,113 @@ public class AnmeldeGUI extends JFrame implements ActionListener {
 		gbc_lblNichtVorhanden.gridy = 0;
 		panel_3.add(lblNichtVorhanden, gbc_lblNichtVorhanden);
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setMaximum(4);
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
 		gbc_progressBar.anchor = GridBagConstraints.NORTHWEST;
 		gbc_progressBar.gridx = 0;
 		gbc_progressBar.gridy = 1;
 		panel_3.add(progressBar, gbc_progressBar);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.pack();
 		this.setVisible(true);
 		
 	}
-	
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnCancel)
+
+	public void actionPerformed(ActionEvent event) {
+		
+		if(event.getSource() == btnCancel)
 		{
-			this.dispose();
+			ClearForm();
 		}
+		else
+		{
+			try {
+				ValidateInput();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
+	public void ValidateInput() throws SQLException
+	{
+		lblFehlermeldung.setText(ValidateUserFormData());
+		if(!lblFehlermeldung.getText().equals(""))
+		{
+			// User muss erfolgreich erstellt werden können
+			//TamagotchiGUI tGui = new TamagotchiGUI();
+			lblFehlermeldung.setVisible(true);
+		}
+		else
+		{	
+			User newUser = new User(txtUsername.getText(), txtPassword.getText(), txtEmail.getText());
+			
+				if(blU.createUser(newUser))
+				{
+					if(blU.isUserDataValid(newUser.getNickname(), newUser.getPasswort()))
+					{
+						TamagotchiGUI.main(null);
+						this.dispose();
+					}
+				}
+				else
+				{
+					lblFehlermeldung.setText("Ein bis anhin unbekannter Fehler ist aufgetreten. \n Melde dich umgehend beim Administrator.");					
+				}
+		}
+	}
+	
+	public void ClearForm()
+	{
+		txtUsername.setText("");
+		txtPassword.setText("");
+		txtPasswordSecurity.setText("");
+		txtEmail.setText("");
+	}
+	
+	public String ValidateUserFormData()
+	{
+		String UserFormDataValidateResult = "";
+		
+		if(!txtUsername.getText().equalsIgnoreCase("") && !txtPassword.getText().equalsIgnoreCase("") && !txtPasswordSecurity.getText().equalsIgnoreCase("") && !txtEmail.getText().equalsIgnoreCase(""))
+		{
+			if(txtPassword.getText().equals(txtPasswordSecurity.getText()))
+			{
+				if(!txtEmail.getText().contains(".") || !txtEmail.getText().contains("@"))
+				{
+					UserFormDataValidateResult += "Dies ist kein zulässiges Mailformat\n";
+				}
+			}
+			else
+			{
+				UserFormDataValidateResult += "Die beiden Passwörter stimmen nicht überein\n";				
+			}
+		
+		}
+		else
+		{
+			UserFormDataValidateResult += "Du hast nicht alle Felder ausgefüllt\n";
+		}
+			return UserFormDataValidateResult;
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		String Password = txtPassword.getText();
+		progressBar.setValue(blU.checkPasswordsStrength(Password));
+	}	
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

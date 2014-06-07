@@ -1,5 +1,6 @@
 package db;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bo.*;
@@ -13,17 +14,15 @@ public interface DAOUser {
 
 	public boolean addConfigData(TamagotchiConfig TamagotchiConfig);
 	
-	public  boolean addHighscore(Highscore Highscore);
+	public  boolean addHighscore(Highscore Highscore) throws SQLException;
 	
-	public boolean addUser(User User);
+	public boolean addUser(User User) throws SQLException;
 	
 	public boolean changeConfigData(TamagotchiConfig TamagotchiConfig);
-	
-	public boolean changeUser(User User);
-	
+		
 	public boolean deleteConfigData(TamagotchiConfig TamagotchiConfig);
 	
-	public boolean deleteUser(User User);
+	public boolean deleteUser(User User) throws SQLException;
 	
 	public ArrayList<Highscore> getAllHighscores();
 	

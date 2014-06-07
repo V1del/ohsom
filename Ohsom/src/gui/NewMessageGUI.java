@@ -25,18 +25,18 @@ public class NewMessageGUI {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					NewMessageGUI window = new NewMessageGUI();
-//					window.frmNeueNachrichtVerfassen.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					NewMessageGUI window = new NewMessageGUI();
+					window.frmNeueNachrichtVerfassen.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -52,7 +52,7 @@ public class NewMessageGUI {
 		frmNeueNachrichtVerfassen = new JFrame();
 		frmNeueNachrichtVerfassen.setTitle("Neue Nachricht verfassen");
 		frmNeueNachrichtVerfassen.setBounds(100, 100, 450, 300);
-		frmNeueNachrichtVerfassen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmNeueNachrichtVerfassen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Neue Nachricht", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -72,7 +72,7 @@ public class NewMessageGUI {
 		gbc_lblAn.gridy = 1;
 		panel.add(lblAn, gbc_lblAn);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		JComboBox comboBox = new JComboBox();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.gridwidth = 2;
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -128,9 +128,6 @@ public class NewMessageGUI {
 		gbc_btnCancel.gridx = 5;
 		gbc_btnCancel.gridy = 4;
 		panel.add(btnCancel, gbc_btnCancel);
-		
-		frmNeueNachrichtVerfassen.setVisible(true);
-		
 	}
 
 }

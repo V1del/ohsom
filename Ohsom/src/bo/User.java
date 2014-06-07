@@ -1,5 +1,7 @@
 package bo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class User {
@@ -10,6 +12,23 @@ public class User {
 	public Highscore Highscore;
 	public Tamagotchi Tamagotchi;
 	public ArrayList<TamagotchiConfig> Config;
+	
+	public User(ResultSet UserRS) throws SQLException
+	{
+			if(UserRS.next()){
+				id = UserRS.getInt("UserId");
+				Nickname = UserRS.getString("Nickname");
+				Email = UserRS.getString("Email");
+				Passwort = UserRS.getString("Passwort");
+			}
+	}
+	
+	public User(String Nickname, String Passwort, String Email)
+	{
+		this.Nickname = Nickname;
+		this.Email = Email;
+		this.Passwort = Passwort;
+	}
 	
 	public ArrayList<Nachricht> getNachrichten()
 	{
@@ -56,6 +75,11 @@ public class User {
 
 	public Tamagotchi getTamagotchi() {
 		return Tamagotchi;
+	}
+	
+	public void setTamagotchi(Tamagotchi Tamagotchi)
+	{
+		this.Tamagotchi = Tamagotchi;
 	}
 
 	public ArrayList<TamagotchiConfig> getConfig() {

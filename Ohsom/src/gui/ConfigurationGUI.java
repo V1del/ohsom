@@ -225,14 +225,11 @@ public class ConfigurationGUI extends JFrame {
 		
 		chosenImg = new Canvas();
 		panel_3.add(chosenImg);
-		
-		this.pack();
-		this.setVisible(true);
 	}
 	
-//	public static void main(String[] args) {
-//		ConfigurationGUI gui = new ConfigurationGUI();
-//		gui.pack();
-//		gui.setVisible(true);
-//	}
+	public static void main(String[] args) {
+		ConfigurationGUI gui = new ConfigurationGUI();
+		gui.pack();
+		gui.setVisible(true);
+	}
 }
