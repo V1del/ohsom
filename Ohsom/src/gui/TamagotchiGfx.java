@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -15,38 +16,48 @@ import bo.TamagotchiObj;
 
 public class TamagotchiGfx extends JPanel {
 	
-	private TamagotchiObj tamagotchi;
-	//private ArrayList<InvaderObject> tamagotchiobjs = new ArrayList<InvaderObject>();
-	private BufferedImage img = null;
+	private TamagotchiObj tamagotchibg, tamagotchiworld, tamagotchi;
+	private ArrayList<InvaderObject> tamagotchiobjs = new ArrayList<InvaderObject>();
+//	private BufferedImage img = null;
 	
 
 	public TamagotchiGfx() {
 
 		initTamagotchiObjects();
 		
+	}
+	
+	private void initTamagotchiObjects() {
+		tamagotchibg = new TamagotchiObj(this, "gfx/Tamagotchi.jpg", 0, 0);
+		tamagotchiworld = new TamagotchiObj(this, "gfx/Tamagotchiwelt.png", 99, 135);
+		tamagotchi = new TamagotchiObj(this, "gfx/Snatschikus.png", 202, 200);
 		
+		//tamagotchiobjs.add(tamagotchi);
+//		try {
+//			img = new ImageIO.read(new File("gfx/Tamagotchi.jpg"));
+//		} catch (IOException e) {
+//			// TODO: handle exception
+//		}
 		
 		
 	}
 	
-	private void initTamagotchiObjects() {
-		//tamagotchi = new TamagotchiObj(this, "gfx/Tamagotchi.jpg", 0, 0);
-		//tamagotchiobjs.add(tamagotchi);
-		try {
-			img = new ImageIO.read(new File("gfx/Tamagotchi.jpg"));
-		} catch (IOException e) {
-			// TODO: handle exception
-		}
-		
-		
+	public Dimension getPreferredSize() {
+		return new Dimension(580,475);
 	}
+	
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.drawImage(img, 0, 0, null);
+		Graphics2D g2d = (Graphics2D) g;
 		
-		//tamagotchi.draw((Graphics2D) g);
+		//g.drawImage(img, 0, 0, null);
+		
+		tamagotchibg.draw(g2d);
+		tamagotchiworld.draw(g2d);
+		tamagotchi.draw(g2d);
+		
 		
 		
 		

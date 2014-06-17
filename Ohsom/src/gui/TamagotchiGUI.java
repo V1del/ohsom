@@ -11,6 +11,7 @@ import bo.User;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -20,7 +21,6 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 
-import java.awt.Canvas;
 import javax.swing.JTextField;
 
 public class TamagotchiGUI {
@@ -38,6 +38,20 @@ public class TamagotchiGUI {
 	private JPanel panel;
 
 	private TamagotchiGfx pnlTamagotchi;
+
+	private JPanel pnlTamagotchiButtons;
+
+	private JButton btnWerte;
+
+	private JButton btnFuettern;
+
+	private JButton btnTrinken;
+
+	private JButton btnWaschen;
+
+	private JButton btnSchlafen;
+
+	private JButton btnSpielen;
 
 	/**
 	 * Launch the application.
@@ -75,6 +89,7 @@ public class TamagotchiGUI {
 		frmOhsom.setTitle("Ohsom");
 		frmOhsom.setBounds(100, 100, 450, 300);
 		frmOhsom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmOhsom.setLayout(new BorderLayout(20, 0));
 		
 		panel = new JPanel();
 		frmOhsom.getContentPane().add(panel, BorderLayout.WEST);
@@ -140,11 +155,36 @@ public class TamagotchiGUI {
 		gbc_btnReset.gridy = 9;
 		panel.add(btnReset, gbc_btnReset);
 		
-		JPanel panel_1 = new JPanel();
+		JPanel panel_1 = new JPanel(new BorderLayout());
 		frmOhsom.getContentPane().add(panel_1, BorderLayout.CENTER);
 		
 		pnlTamagotchi = new TamagotchiGfx();
-		panel_1.add(pnlTamagotchi);
+		panel_1.add(pnlTamagotchi, BorderLayout.CENTER);
+		
+		pnlTamagotchiButtons = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		
+		
+		btnWerte = new JButton("Werte");
+		pnlTamagotchiButtons.add(btnWerte);
+		
+		btnFuettern = new JButton("Füttern");
+		pnlTamagotchiButtons.add(btnFuettern);
+		
+		btnTrinken = new JButton("Trinken");
+		pnlTamagotchiButtons.add(btnTrinken);
+		
+		btnWaschen = new JButton("Waschen");
+		pnlTamagotchiButtons.add(btnWaschen);
+		
+		btnSchlafen = new JButton("Schlafen");
+		pnlTamagotchiButtons.add(btnSchlafen);
+		
+		btnSpielen = new JButton("Spielen");
+		pnlTamagotchiButtons.add(btnSpielen);
+		
+		panel_1.add(pnlTamagotchiButtons, BorderLayout.SOUTH);
+		
+		frmOhsom.pack();
 	}
 
 }
