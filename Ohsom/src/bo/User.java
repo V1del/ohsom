@@ -4,23 +4,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import db.DAONachrichtenImpl;
+import db.DAOTamagotchiImpl;
+import db.DAOUserImpl;
+
 public class User {
 	private int id;
 	private String Email;
 	private String Nickname;
 	public String Passwort;
-	public Highscore Highscore;
 	public Tamagotchi Tamagotchi;
-	public ArrayList<TamagotchiConfig> Config;
 	
 	public User(ResultSet UserRS) throws SQLException
 	{
-			if(UserRS.next()){
-				id = UserRS.getInt("UserId");
-				Nickname = UserRS.getString("Nickname");
-				Email = UserRS.getString("Email");
-				Passwort = UserRS.getString("Passwort");
-			}
+		id = UserRS.getInt("idUser");
+		Nickname = UserRS.getString("Nickname");
+		Email = UserRS.getString("Email");
+		Passwort = UserRS.getString("Passwort");
+		
+		DAOTamagotchiImpl DAOT = new DAOTamagotchiImpl();
+		Tamagotchi = DAOT.getTamagotchi(id);
+		
+		
 	}
 	
 	public User(String Nickname, String Passwort, String Email)
@@ -30,10 +35,10 @@ public class User {
 		this.Passwort = Passwort;
 	}
 	
-	public ArrayList<Nachricht> getNachrichten()
+	public ArrayList<Nachricht> getNachrichten() throws SQLException
 	{
-		return null;
-		
+		DAONachrichtenImpl DAON = new DAONachrichtenImpl();
+		return DAON.getNachrichten(id);
 	}
 
 	public int getId()
@@ -65,29 +70,26 @@ public class User {
 		Passwort = passwort;
 	}
 
-	public int getHighscore() {
-		return Highscore.getPunkte();
+	public Highscore getHighscore() throws SQLException {
+		DAOUserImpl DAOU = new DAOUserImpl();
+		return DAOU.getHighscore(id);
 	}
 
-	public void setHighscore(int highscore) {
-		Highscore.setPunkte(highscore);
-	}
-
-	public Tamagotchi getTamagotchi() {
+	public Tamagotchi getTamagotchi() throws SQLException {
 		return Tamagotchi;
 	}
-	
-	public void setTamagotchi(Tamagotchi Tamagotchi)
-	{
+	public void setTamagotchi(Tamagotchi Tamagotchi) throws SQLException {
 		this.Tamagotchi = Tamagotchi;
 	}
 
-	public ArrayList<TamagotchiConfig> getConfig() {
-		return Config;
+	public boolean hasTamagotchi() throws SQLException
+	{
+		return !(Tamagotchi == null);
 	}
 
-	public void ConfigAddConfigData(TamagotchiConfig config) {
-		this.Config.add(config);
+	public ArrayList<TamagotchiConfig> getConfig() throws SQLException {
+		DAOUserImpl DAOU = new DAOUserImpl();
+		return DAOU.getConfigData(id);
 	}
 	
 }

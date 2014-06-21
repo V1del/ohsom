@@ -1,23 +1,28 @@
 package bo;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Shopartikel - Klasse
  * @author vmuser
  *
  */
 public class Shopartikel {
-	public Shopartikel(int idArtikel, String artikelname, double preis,
-			bo.Kategorie kategorie) {
+	public Shopartikel(ResultSet ShopartikelResultSet) throws SQLException {
 		super();
-		this.idArtikel = idArtikel;
-		Artikelname = artikelname;
-		Preis = preis;
-		Kategorie = kategorie;
+		this.idArtikel = ShopartikelResultSet.getInt("idShop");
+		this.Artikelname = ShopartikelResultSet.getString("Artikelname");
+		this.Preis = ShopartikelResultSet.getInt("Preis");
+		this.Kategorie = Kategorie.getKategorieByName(ShopartikelResultSet.getString("Kategorie"));
+		this.ArtikelImage = ShopartikelResultSet.getString("ArtikelImage");
 	}
 	
 	int idArtikel;
 	String Artikelname;
-	double Preis;
+	int Preis;
 	Kategorie Kategorie;
+	String ArtikelImage;
 
 	/**
 	 * Getter Artikelname
@@ -31,7 +36,7 @@ public class Shopartikel {
 	 * Getter Preis
 	 * @return
 	 */
-	public double getPreis() {
+	public int getPreis() {
 		return Preis;
 	}
 	
@@ -41,6 +46,24 @@ public class Shopartikel {
 	 */
 	public Kategorie getKategorie() {
 		return Kategorie;
+	}
+	
+	/**
+	 * Getter ID
+	 * @return
+	 */
+	public int getId()
+	{
+		return idArtikel;
+	}
+	
+	/**
+	 * Getter ArtikelImage
+	 * @return
+	 */
+	public String getArtikelImage()
+	{
+		return this.ArtikelImage;
 	}
 	
 }

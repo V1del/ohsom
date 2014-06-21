@@ -1,5 +1,7 @@
 package bo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -8,32 +10,35 @@ import java.util.Date;
  */
 public class Nachricht 
 {
+	private int idNachricht;
 	private String Titel;
 	private String Nachricht;
 	private Date Zeitpunkt;
 	private boolean gelesen;
-	private User Sender;
-	private User Empfaenger;
+	private int idSender;
+	private int idEmpfaenger;
 
 	/**
-	 * Der Konstruktor, der notwendig ist, wenn das Tamagotchi bereits in der Datenbank vorhanden ist.
+	 * Dieser Konstruktor wird verwendet wenn die Nachricht bereits in der Datenbank ist
 	 * @param titel
 	 * @param nachricht
 	 * @param zeitpunkt
 	 * @param gelesen
 	 * @param sender
 	 * @param empfaenger
+	 * @throws SQLException 
 	 */
-	public Nachricht(String titel, String nachricht, Date zeitpunkt,
-			boolean gelesen, User sender, User empfaenger) {
+	public Nachricht(ResultSet NachrichtResultSet) throws SQLException {
 		super();
-		Titel = titel;
-		Nachricht = nachricht;
-		Zeitpunkt = zeitpunkt;
-		this.gelesen = gelesen;
-		Sender = sender;
-		Empfaenger = empfaenger;
+		idNachricht = NachrichtResultSet.getInt("idNachricht");
+		Titel = NachrichtResultSet.getString("Titel");
+		Nachricht = NachrichtResultSet.getString("Nachricht");
+		Zeitpunkt = NachrichtResultSet.getDate("Zeitpunkt");
+		this.gelesen = NachrichtResultSet.getBoolean("gelesen");
+		idSender = NachrichtResultSet.getInt("Userid_Sender");
+		idEmpfaenger = NachrichtResultSet.getInt("Userid_Empfaenger");
 	}
+	
 	
 	/**
 	 * Der Konstruktor, der notwendig ist, wenn die Nachricht erst noch erstellt wird (Datum muss bei diesem Schritt generiert werden)
@@ -43,15 +48,15 @@ public class Nachricht
 	 * @param empfaenger
 	 * @param sender
 	 */
-	public Nachricht(String titel, String nachricht, User empfaenger, User sender)
+	public Nachricht(String titel, String nachricht, int idEmpfaenger, int idSender)
 	{
 		super();
 		Titel = titel;
 		Nachricht = nachricht;
 		Zeitpunkt = new Date();
 		gelesen = false;
-		Empfaenger = empfaenger;
-		Sender = sender;
+		this.idEmpfaenger = idEmpfaenger;
+		this.idSender = idSender;
 	}	
 	
 	/**
@@ -68,6 +73,11 @@ public class Nachricht
 	 */
 	public void setTitel(String titel) {
 		Titel = titel;
+	}
+	
+	public int getId()
+	{
+		return idNachricht;
 	}
 	
 	/**
@@ -106,16 +116,16 @@ public class Nachricht
 	 * Getter des Senders
 	 * @return
 	 */
-	public String getSender() {
-		return Sender.getNickname();
+	public int getSender() {
+		return idSender;
 	}
 	
 	/**
 	 * Getter des Empfaengers
 	 * @return
 	 */
-	public String getEmpfaenger() {
-		return Empfaenger.getNickname();
+	public int getEmpfaenger() {
+		return idEmpfaenger;
 	}
 
 }

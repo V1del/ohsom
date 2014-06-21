@@ -9,7 +9,7 @@ public class OhsomDBDAOImpl {
 	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
 	private static final String DB_CONNECTION = "jdbc:mysql://localhost/tamagotchi";
 	private static final String DB_USER = "root";
-	private static final String DB_PASSWORD = "";
+	private static final String DB_PASSWORD = "aquaclonk";
 	
 
 	OhsomDBDAOImpl()
@@ -82,7 +82,7 @@ public class OhsomDBDAOImpl {
 		boolean SuccessfullInsertingChangingDeleting = false;
 		
 		try {
-			SuccessfullInsertingChangingDeleting = icdstmt.execute();
+			SuccessfullInsertingChangingDeleting = !icdstmt.execute();
 		}
 		catch(SQLException ex)
 		{

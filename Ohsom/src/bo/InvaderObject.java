@@ -10,26 +10,26 @@ import java.awt.Rectangle;
  */
 public abstract class InvaderObject {
 
-	protected double x;			
+	protected double x;	
 	protected double y;
 	protected Sprite sprite;
-	protected double speedX;	//Need to be double for proper speed increase in aliens, we loose floating point precision otherwise  which can lead to all sorts
+	protected double speedX;	//Need to be double for proper speed increase in aliens, we loose floating point precision otherwise which can lead to all sorts
 	protected double speedY;	//of weird stuff happening (aliens accelerating way to fast or suddenly slowing to a crawl
 	Rectangle obj1 = new Rectangle();
 	Rectangle obj2 = new Rectangle();
-	
+
 	public InvaderObject(String fileLoc, int x, int y) {
 		this.sprite = SpriteResources.get().getSprite(fileLoc);
-		
+
 		this.x = x;
 		this.y = y;
-		
+
 	}
 
 	public void move(long passedTime) {
 		x += (passedTime * speedX) / 1000;
 		y += (passedTime * speedY) / 1000;
-		
+
 	}
 
 	public void draw(Graphics2D g) {
@@ -67,16 +67,16 @@ public abstract class InvaderObject {
 	public void setSpeedY(double speedY) {
 		this.speedY = speedY;
 	}
-	
+
 	public boolean checkCollision(InvaderObject other) {
 		obj1.setBounds((int) x,(int) y, sprite.getWidth(), sprite.getHeight());
 		obj2.setBounds((int) other.x, (int) other.y, other.sprite.getWidth(), other.sprite.getHeight());
-		
+
 		return obj1.intersects(obj2);
 	}
-	
+
 	public abstract void confirmCollision(InvaderObject other);
-	
+
 	/**
 	 * Only relevant for Alien movement, but defining here because we're going to use this as base class for our list
 	 */

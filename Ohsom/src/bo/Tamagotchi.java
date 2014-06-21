@@ -1,7 +1,14 @@
 package bo;
 
-import java.util.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import db.DAOTamagotchiImpl;
+import db.DAOUserImpl;
 
 /**
  * Klasse Tamagotchi
@@ -17,87 +24,73 @@ public class Tamagotchi {
 	private int Geld = 100;
 	private int Medizin = 1;
 	private Gesundheitszustand Gesundheitszustand;
-	private Date letzteFuetterungszeit;
-	private Date letzteSchlafenszeit;
-	private Date letzteWaschzeit;
-	private Date letzteTrinkzeit;
-	private Date letzteSpielzeit;
-	private Date letzteZustandsaenderung;
-	private User User;
+	private Timestamp letzteFuetterungszeit;
+	private Timestamp letzteSchlafenszeit;
+	private Timestamp letzteWaschzeit;
+	private Timestamp letzteTrinkzeit;
+	private Timestamp letzteSpielzeit;
+	private int idUser;
+//	private User User;
 	private ArrayList<Item> Inventar;
 	
 // Konstruktoren
 	
 	/**
-	 * Konstruktor für ein Tamagotchi, das bereits in der Datenbank ist
-	 * @param id
-	 * @param name
-	 * @param geschlechtw
-	 * @param geburtsdatum
-	 * @param geld
-	 * @param medizin
-	 * @param gesundheitszustand
-	 * @param letzteFuetterungszeit
-	 * @param letzteSchlafenszeit
-	 * @param letzteWaschzeit
-	 * @param letzteTrinkzeit
-	 * @param letzteSpielzeit
-	 * @param letzteZustandsaenderung
-	 * @param user
-	 * @param inventar
-	 */
-	public Tamagotchi(int id, String name, boolean geschlechtw,
-			Date geburtsdatum, int geld, int medizin,
-			bo.Gesundheitszustand gesundheitszustand,
-			Date letzteFuetterungszeit, Date letzteSchlafenszeit,
-			Date letzteWaschzeit, Date letzteTrinkzeit, Date letzteSpielzeit,
-			Date letzteZustandsaenderung, bo.User user, ArrayList<Item> inventar) {
-		super();
-		this.id = id;
-		Name = name;
-		Geschlechtw = geschlechtw;
-		Geburtsdatum = geburtsdatum;
-		Geld = geld;
-		Medizin = medizin;
-		Gesundheitszustand = gesundheitszustand;
-		this.letzteFuetterungszeit = letzteFuetterungszeit;
-		this.letzteSchlafenszeit = letzteSchlafenszeit;
-		this.letzteWaschzeit = letzteWaschzeit;
-		this.letzteTrinkzeit = letzteTrinkzeit;
-		this.letzteSpielzeit = letzteSpielzeit;
-		this.letzteZustandsaenderung = letzteZustandsaenderung;
-		User = user;
-		Inventar = inventar;
-	}
-	
-	/**
-	 * Konstruktor für ein Tamagotchi, das noch nicht in der Datenbank ist
-	 * Konstruktor für ein Tamagotchi, das schon in der Datenbank ist aber resetet wird
+	 * Konstruktor fï¿½r ein Tamagotchi, das noch nicht in der Datenbank ist
+	 * Konstruktor fï¿½r ein Tamagotchi, das schon in der Datenbank ist aber resetet wird
 	 * @param name
 	 * @param user
 	 */
-	Tamagotchi(String name, User user)
+	public Tamagotchi(String name, User user)
 	{
 		Name = name;
-		User = user;
+		idUser = user.getId();
 		
-		// Geschlecht wird zufällig ermittelt
+		// Geschlecht wird zufï¿½llig ermittelt
 		double zufall = Math.random() * 1;
 		Geschlechtw = (zufall == 1) ? true : false;
 		
-		Geburtsdatum = new Date();
-		letzteFuetterungszeit = new Date();
-		letzteSchlafenszeit = new Date();
-		letzteWaschzeit = new Date();
-		letzteTrinkzeit = new Date();
-		letzteSpielzeit = new Date();
-		letzteZustandsaenderung = new Date();
+		Long Today = new java.util.Date().getTime();
+		
+		Geburtsdatum = new Date(Today);
+		Geld = 100;
+		Medizin = 1;
 		
 		Gesundheitszustand = Gesundheitszustand.GESUND;
 		Inventar = new ArrayList<Item>();
 	}
 	
+	/**
+	 * Konstruktor fÃ¼r ein Tamagotchi aus der Datenbank
+	 * @param tamagotchiResultSet
+	 * @throws SQLException
+	 */
+	public Tamagotchi(ResultSet tamagotchiResultSet) throws SQLException {
+		id = tamagotchiResultSet.getInt("idTamagotchi");
+		Geld = tamagotchiResultSet.getInt("Geld");
+		Geburtsdatum = tamagotchiResultSet.getDate("Geburtsdatum");
+		Geschlechtw = tamagotchiResultSet.getBoolean("Geschlechtw");
+		Name = tamagotchiResultSet.getString("Name");
+		Geburtsdatum = tamagotchiResultSet.getDate("Geburtsdatum");
+		letzteFuetterungszeit = tamagotchiResultSet.getTimestamp("letzteFuetterungszeit");
+		letzteSchlafenszeit = tamagotchiResultSet.getTimestamp("letzteSchlafenszeit");
+		letzteWaschzeit = tamagotchiResultSet.getTimestamp("letzteWaschzeit");
+		letzteTrinkzeit = tamagotchiResultSet.getTimestamp("letzteTrinkzeit");
+		letzteSpielzeit = tamagotchiResultSet.getTimestamp("letzteSpielzeit");
+		Geld = tamagotchiResultSet.getInt("Geld");
+		Medizin = tamagotchiResultSet.getInt("Medizin");
+		idUser = tamagotchiResultSet.getInt("idUser");
+		
+		Gesundheitszustand = Gesundheitszustand.getGesundheitszustandByName(tamagotchiResultSet.getString("Gesundheitszustand"));
+	
+		DAOTamagotchiImpl DAOT = new DAOTamagotchiImpl();
+		Inventar = DAOT.getInventar(id);
+	}
 
+	/** 
+	 * Getter fÃ¼r das Evolutionsstadium
+	 * @return
+	 */
 	public Entwicklungsstadium getEvolutionsstadium()
 	{
 		if(getAlter() > 1)
@@ -119,7 +112,7 @@ public class Tamagotchi {
 	}
 		
 	/**
-	 * 
+	 * Getter ID
 	 * @return
 	 */
 	public int getId() {
@@ -147,16 +140,36 @@ public class Tamagotchi {
 	 * @return
 	 */
 	public String getGeschlecht() {
-		return (Geschlechtw == false) ? "männlich" : "weiblich";
+		return (Geschlechtw == false) ? "mï¿½nnlich" : "weiblich";
 	}
+	
+	/**
+	 * Getter Geschlecht as boolean 
+	 */
+	public boolean isGeschlechtw()
+	{
+		return Geschlechtw;
+	}
+	
 	
 	/**
 	 * Getter Alter (beruhend auf Geburtsdatum)
 	 * @return
 	 */
 	public int getAlter() {
-		Date today = new Date();
-		return (int) ((int) today.getTime() - Geburtsdatum.getTime());
+		Long Today_Long = new java.util.Date().getTime();
+		Date Today_date = new Date(Today_Long);
+		return (int) ((int) Today_date.getTime() - Geburtsdatum.getTime());
+	}
+	
+	/**
+	 * Getter Geburtsdatum 
+	 * @return
+	 */
+	
+	public Date getGeburtsdatum()
+	{
+		return Geburtsdatum;
 	}
 
 	/**
@@ -183,7 +196,7 @@ public class Tamagotchi {
 	}
 	
 	/**
-	 * Setter 2 Geld Tamagotchi zur Erhöhung des Geldstands
+	 * Setter 2 Geld Tamagotchi zur Erhï¿½hung des Geldstands
 	 * @param geld
 	 */
 	public void VerdienGeld(int geld)
@@ -200,13 +213,13 @@ public class Tamagotchi {
 	}
 	
 	/**
-	 * Setter Medizin (erhöhen der Medizin um angegebene Menge)
+	 * Setter Medizin (erhï¿½hen der Medizin um angegebene Menge)
 	 * @param medizin
 	 */
 	public boolean kaufeMedizin(int medizin) {
 		boolean KaufErfolgreich = false;
 		
-		if(Medizin + medizin <= 50)
+		if(Medizin + medizin <= 100)
 		{
 			Medizin += medizin;
 			KaufErfolgreich = true;
@@ -216,11 +229,15 @@ public class Tamagotchi {
 		
 	}
 	
+	/**
+	 * Setter Medizin (- 1) sofern krank
+	 * @return
+	 */
 	public boolean verwendeMedizin()
 	{
 		boolean VerwendungErfolgreich = false;
 		
-		if(Medizin >= 1)
+		if(Medizin >= 1 & getGesundheitszustand() == Gesundheitszustand.KRANK)
 		{
 			Medizin--;
 			VerwendungErfolgreich = true;
@@ -241,8 +258,6 @@ public class Tamagotchi {
 	 * @param gesundheitszustand
 	 */
 	public void aktualisiereGesundheitszustand(Gesundheitszustand gesundheitszustand) {
-		
-		
 		Gesundheitszustand = gesundheitszustand;
 	}
 	
@@ -250,111 +265,176 @@ public class Tamagotchi {
 	 * Getter Fuetterungszeit
 	 * @return
 	 */
-	public Date getLetzteFuetterungszeit() {
-		return letzteFuetterungszeit;
+	public int getHunger() {
+		long hours = TimeUnit.MILLISECONDS.toHours(new Date(new java.util.Date().getTime()).getTime() - letzteFuetterungszeit.getTime());
+		int Hunger = 0;
+		if(hours <= 5)
+		{
+			Hunger = (int) hours;
+		}
+		else
+		{
+			Hunger = 5;
+		}
+		
+		return Hunger;
+	}
+	
+	/**
+	 * Getter Thirst
+	 * @return
+	 */
+	public int getThirst()
+	{
+		long hours = TimeUnit.MILLISECONDS.toHours(new Date(new java.util.Date().getTime()).getTime() - letzteTrinkzeit.getTime());
+		
+		int Durst = 0;
+		
+		if(hours <= 5)
+		{
+			Durst = (int) hours;
+		}
+		else
+		{
+			Durst = 5;
+		}
+		
+		return Durst;
+	}
+	
+	/**
+	 * Ist Tamagotchi hungrig?
+	 * @return
+	 */
+	public boolean isHungry()
+	{
+		return (getHunger() > 0);
+	}
+	
+	/**
+	 * Ist Tamagotchi durstig?
+	 * @return
+	 */
+	public boolean isThirsty()
+	{
+		return(getThirst() > 0);
 	}
 	
 	/**
 	 * Setter Fuetterungszeit
 	 * @param letzteFuetterungszeit
 	 */
-	public void setLetzteFuetterungszeit(Date letzteFuetterungszeit) {
+	public void setLetzteFuetterungszeit(Timestamp letzteFuetterungszeit) {
 		this.letzteFuetterungszeit = letzteFuetterungszeit;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Getter Fuetterungszeit
+	 * @return Fuetterungszeit
 	 */
-	public Date getLetzteSchlafenszeit() {
-		return letzteSchlafenszeit;
+	public Timestamp getLetzteFuetterungszeit()
+	{
+		return this.letzteFuetterungszeit;
 	}
 	
 	/**
-	 * 
-	 * @param letzteSchlafenszeit
+	 * ist Tamagotchi noch am Schlafen?
+	 * @return
 	 */
-	public void setLetzteSchlafenszeit(Date letzteSchlafenszeit) {
-		this.letzteSchlafenszeit = letzteSchlafenszeit;
+	@SuppressWarnings("deprecation")
+	public boolean isStillSleeping()
+	{
+		if(getLetzteSchlafenszeit().getHours() < 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * Ist Tamagotchi mÃ¼de?
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public boolean isTired()
+	{
+		if(getLetzteSchlafenszeit().getHours() > 8)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * Getter letzteSchlafenszeit
+	 * @return
+	 */
+	public Timestamp getLetzteSchlafenszeit() {
+		return letzteSchlafenszeit;
 	}
 	
 	/**
 	 * Getter letzteWaschzeit
 	 * @return
 	 */
-	public Date getLetzteWaschzeit() {
+	public Timestamp getLetzteWaschzeit() {
 		return letzteWaschzeit;
 	}
 	
 	/**
-	 * Setter LetzteWaschzeit
-	 * @param letzteWaschzeit
-	 */
-	public void setLetzteWaschzeit(Date letzteWaschzeit) {
-		this.letzteWaschzeit = letzteWaschzeit;
-	}
-
-	/**
-	 * 
+	 * Getter letzteTrinkzeit
 	 * @return
 	 */
-	public Date getLetzteTrinkzeit() {
+	public Timestamp getLetzteTrinkzeit() {
 		return letzteTrinkzeit;
 	}
 	
 	/**
-	 * 
-	 * @param letzteTrinkzeit
-	 */
-	public void setLetzteTrinkzeit(Date letzteTrinkzeit) {
-		this.letzteTrinkzeit = letzteTrinkzeit;
-	}
-	
-	/**
-	 * 
+	 * Getter letzteSpielzeit
 	 * @return
 	 */
-	public Date getLetzteSpielzeit() {
+	public Timestamp getLetzteSpielzeit() {
 		return letzteSpielzeit;
-	}
-	
-	/**
-	 * 
-	 * @param letzteSpielzeit
-	 */
-	public void setLetzteSpielzeit(Date letzteSpielzeit) {
-		this.letzteSpielzeit = letzteSpielzeit;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Date getLetzteZustandsaenderung() {
-		return letzteZustandsaenderung;
-	}
-	
-	/**
-	 * 
-	 * @param letzteZustandsaenderung
-	 */
-	public void setLetzteZustandsaenderung(Date letzteZustandsaenderung) {
-		this.letzteZustandsaenderung = letzteZustandsaenderung;
 	}
 	
 	/**
 	 * Getter User (Nickname)
 	 * @return
+	 * @throws SQLException 
 	 */
-	public String getUser() {
-		return User.getNickname();
+	public String getUserNickname() throws SQLException {
+		return getUser().getNickname();
+	}
+	
+	public int getUserId() throws SQLException
+	{
+		return getUser().getId();
 	}
 	
 	/**
 	 * 
 	 * @return
+	 * @throws SQLException 
 	 */
-	public ArrayList<Item> getInventar() {
+	public User getUser() throws SQLException
+	{
+		DAOUserImpl DAOU = new DAOUserImpl();
+		return DAOU.getUser(idUser);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<Item> getInventar() throws SQLException {
 		return Inventar;
 	}
 	

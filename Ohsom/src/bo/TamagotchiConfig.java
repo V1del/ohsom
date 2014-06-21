@@ -1,5 +1,8 @@
 package bo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * 
  * @author vmuser
@@ -7,16 +10,30 @@ package bo;
  */
 public class TamagotchiConfig {
 
-		public TamagotchiConfig(int idUser, String code, String hotkey) {
+		public TamagotchiConfig(int idUser, String code, char hotkey) {
 		super();
 		this.idUser = idUser;
-		Code = code;
+		Code = Code.getCodeByName(code);
 		Hotkey = hotkey;
 	}
-		private int idUser;
-		private String Code;
-		private String Hotkey;
 		
+		private int idUser;
+		private Code Code;
+		private char Hotkey;
+		
+		public TamagotchiConfig(ResultSet ConfigResultSet) throws SQLException
+		{
+			super();
+			this.idUser = ConfigResultSet.getInt("idUser");
+			this.Code = Code.getCodeByName(ConfigResultSet.getString("Code"));
+			this.Hotkey = ConfigResultSet.getString("Hotkey").charAt(0);
+		}
+		
+		public TamagotchiConfig(int idUser, String code) {
+			this.idUser = idUser;
+			this.Code = Code.getCodeByName(code);
+		}
+
 		/**
 		 * 
 		 * @return
@@ -29,7 +46,7 @@ public class TamagotchiConfig {
 		 * 
 		 * @return
 		 */
-		public String getCode() {
+		public Code getCode() {
 			return Code;
 		}
 		
@@ -38,14 +55,14 @@ public class TamagotchiConfig {
 		 * @param code
 		 */
 		public void setCode(String code) {
-			Code = code;
+			Code = Code.getCodeByName(code);
 		}
 		
 		/**
 		 * 
 		 * @return
 		 */
-		public String getHotkey() {
+		public char getHotkey() {
 			return Hotkey;
 		}
 		
@@ -53,7 +70,7 @@ public class TamagotchiConfig {
 		 * 
 		 * @param hotkey
 		 */
-		public void setHotkey(String hotkey) {
+		public void setHotkey(char hotkey) {
 			Hotkey = hotkey;
 		}
 

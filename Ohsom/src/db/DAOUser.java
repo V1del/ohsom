@@ -12,28 +12,27 @@ import bo.*;
  */
 public interface DAOUser {
 
-	public boolean addConfigData(TamagotchiConfig TamagotchiConfig);
+	public boolean addConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException;
 	
 	public  boolean addHighscore(Highscore Highscore) throws SQLException;
 	
 	public boolean addUser(User User) throws SQLException;
 	
-	public boolean changeConfigData(TamagotchiConfig TamagotchiConfig);
 		
-	public boolean deleteConfigData(TamagotchiConfig TamagotchiConfig);
+	public boolean deleteConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException;
 	
 	public boolean deleteUser(User User) throws SQLException;
 	
-	public ArrayList<Highscore> getAllHighscores();
+	public ArrayList<Highscore> getAllHighscores() throws SQLException;
 	
-	public ArrayList<TamagotchiConfig> getConfigData(int idUser);
+	public ArrayList<TamagotchiConfig> getConfigData(int idUser) throws SQLException;
 	
-	public ArrayList<User> getAllUsers();
+	public boolean updateHighscore(Highscore Highscore) throws SQLException;
 	
-	public boolean updateHighscore(Highscore Highscore);
+	public boolean updateUser(User User) throws SQLException;
 	
-	public boolean updateUser(User User);
+	public boolean updateConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException;
 	
-	public boolean updateConfig(TamagotchiConfig TamagotchiConfig);
+	public ArrayList<User> getAllUsers() throws SQLException;
 	
 }

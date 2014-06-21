@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 
 import java.awt.FlowLayout;
+import java.sql.SQLException;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.JScrollPane;
@@ -17,7 +18,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 
+import bl.BLNachrichten;
+
+import com.mysql.jdbc.Constants;
+
 public class MessagesGUI extends JFrame {
+	private BLNachrichten blN = new BLNachrichten();
 	private JButton btnHelp;
 	private JPanel panel;
 	private JPanel panel_1;
@@ -30,10 +36,11 @@ public class MessagesGUI extends JFrame {
 	private JButton btnZurueck;
 	private JButton btnVorwaerts;
 
-	public MessagesGUI() {
+	public MessagesGUI() throws SQLException {
 		super("Nachrichten");
 		
 		panel = new JPanel();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		getContentPane().add(panel, BorderLayout.NORTH);
@@ -52,11 +59,7 @@ public class MessagesGUI extends JFrame {
 		
 		tblNachrichten = new JTable();
 		tblNachrichten.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
+			blN.getNachrichtenData(),
 			new String[] {
 				"Schreiber", "gelesen", "Titel", "Zeitpunkt", "lesen?", "l\u00F6schen"
 			}
@@ -70,7 +73,7 @@ public class MessagesGUI extends JFrame {
 		flowLayout_2.setHgap(30);
 		panel_1.add(panel_3, BorderLayout.SOUTH);
 		
-		btnZurueck = new JButton("<< zurückblättern");
+		btnZurueck = new JButton("<< zur�ckbl�ttern");
 		
         btnZurueck.setMargin(new Insets(0, 0, 0, 0));
         btnZurueck.setContentAreaFilled(false);
@@ -82,7 +85,7 @@ public class MessagesGUI extends JFrame {
 		lblSeite = new JLabel("S 1 / 1");
 		panel_3.add(lblSeite);
 		
-		btnVorwaerts = new JButton("vorwärtsblättern >>");
+		btnVorwaerts = new JButton("vorw�rtsbl�ttern >>");
 		
         btnVorwaerts.setMargin(new Insets(0, 0, 0, 0));
         btnVorwaerts.setContentAreaFilled(false);
@@ -96,19 +99,16 @@ public class MessagesGUI extends JFrame {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
+		btnNachrichtVerfassen = new JButton("Nachricht verfassen");
+		
         btnNachrichtVerfassen.setMargin(new Insets(0, 0, 0, 0));
         btnNachrichtVerfassen.setContentAreaFilled(false);
         btnNachrichtVerfassen.setBorderPainted(false);
         btnNachrichtVerfassen.setOpaque(false);
 		
-		btnNachrichtVerfassen = new JButton("Nachricht verfassen");
 		panel_2.add(btnNachrichtVerfassen);
 		
 		this.pack();
 		this.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		new MessagesGUI();
 	}
 }

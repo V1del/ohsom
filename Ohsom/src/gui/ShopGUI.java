@@ -1,138 +1,5 @@
 package gui;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Spinner;
-
-
-public class ShopGUI {
-
-	protected Shell shlShop;
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			ShopGUI window = new ShopGUI();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shlShop.open();
-		shlShop.layout();
-		while (!shlShop.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-	
-	
-
-	/**
-	 * Create contents of the window.
-	 */
-	protected void createContents() {
-		shlShop = new Shell();
-		shlShop.setSize(450, 300);
-		shlShop.setText("Shop");
-		
-		TabFolder tabFolder = new TabFolder(shlShop, SWT.NONE);
-		tabFolder.setBounds(0, 0, 434, 261);
-		// Add an event listener to write the selected tab to stdout
-		tabFolder.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		TabItem tbtmMedicin = new TabItem(tabFolder, SWT.NONE);
-		tbtmMedicin.setText("Medicin");
-		
-		Composite cmpMedicin = new Composite(tabFolder, SWT.NONE);
-		tbtmMedicin.setControl(cmpMedicin);
-		
-		Label lblMedicine = new Label(cmpMedicin, SWT.NONE);
-		lblMedicine.setBounds(10, 10, 55, 15);
-		lblMedicine.setText("Medicine:");
-		
-		Label lblCurrentMedicine = new Label(cmpMedicin, SWT.NONE);
-		lblCurrentMedicine.setBounds(71, 10, 28, 15);
-		lblCurrentMedicine.setText("0");
-		
-		Label lblNewLabel = new Label(cmpMedicin, SWT.NONE);
-		lblNewLabel.setBounds(127, 10, 55, 15);
-		lblNewLabel.setText("Money:");
-		
-		Label lblCurrentMoney = new Label(cmpMedicin, SWT.NONE);
-		lblCurrentMoney.setBounds(188, 10, 55, 15);
-		lblCurrentMoney.setText("0 \u00A5");
-		
-		Group grpBuyMedicine = new Group(cmpMedicin, SWT.NONE);
-		grpBuyMedicine.setText("Buy Medicine");
-		grpBuyMedicine.setBounds(10, 31, 406, 192);
-		
-		Label lblHowMuchMedicine = new Label(grpBuyMedicine, SWT.NONE);
-		lblHowMuchMedicine.setBounds(10, 24, 240, 15);
-		lblHowMuchMedicine.setText("How much medicine do want to buy?");
-		
-		Spinner spnAmount = new Spinner(grpBuyMedicine, SWT.BORDER);
-		spnAmount.setBounds(10, 45, 47, 22);
-		
-		Button btnBuyMedicin = new Button(grpBuyMedicine, SWT.NONE);
-		btnBuyMedicin.setBounds(63, 43, 75, 25);
-		btnBuyMedicin.setText("Buy");
-		
-		Label lblCostsMedicine = new Label(grpBuyMedicine, SWT.NONE);
-		lblCostsMedicine.setBounds(10, 86, 55, 15);
-		lblCostsMedicine.setText("Costs: 0 \u00A5");
-		
-		TabItem tbtmFood = new TabItem(tabFolder, SWT.NONE);
-		tbtmFood.setText("Food");
-		
-		Composite cmpFood = new Composite(tabFolder, SWT.NONE);
-		tbtmFood.setControl(cmpFood);
-		
-		TabItem tbtmDrinks = new TabItem(tabFolder, SWT.NONE);
-		tbtmDrinks.setText("Drinks");
-		
-		Composite cmpDrink = new Composite(tabFolder, SWT.NONE);
-		tbtmDrinks.setControl(cmpDrink);
-		
-		TabItem tbtmOthers = new TabItem(tabFolder, SWT.NONE);
-		tbtmOthers.setText("Others");
-		
-		Composite cmpOthers = new Composite(tabFolder, SWT.NONE);
-		tbtmOthers.setControl(cmpOthers);
-
-	}
-}
-
-/*
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -150,6 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
@@ -157,47 +25,108 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JToggleButton;
 
-public class ShopGUI implements ActionListener{
+import bl.BLShopartikel;
+import bl.BLTamagotchi;
+import bo.Item;
+import bo.Kategorie;
+import bo.Shopartikel;
+import bo.Tamagotchi;
+import bo.User;
 
-	private JFrame frmShop;
+/**
+ * GUI für den Shop
+ * @author Snatsch
+ *
+ */
+public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 
+	private BLShopartikel blS = null;
+	private BLTamagotchi blT = null;
 	
-	private JSpinner spAnzahl;
-	private JButton btnMedizinKaufen, btnTrinkenKaufen, btnNewButton;
+	private JSpinner spAnzahlMedizin;
+	private JButton btnMedizinKaufen, btnEssenKaufen, btnTrinkenKaufen;
+	private Map<String, JToggleButton> BtnAuswahlMap = new HashMap<String, JToggleButton>();
+	private Map<JToggleButton, Integer> BtnAuswahlValuesMap = new HashMap<JToggleButton, Integer>();
+	private JPanel pnlEssenAuswahl, pnlGetraenkeAuswahl, pnlInventarEssen, pnlInventarTrinken;
 	
-	JToggleButton btnEssen1, btnEssen2, btnEssen3, btnEssen4, btnEssen5, btnGetraenk1, btnGetraenk2, btnGetraenk3, btnGetraenk4, btnGetraenk5;
-	JLabel lblGeld, lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue;
+	private Map<String, JToggleButton> BtnInventarMap = new HashMap<String, JToggleButton>();
+	private Map<JToggleButton, Item> BtnInventarValuesMap = new HashMap<JToggleButton, Item>();
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ShopGUI window = new ShopGUI();
-					//window.frmShop.pack();
-					window.frmShop.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public ShopGUI() {
+	JToggleButton btnEssen1 = new JToggleButton("?");
+	JToggleButton btnEssen2 = new JToggleButton("?");
+	JToggleButton btnEssen3 = new JToggleButton("?");
+	JToggleButton btnEssen4 = new JToggleButton("?"); 
+	JToggleButton btnEssen5 = new JToggleButton("?");
+	JToggleButton btnGetraenk1 = new JToggleButton("?");
+	JToggleButton btnGetraenk2 = new JToggleButton("?");
+	JToggleButton btnGetraenk3 = new JToggleButton("?"); 
+	JToggleButton btnGetraenk4 = new JToggleButton("?"); 
+	JToggleButton btnGetraenk5 = new JToggleButton("?");
+	
+	JToggleButton btnItemEssen1 = new JToggleButton("?");
+	JToggleButton btnItemEssen2 = new JToggleButton("?");
+	JToggleButton btnItemEssen3 = new JToggleButton("?");
+	JToggleButton btnItemEssen4 = new JToggleButton("?");
+	JToggleButton btnItemEssen5 = new JToggleButton("?");
+	JToggleButton btnItemGetraenk1 = new JToggleButton("?");
+	JToggleButton btnItemGetraenk2 = new JToggleButton("?");
+	JToggleButton btnItemGetraenk3 = new JToggleButton("?");
+	JToggleButton btnItemGetraenk4 = new JToggleButton("?");
+	JToggleButton btnItemGetraenk5 = new JToggleButton("?");
+	
+	JLabel lblGeld, lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue, lblFehlermeldung;
+	
+	/**
+	 * Konstruktor, der die Map füllt => Ersatz zu variablen Variablen
+	 * @throws SQLException
+	 */
+	public ShopGUI() throws SQLException {
+		blS = new BLShopartikel();
+		blT = new BLTamagotchi();
+		
+		BtnAuswahlMap.put("btnEssen1", btnEssen1);
+		BtnAuswahlMap.put("btnEssen2", btnEssen2);
+		BtnAuswahlMap.put("btnEssen3", btnEssen3);
+		BtnAuswahlMap.put("btnEssen4", btnEssen4);
+		BtnAuswahlMap.put("btnEssen5", btnEssen5);
+		BtnAuswahlMap.put("btnGetraenk1", btnGetraenk1);
+		BtnAuswahlMap.put("btnGetraenk2", btnGetraenk2);
+		BtnAuswahlMap.put("btnGetraenk3", btnGetraenk3);
+		BtnAuswahlMap.put("btnGetraenk4", btnGetraenk4);
+		BtnAuswahlMap.put("btnGetraenk5", btnGetraenk5);
+		
+		BtnInventarMap.put("btnItemEssen1", btnItemEssen1);
+		BtnInventarMap.put("btnItemEssen2", btnItemEssen2);
+		BtnInventarMap.put("btnItemEssen3", btnItemEssen3);
+		BtnInventarMap.put("btnItemEssen4", btnItemEssen4);
+		BtnInventarMap.put("btnItemEssen5", btnItemEssen5);
+		BtnInventarMap.put("btnItemGetraenk1", btnItemGetraenk1);
+		BtnInventarMap.put("btnItemGetraenk2", btnItemGetraenk2);
+		BtnInventarMap.put("btnItemGetraenk3", btnItemGetraenk3);
+		BtnInventarMap.put("btnItemGetraenk4", btnItemGetraenk4);
+		BtnInventarMap.put("btnItemGetraenk5", btnItemGetraenk5);
+		
 		initialize();
 	}
-	private void initialize() {
-		frmShop = new JFrame();
-		frmShop.setTitle("Shop");
-		frmShop.setBounds(100, 100, 450, 300);
-		frmShop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private void initialize() throws SQLException {
+		new JFrame();
+		setTitle("Shop");
+		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		frmShop.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel pnlMedizin = new JPanel();
 		tabbedPane.addTab("Medizin", null, pnlMedizin, null);
@@ -252,7 +181,7 @@ public class ShopGUI implements ActionListener{
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
-		JLabel lblWieVielMedizin = new JLabel("Wie viel Medizin m�chtest du kaufen?");
+		JLabel lblWieVielMedizin = new JLabel("Wie viel Medizin m�chtest du kaufen?");
 		GridBagConstraints gbc_lblWieVielMedizin = new GridBagConstraints();
 		gbc_lblWieVielMedizin.insets = new Insets(0, 0, 5, 0);
 		gbc_lblWieVielMedizin.gridwidth = 2;
@@ -261,13 +190,14 @@ public class ShopGUI implements ActionListener{
 		gbc_lblWieVielMedizin.gridy = 0;
 		panel_1.add(lblWieVielMedizin, gbc_lblWieVielMedizin);
 		
-		spAnzahl = new JSpinner();
-		spAnzahl.setModel(new SpinnerNumberModel(new Integer(15), new Integer(0), null, new Integer(1)));
+		spAnzahlMedizin = new JSpinner();
+		spAnzahlMedizin.addChangeListener(this);
+		spAnzahlMedizin.setModel(new SpinnerNumberModel(new Integer(15), new Integer(0), new Integer(100), new Integer(1)));
 		GridBagConstraints gbc_spAnzahl = new GridBagConstraints();
 		gbc_spAnzahl.insets = new Insets(0, 0, 5, 5);
 		gbc_spAnzahl.gridx = 0;
 		gbc_spAnzahl.gridy = 1;
-		panel_1.add(spAnzahl, gbc_spAnzahl);
+		panel_1.add(spAnzahlMedizin, gbc_spAnzahl);
 		
 		btnMedizinKaufen = new JButton("Kaufen");
 		btnMedizinKaufen.addActionListener(this);
@@ -312,79 +242,52 @@ public class ShopGUI implements ActionListener{
 		gbl_pnlEssen.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		pnlEssen.setLayout(gbl_pnlEssen);
 		
-		JLabel lblGeld2 = new JLabel("Geld: ");
 		GridBagConstraints gbc_lblGeld2 = new GridBagConstraints();
 		gbc_lblGeld2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGeld2.gridx = 2;
 		gbc_lblGeld2.gridy = 1;
 		pnlEssen.add(lblGeld, gbc_lblGeld2);
 		
-		JLabel label_2 = new JLabel("10"); 
 		GridBagConstraints gbc_label_2 = new GridBagConstraints();
 		gbc_label_2.insets = new Insets(0, 0, 5, 5);
 		gbc_label_2.gridx = 3;
 		gbc_label_2.gridy = 1;
 		pnlEssen.add(lblGeldValue, gbc_label_2);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnlEssenAuswahl = new JPanel();
+		pnlEssenAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
 		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_4.gridwidth = 12;
 		gbc_panel_4.anchor = GridBagConstraints.NORTH;
 		gbc_panel_4.gridx = 1;
 		gbc_panel_4.gridy = 2;
-		pnlEssen.add(panel_4, gbc_panel_4);
+		pnlEssen.add(pnlEssenAuswahl, gbc_panel_4);
 		
-		btnEssen1 = new JToggleButton("?");
-		panel_4.add(btnEssen1);
+		fillFood(pnlEssenAuswahl);
 		
-		btnEssen2 = new JToggleButton("?");
-		panel_4.add(btnEssen2);
-		
-		btnEssen3 = new JToggleButton("?");
-		panel_4.add(btnEssen3);
-		
-		btnEssen4 = new JToggleButton("?");
-		panel_4.add(btnEssen4);
-		
-		btnEssen5 = new JToggleButton("?");
-		panel_4.add(btnEssen5);
-		
-		btnNewButton = new JButton("Essen kaufen");
+		btnEssenKaufen = new JButton("Essen kaufen");
+		btnEssenKaufen.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 6;
 		gbc_btnNewButton.gridy = 4;
-		pnlEssen.add(btnNewButton, gbc_btnNewButton);
+		pnlEssen.add(btnEssenKaufen, gbc_btnNewButton);
 		
-		JPanel pnlInventar = new JPanel();
-		pnlInventar.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
-		gbc_panel_5.gridwidth = 6;
-		gbc_panel_5.insets = new Insets(0, 0, 0, 5);
-		gbc_panel_5.fill = GridBagConstraints.BOTH;
-		gbc_panel_5.gridx = 4;
-		gbc_panel_5.gridy = 6;
-		pnlEssen.add(pnlInventar, gbc_panel_5);
+		pnlInventarEssen = new JPanel();
+		pnlInventarEssen.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_pnlInventarEssen = new GridBagConstraints();
+		gbc_pnlInventarEssen.gridwidth = 6;
+		gbc_pnlInventarEssen.insets = new Insets(0, 0, 0, 5);
+		gbc_pnlInventarEssen.fill = GridBagConstraints.BOTH;
+		gbc_pnlInventarEssen.gridx = 4;
+		gbc_pnlInventarEssen.gridy = 6;
+		pnlEssen.add(pnlInventarEssen, gbc_pnlInventarEssen);
 		
-		JButton button = new JButton("?");
-		pnlInventar.add(button);
-		
-		JButton button_1 = new JButton("?");
-		pnlInventar.add(button_1);
-		
-		JButton button_2 = new JButton("?");
-		pnlInventar.add(button_2);
-		
-		JButton button_3 = new JButton("?");
-		pnlInventar.add(button_3);
-		
-		JButton button_4 = new JButton("?");
-		pnlInventar.add(button_4);
-		
+		fillFoodInventarPanel(pnlInventarEssen);
+				
 		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Getr�nke", null, panel_3, null);
+		tabbedPane.addTab("Getr�nke", null, panel_3, null);
 		
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6);
@@ -395,85 +298,242 @@ public class ShopGUI implements ActionListener{
 		gbl_panel_6.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel_6.setLayout(gbl_panel_6);
 		
-		JLabel label_3 = new JLabel("Geld: ");
 		GridBagConstraints gbc_label_3 = new GridBagConstraints();
 		gbc_label_3.insets = new Insets(0, 0, 5, 5);
 		gbc_label_3.gridx = 2;
 		gbc_label_3.gridy = 1;
 		panel_6.add(lblGeld, gbc_label_3);
 		
-		JLabel label_4 = new JLabel("10");
 		GridBagConstraints gbc_label_4 = new GridBagConstraints();
 		gbc_label_4.insets = new Insets(0, 0, 5, 5);
 		gbc_label_4.gridx = 3;
 		gbc_label_4.gridy = 1;
 		panel_6.add(lblGeldValue, gbc_label_4);
 		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnlGetraenkeAuswahl = new JPanel();
+		pnlGetraenkeAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
 		gbc_panel_7.anchor = GridBagConstraints.NORTH;
 		gbc_panel_7.gridwidth = 6;
 		gbc_panel_7.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_7.gridx = 4;
 		gbc_panel_7.gridy = 2;
-		panel_6.add(panel_7, gbc_panel_7);
+		panel_6.add(pnlGetraenkeAuswahl, gbc_panel_7);
 		
-		btnGetraenk1 = new JToggleButton("?");
-		panel_7.add(btnGetraenk1);
+		fillDrinks(pnlGetraenkeAuswahl);
 		
-		btnGetraenk2 = new JToggleButton("?");
-		panel_7.add(btnGetraenk2);
-		
-		btnGetraenk3 = new JToggleButton("?");
-		panel_7.add(btnGetraenk3);
-		
-		btnGetraenk4 = new JToggleButton("?");
-		panel_7.add(btnGetraenk4);
-		
-		btnGetraenk5 = new JToggleButton("?");
-		panel_7.add(btnGetraenk5);
-		
-		btnTrinkenKaufen = new JButton("Getr�nk kaufen");
+		btnTrinkenKaufen = new JButton("Getr�nk kaufen");
+		btnTrinkenKaufen.addActionListener(this);
 		GridBagConstraints gbc_btnTrinkenKaufen = new GridBagConstraints();
 		gbc_btnTrinkenKaufen.insets = new Insets(0, 0, 5, 5);
 		gbc_btnTrinkenKaufen.gridx = 8;
 		gbc_btnTrinkenKaufen.gridy = 4;
 		panel_6.add(btnTrinkenKaufen, gbc_btnTrinkenKaufen);
-		
-		JPanel panel_8 = new JPanel();
-		panel_8.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
-		gbc_panel_8.fill = GridBagConstraints.BOTH;
-		gbc_panel_8.gridwidth = 4;
-		gbc_panel_8.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_8.gridx = 5;
-		gbc_panel_8.gridy = 6;
-		panel_6.add(panel_8, gbc_panel_8);
-		
-		JButton button_11 = new JButton("?");
-		panel_8.add(button_11);
-		
-		JButton button_12 = new JButton("?");
-		panel_8.add(button_12);
-		
-		JButton button_13 = new JButton("?");
-		panel_8.add(button_13);
-		
-		JButton button_14 = new JButton("?");
-		panel_8.add(button_14);
-		
-		JButton button_15 = new JButton("?");
-		panel_8.add(button_15);
-		
-		frmShop.setVisible(true);
-	}
 
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnMedizinKaufen)
+		pnlInventarTrinken = new JPanel();
+		pnlInventarTrinken.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_pnlInventarTrinken = new GridBagConstraints();
+		gbc_pnlInventarTrinken.fill = GridBagConstraints.BOTH;
+		gbc_pnlInventarTrinken.gridwidth = 4;
+		gbc_pnlInventarTrinken.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlInventarTrinken.gridx = 5;
+		gbc_pnlInventarTrinken.gridy = 6;
+		panel_6.add(pnlInventarTrinken, gbc_pnlInventarTrinken);
+		
+		fillDrinkInventarPanel(pnlInventarTrinken);
+		
+		setVisible(true);
+	}
+	
+	/**
+	 * Filler der Articlepanels (Essen und Trinken - Auswahl)
+	 * @param pnlArticle
+	 * @param katArticle
+	 * @throws SQLException
+	 */
+	public void fillArticlePanel(JPanel pnlArticle, Kategorie katArticle) throws SQLException
+	{
+		int ArticleIndex = 1; 
+	
+		for(Shopartikel Artikel : blS.getFilteredShopartikel(katArticle))
+		{	
+			JToggleButton btnArticle = BtnAuswahlMap.get("btn" + katArticle.getBtnName() + ArticleIndex);
+			BtnAuswahlValuesMap.put(btnArticle, Artikel.getId());
+			btnArticle.setText("");
+			btnArticle.setIcon(new ImageIcon("Sources/Shopartikel/" + Artikel.getArtikelImage()));
+			pnlArticle.add(btnArticle);
+			
+			ArticleIndex++;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param pnlInventar
+	 * @param katItem
+	 * @throws SQLException
+	 */
+	public void fillInventarPanel(JPanel pnlInventar, Kategorie katItem) throws SQLException
+	{
+		int Index = 1;
+		
+		pnlInventar.removeAll();
+
+		for(int i = 1; i < 6; i++)
 		{
-			spAnzahl.getValue();
+			JToggleButton btnItemEmpty = BtnInventarMap.get("btnItem" + katItem.getBtnName() + i);
+			btnItemEmpty.setText("?");
+			btnItemEmpty.setIcon(null);
+			pnlInventar.add(btnItemEmpty);
 		}
 		
+		for(Item Item : blT.getInventory(katItem))
+		{
+			JToggleButton btnItem = BtnInventarMap.get("btnItem" + katItem.getBtnName() + Index);
+			BtnInventarValuesMap.put(btnItem, Item);
+			btnItem.setText("");
+			btnItem.setIcon(new ImageIcon("Sources/Shopartikel/" + Item.getShopartikel().getArtikelImage()));
+			btnItem.addActionListener(this);
+			
+			Index++;
+		}
 	}
-}*/
+	/**
+	 * 
+	 * @param pnlInventar
+	 * @throws SQLException
+	 */
+	public void fillFoodInventarPanel(JPanel pnlInventar) throws SQLException
+	{
+		fillInventarPanel(pnlInventar, Kategorie.FUTTER);
+	}
+	
+	public void fillDrinkInventarPanel(JPanel pnlInventar) throws SQLException
+	{
+		fillInventarPanel(pnlInventar, Kategorie.GETRÄNK);
+	}
+	
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public void RefreshMoneyLabels() throws SQLException
+	{
+		Tamagotchi currentTamagotchi = blT.getCurrentUser().getTamagotchi();
+		lblGeldValue.setText(String.valueOf(currentTamagotchi.getGeld()));
+		lblMedizinValue.setText(String.valueOf(currentTamagotchi.getMedizin()));
+	}
+	
+	/**
+	 * 
+	 * @param pnlEssen
+	 * @throws SQLException
+	 */
+	public void fillFood(JPanel pnlEssen) throws SQLException
+	{
+		fillArticlePanel(pnlEssen, Kategorie.FUTTER);
+	}
+	
+	/**
+	 * 
+	 */
+	public void fillDrinks(JPanel pnlTrinken) throws SQLException
+	{
+		fillArticlePanel(pnlTrinken, Kategorie.GETRÄNK);
+	}
+	
+	/**
+	 * Methode zur Verarbeitung (Gui - Logik) des Kaufs eines Shopartikels
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean BuyingItems() throws SQLException
+	{
+		boolean BuyingSuccessfully = false;
+		
+		for(Map.Entry BtnValueEntry : BtnAuswahlValuesMap.entrySet())
+		{
+			JToggleButton btnNeu = (JToggleButton) BtnValueEntry.getKey();
+			if(btnNeu.isSelected())
+			{
+				BuyingSuccessfully = blT.kaufeItem(blS.getArticle((int)BtnValueEntry.getValue()));
+			}
+		}
+		return BuyingSuccessfully; 
+	}
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	public void actionPerformed(ActionEvent e) {
+		try {	
+			if(e.getSource() == btnMedizinKaufen)
+			{
+				if(blT.kaufeMedizin((int)spAnzahlMedizin.getValue(), blS.getMedicinePrice((int)spAnzahlMedizin.getValue())))
+				{
+					lblFehlermeldung.setText("Die Medizin konnte nicht gekauft werden.");
+				}
+			}
+			else if(e.getSource() == btnEssenKaufen)
+			{
+				if(BuyingItems())
+				{
+					fillFoodInventarPanel(pnlInventarEssen);
+				}
+			}
+			else if(e.getSource() == btnTrinkenKaufen)
+			{
+				if(BuyingItems()){
+					fillDrinkInventarPanel(pnlInventarTrinken);
+				}
+			}
+			else if(BtnInventarValuesMap.get(e.getSource()) != null)
+			{				
+				Item usedItem = BtnInventarValuesMap.get(e.getSource());
+			if(usedItem.getShopartikel().getKategorie() == Kategorie.FUTTER)
+				{
+					if(blT.feedTamagotchi(usedItem))
+					{
+						fillFoodInventarPanel(pnlInventarEssen);
+					}
+				}
+				else
+				{
+					if(blT.giveTamagotchiADrink(usedItem))
+					{
+						fillDrinkInventarPanel(pnlInventarTrinken);
+					}
+				}
+			}
+			
+				RefreshMoneyLabels();
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		finally{}
+	}
+	
+	/**
+	 * Veränderung des Spinners wird sofort überprüft
+	 * @param ce
+	 */
+	@Override
+	public void stateChanged(ChangeEvent ce) {
+		try {
+			if(ce.getSource() == spAnzahlMedizin)
+			{
+			JSpinner Spinner = (JSpinner) ce.getSource();
+			
+			lblKostenValue.setText("" + blS.getMedicinePrice((int) Spinner.getValue()) + "");
+	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+	}
+	
+}

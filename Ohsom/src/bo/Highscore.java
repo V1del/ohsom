@@ -12,13 +12,13 @@ public class Highscore {
 	 * @param punkte
 	 * @param user
 	 */
-	public Highscore(int punkte, bo.User user) {
+	public Highscore(int punkte, int iduser) {
 		super();
 		Punkte = punkte;
-		User = user;
+		idUser = iduser;
 	}
 	int Punkte;
-	User User;
+	int idUser;
 	
 	/**
 	 * Getter Punkte
@@ -40,7 +40,7 @@ public class Highscore {
 	 * Getter User (Nickname)
 	 * @return
 	 */
-	public User getUser() {
-		return User;
+	public int getIdUser() {
+		return idUser;
 	}
 }

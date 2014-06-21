@@ -1,25 +1,23 @@
 package db;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bo.*;
 
 public interface DAOTamagotchi {
 
-	public boolean addTamagotchi(Tamagotchi Tamagotchi);
+	public boolean addTamagotchi(Tamagotchi Tamagotchi) throws SQLException;
 	
-	public boolean addItem(Item Item);
+	public boolean addItem(Item Item) throws SQLException;
 	
-	public boolean changeTamagotchi(Tamagotchi Tamagotchi);
+	public boolean changeTamagotchi(Tamagotchi Tamagotchi) throws SQLException;
 	
-	public boolean deleteTamagotchi(Tamagotchi Tamagotchi);
+	public boolean deleteTamagotchi(Tamagotchi Tamagotchi) throws SQLException;
 	
-	public ArrayList<Item> getInventar(int idTamagotchi);
+	public ArrayList<Item> getInventar(int idTamagotchi) throws SQLException;
 	
-	public Tamagotchi getTamagotchi(int idUser);
-	
-	public ArrayList<Tamagotchi> getTamagotchis();
-	
+	public Tamagotchi getTamagotchi(int idUser) throws SQLException;
 	
 	
 }

@@ -14,7 +14,7 @@ public class TamagotchiObj extends InvaderObject {
 	@Override
 	public void confirmCollision(InvaderObject other) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

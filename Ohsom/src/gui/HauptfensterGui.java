@@ -1,65 +1,13 @@
 package gui;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.SWT;
-
-
-public class HauptfensterGui {
-
-	protected Shell shell;
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			HauptfensterGui window = new HauptfensterGui();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-
-	/**
-	 * Create contents of the window.
-	 */
-	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(567, 408);
-		shell.setText("SWT Application");
-		
-		Composite composite = new Composite(shell, SWT.NONE);
-		composite.setBounds(174, 10, 367, 349);
-
-	}
-}
-
-
-/*
 import bl.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
+import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -69,6 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -87,11 +37,11 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JLabel lblFehlermeldung = new JLabel("");	
 	JPanel pnlHighscore = new JPanel();
 	JTable tblHighscore = new JTable();
-	JLabel lblCreate = new JLabel("Create Account");
+	JButton btnCreate = new JButton("Create Account");
 
-	public HauptfensterGui() {
+	public HauptfensterGui() throws SQLException {
 		super("Ohsom");
-		//this.setSize(600, 400);
+		this.setSize(750, 300);
 		this.setLayout(new BorderLayout(20,20));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -101,6 +51,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		c.gridy = 0;
 		c.weightx = 0.5;
 		c.anchor = GridBagConstraints.LINE_START;
+		c.insets = new Insets(0, 0, 5, 5);
 		pnlLogin.add(lblNickname, c);
 		
 		c.gridx = 1;
@@ -135,6 +86,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		c.gridx = 1;
 		c.gridy = 3;
 		c.gridwidth = 2;
+		
 
 		pnlLogin.add(lblFehlermeldung, c);
 
@@ -142,34 +94,57 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		this.add(pnlLogin, BorderLayout.CENTER);
 		
 		tblHighscore.setEnabled(false);
-		tblHighscore.setFillsViewportHeight(false);
 		
-		tblHighscore.setModel(new DefaultTableModel(new String[] {"Platz", "Name", "Highscore"}, 
-				10));
+		tblHighscore.setModel((new DefaultTableModel(
+				blU.getHighscoreData(),
+			new String[] {
+				"Platz", "Name", "Highscore"
+			}
+		)));
 		
 		
 		JScrollPane scrollPane = new JScrollPane(tblHighscore);
-//		tblHighscore.setFillsViewportHeight(true);
+		
+
 		pnlHighscore.setBorder(new TitledBorder("Highscore"));
-		pnlHighscore.add(scrollPane);
+		pnlHighscore.add(scrollPane, BorderLayout.CENTER);
 
 		this.add(pnlHighscore,BorderLayout.EAST);
+		
+		//Modify Button L'n'F to look like a Label
+        btnCreate.setMargin(new Insets(0, 0, 0, 0));
+        btnCreate.setContentAreaFilled(false);
+        btnCreate.setBorderPainted(false);
+        btnCreate.setOpaque(false);
+        btnCreate.setHorizontalAlignment(SwingConstants.LEADING);
+        
+        btnCreate.addActionListener(this);
 
-		this.add(lblCreate, BorderLayout.SOUTH);
+		this.add(btnCreate, BorderLayout.SOUTH);
+		
 		//lbCreate.action(arg0, arg1)n(arg0, arg1); // f�llen :D
 		
-		this.pack();
+		//this.pack();
 		this.setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnLogin)
 		{
-			validateInput();
+			try {
+				validateInput();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else
+		{
+			AnmeldeGUI fenster = new AnmeldeGUI();
 		}
 	}
 
-	public void validateInput()
+	public void validateInput() throws SQLException
 	{
 		if(!isUserInputValid())
 		{
@@ -183,15 +158,15 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 			}
 			else
 			{
-				TamagotchiGUI tGui = new TamagotchiGUI(blU.getCurrentUser());
+				TamagotchiGUI tGUI = new TamagotchiGUI();
+				this.dispose();
 			}
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean isUserInputValid()
 	{
 		return !(txtPasswort.getText().equals("") || txtNickname.getText().equals(""));
 	}
-
-}*/
+	
+}
