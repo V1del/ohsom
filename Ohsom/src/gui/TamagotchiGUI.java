@@ -38,6 +38,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import javax.swing.border.TitledBorder;
 
 /**
  * TamagotchiGUI is a GUI especially for playing with your Tamagotchi
@@ -83,6 +84,17 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private JButton btnSpielen;
 	
 	private JButton btnMedizin;
+	private JPanel panel_2;
+	private JLabel lblHunger;
+	private JLabel lblDurst;
+	private JLabel lblSchmutzigkeit;
+	private JLabel valHunger;
+	private JLabel valDurst;
+	private JLabel valSchmutz;
+	private JLabel lblZustand;
+	private JLabel valZustand;
+	private JPanel panel_3;
+	private JButton[] btnInvList = {new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?")};
 
 	/**
 	 * Create the application.
@@ -112,7 +124,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		frmOhsom.setTitle("Ohsom");
 		frmOhsom.setBounds(100, 100, 750, 600);
 		frmOhsom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmOhsom.setLayout(new BorderLayout(20, 0));
+		frmOhsom.getContentPane().setLayout(new BorderLayout(20, 0));
 
 		JPanel panel = new JPanel();
 		frmOhsom.getContentPane().add(panel, BorderLayout.WEST);
@@ -219,6 +231,87 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		panel_1.add(pnlTamagotchiButtons, BorderLayout.SOUTH);
 
 		panel_1.add(lblEreignis, BorderLayout.NORTH);
+		
+		panel_2 = new JPanel();
+		frmOhsom.getContentPane().add(panel_2, BorderLayout.SOUTH);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_2.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
+		
+		lblHunger = new JLabel("Hunger:");
+		GridBagConstraints gbc_lblHunger = new GridBagConstraints();
+		gbc_lblHunger.insets = new Insets(0, 0, 5, 5);
+		gbc_lblHunger.gridx = 0;
+		gbc_lblHunger.gridy = 0;
+		panel_2.add(lblHunger, gbc_lblHunger);
+		
+		valHunger = new JLabel("valHunger");
+		GridBagConstraints gbc_valHunger = new GridBagConstraints();
+		gbc_valHunger.insets = new Insets(0, 0, 5, 5);
+		gbc_valHunger.gridx = 1;
+		gbc_valHunger.gridy = 0;
+		panel_2.add(valHunger, gbc_valHunger);
+		
+		lblDurst = new JLabel("Durst:");
+		GridBagConstraints gbc_lblDurst = new GridBagConstraints();
+		gbc_lblDurst.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDurst.gridx = 3;
+		gbc_lblDurst.gridy = 0;
+		panel_2.add(lblDurst, gbc_lblDurst);
+		
+		valDurst = new JLabel("valDurst");
+		GridBagConstraints gbc_valDurst = new GridBagConstraints();
+		gbc_valDurst.insets = new Insets(0, 0, 5, 5);
+		gbc_valDurst.gridx = 4;
+		gbc_valDurst.gridy = 0;
+		panel_2.add(valDurst, gbc_valDurst);
+		
+		lblSchmutzigkeit = new JLabel("Schmutzigkeit:");
+		GridBagConstraints gbc_lblSchmutzigkeit = new GridBagConstraints();
+		gbc_lblSchmutzigkeit.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSchmutzigkeit.gridx = 6;
+		gbc_lblSchmutzigkeit.gridy = 0;
+		panel_2.add(lblSchmutzigkeit, gbc_lblSchmutzigkeit);
+		
+		valSchmutz = new JLabel("valSchmutz");
+		GridBagConstraints gbc_valSchmutz = new GridBagConstraints();
+		gbc_valSchmutz.insets = new Insets(0, 0, 5, 5);
+		gbc_valSchmutz.gridx = 7;
+		gbc_valSchmutz.gridy = 0;
+		panel_2.add(valSchmutz, gbc_valSchmutz);
+		
+		lblZustand = new JLabel("Zustand:");
+		GridBagConstraints gbc_lblZustand = new GridBagConstraints();
+		gbc_lblZustand.insets = new Insets(0, 0, 5, 5);
+		gbc_lblZustand.gridx = 9;
+		gbc_lblZustand.gridy = 0;
+		panel_2.add(lblZustand, gbc_lblZustand);
+		
+		valZustand = new JLabel("valZustand");
+		GridBagConstraints gbc_valZustand = new GridBagConstraints();
+		gbc_valZustand.insets = new Insets(0, 0, 5, 0);
+		gbc_valZustand.gridx = 10;
+		gbc_valZustand.gridy = 0;
+		panel_2.add(valZustand, gbc_valZustand);
+		
+		panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.gridheight = 2;
+		gbc_panel_3.gridwidth = 11;
+		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 1;
+		panel_2.add(panel_3, gbc_panel_3);
+		
+		for(JButton btnInv : btnInvList) 
+		{
+			panel_3.add(btnInv);
+		}
 
 		frmOhsom.setVisible(true);
 		frmOhsom.requestFocusInWindow();
@@ -387,6 +480,4 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		//lblEreignis.setText(e.getKeyChar() + "");
 
 	}
-
-
 }
