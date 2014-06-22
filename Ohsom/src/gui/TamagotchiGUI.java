@@ -95,6 +95,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private JLabel valZustand;
 	private JPanel panel_3;
 	private JButton[] btnInvList = {new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?")};
+	private JLabel lblMedizin;
+	private JLabel valMedizin;
 
 	/**
 	 * Create the application.
@@ -236,9 +238,9 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		frmOhsom.getContentPane().add(panel_2, BorderLayout.SOUTH);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_panel_2.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 		
 		lblHunger = new JLabel("Hunger:");
@@ -297,15 +299,28 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		gbc_valZustand.gridy = 0;
 		panel_2.add(valZustand, gbc_valZustand);
 		
+		lblMedizin = new JLabel("Medizin:");
+		GridBagConstraints gbc_lblMedizin = new GridBagConstraints();
+		gbc_lblMedizin.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMedizin.gridx = 0;
+		gbc_lblMedizin.gridy = 1;
+		panel_2.add(lblMedizin, gbc_lblMedizin);
+		
+		valMedizin = new JLabel("valMedizin");
+		GridBagConstraints gbc_valMedizin = new GridBagConstraints();
+		gbc_valMedizin.insets = new Insets(0, 0, 5, 5);
+		gbc_valMedizin.gridx = 1;
+		gbc_valMedizin.gridy = 1;
+		panel_2.add(valMedizin, gbc_valMedizin);
+		
 		panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
 		gbc_panel_3.gridheight = 2;
 		gbc_panel_3.gridwidth = 11;
-		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 0;
-		gbc_panel_3.gridy = 1;
+		gbc_panel_3.gridy = 2;
 		panel_2.add(panel_3, gbc_panel_3);
 		
 		for(JButton btnInv : btnInvList) 
