@@ -86,7 +86,8 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 	JToggleButton btnItemGetraenk5 = new JToggleButton("?");
 	
 	JLabel lblGeld, lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue, lblFehlermeldung;
-	
+	private JLabel lblFehlermeldungTrinken;
+	private JLabel lblFehlermeldungEssen;
 	/**
 	 * Konstruktor, der die Map füllt => Ersatz zu variablen Variablen
 	 * @throws SQLException
@@ -122,7 +123,7 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 	private void initialize() throws SQLException {
 		new JFrame();
 		setTitle("Shop");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 350);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -145,11 +146,12 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		pnlMedizin.add(lblMedizin, gbc_lblMedizin);
 		
 		lblMedizinValue = new JLabel("10");
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 2;
-		gbc_label.gridy = 1;
-		pnlMedizin.add(lblMedizinValue, gbc_label);
+		GridBagConstraints gbc_lblMedizinValue;
+		gbc_lblMedizinValue = new GridBagConstraints();
+		gbc_lblMedizinValue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMedizinValue.gridx = 2;
+		gbc_lblMedizinValue.gridy = 1;
+		pnlMedizin.add(lblMedizinValue, gbc_lblMedizinValue);
 		
 		lblGeld = new JLabel("Geld: ");
 		GridBagConstraints gbc_lblGeld = new GridBagConstraints();
@@ -236,10 +238,10 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		JPanel pnlEssen = new JPanel();
 		tabbedPane.addTab("Essen", null, pnlEssen, null);
 		GridBagLayout gbl_pnlEssen = new GridBagLayout();
-		gbl_pnlEssen.columnWidths = new int[]{35, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_pnlEssen.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0};
-		gbl_pnlEssen.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_pnlEssen.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlEssen.columnWidths = new int[]{35, 0, 0, 0, 44, 0, 0, 0};
+		gbl_pnlEssen.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnlEssen.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlEssen.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlEssen.setLayout(gbl_pnlEssen);
 		
 		GridBagConstraints gbc_lblGeld2 = new GridBagConstraints();
@@ -257,8 +259,8 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		pnlEssenAuswahl = new JPanel();
 		pnlEssenAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
-		gbc_panel_4.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_4.gridwidth = 12;
+		gbc_panel_4.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_4.gridwidth = 5;
 		gbc_panel_4.anchor = GridBagConstraints.NORTH;
 		gbc_panel_4.gridx = 1;
 		gbc_panel_4.gridy = 2;
@@ -270,7 +272,7 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		btnEssenKaufen.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 6;
+		gbc_btnNewButton.gridx = 5;
 		gbc_btnNewButton.gridy = 4;
 		pnlEssen.add(btnEssenKaufen, gbc_btnNewButton);
 		
@@ -278,69 +280,83 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		pnlInventarEssen.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlInventarEssen = new GridBagConstraints();
 		gbc_pnlInventarEssen.gridwidth = 6;
-		gbc_pnlInventarEssen.insets = new Insets(0, 0, 0, 5);
+		gbc_pnlInventarEssen.insets = new Insets(0, 0, 5, 5);
 		gbc_pnlInventarEssen.fill = GridBagConstraints.BOTH;
-		gbc_pnlInventarEssen.gridx = 4;
+		gbc_pnlInventarEssen.gridx = 1;
 		gbc_pnlInventarEssen.gridy = 6;
 		pnlEssen.add(pnlInventarEssen, gbc_pnlInventarEssen);
 		
 		fillFoodInventarPanel(pnlInventarEssen);
-				
-		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Getr�nke", null, panel_3, null);
 		
-		JPanel panel_6 = new JPanel();
-		panel_3.add(panel_6);
-		GridBagLayout gbl_panel_6 = new GridBagLayout();
-		gbl_panel_6.columnWidths = new int[]{35, 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_6.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_6.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_6.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		panel_6.setLayout(gbl_panel_6);
+		lblFehlermeldungEssen = new JLabel("Fehlermeldung");
+		lblFehlermeldungEssen.setForeground(Color.RED);
+		GridBagConstraints gbc_lblFehlermeldungEssen = new GridBagConstraints();
+		gbc_lblFehlermeldungEssen.insets = new Insets(0, 0, 0, 5);
+		gbc_lblFehlermeldungEssen.gridx = 1;
+		gbc_lblFehlermeldungEssen.gridy = 7;
+		pnlEssen.add(lblFehlermeldungEssen, gbc_lblFehlermeldungEssen);
 		
-		GridBagConstraints gbc_label_3 = new GridBagConstraints();
-		gbc_label_3.insets = new Insets(0, 0, 5, 5);
-		gbc_label_3.gridx = 2;
-		gbc_label_3.gridy = 1;
-		panel_6.add(lblGeld, gbc_label_3);
+		JPanel pnlGetraenke = new JPanel();
+		tabbedPane.addTab("Getränke", null, pnlGetraenke, null);
+		GridBagLayout gbl_pnlGetraenke = new GridBagLayout();
+		gbl_pnlGetraenke.columnWidths = new int[]{35, 0, 0, 0, 44, 0, 0, 0};
+		gbl_pnlGetraenke.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnlGetraenke.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlGetraenke.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		pnlGetraenke.setLayout(gbl_pnlGetraenke);
 		
-		GridBagConstraints gbc_label_4 = new GridBagConstraints();
-		gbc_label_4.insets = new Insets(0, 0, 5, 5);
-		gbc_label_4.gridx = 3;
-		gbc_label_4.gridy = 1;
-		panel_6.add(lblGeldValue, gbc_label_4);
+		btnTrinkenKaufen = new JButton("Getränk kaufen");
+		btnTrinkenKaufen.addActionListener(this);
+		//panel_6.add(lblGeldValue, gbc_label_4);
 		
 		pnlGetraenkeAuswahl = new JPanel();
 		pnlGetraenkeAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
 		gbc_panel_7.anchor = GridBagConstraints.NORTH;
-		gbc_panel_7.gridwidth = 6;
+		gbc_panel_7.gridwidth = 5;
 		gbc_panel_7.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_7.gridx = 4;
+		gbc_panel_7.gridx = 1;
 		gbc_panel_7.gridy = 2;
-		panel_6.add(pnlGetraenkeAuswahl, gbc_panel_7);
+		pnlGetraenke.add(pnlGetraenkeAuswahl, gbc_panel_7);
 		
 		fillDrinks(pnlGetraenkeAuswahl);
-		
-		btnTrinkenKaufen = new JButton("Getr�nk kaufen");
-		btnTrinkenKaufen.addActionListener(this);
 		GridBagConstraints gbc_btnTrinkenKaufen = new GridBagConstraints();
 		gbc_btnTrinkenKaufen.insets = new Insets(0, 0, 5, 5);
-		gbc_btnTrinkenKaufen.gridx = 8;
+		gbc_btnTrinkenKaufen.gridx = 5;
 		gbc_btnTrinkenKaufen.gridy = 4;
-		panel_6.add(btnTrinkenKaufen, gbc_btnTrinkenKaufen);
-
+		pnlGetraenke.add(btnTrinkenKaufen, gbc_btnTrinkenKaufen);
+		
 		pnlInventarTrinken = new JPanel();
 		pnlInventarTrinken.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlInventarTrinken = new GridBagConstraints();
 		gbc_pnlInventarTrinken.fill = GridBagConstraints.BOTH;
-		gbc_pnlInventarTrinken.gridwidth = 4;
-		gbc_pnlInventarTrinken.insets = new Insets(0, 0, 5, 5);
-		gbc_pnlInventarTrinken.gridx = 5;
+		gbc_pnlInventarTrinken.gridwidth = 6;
+		gbc_pnlInventarTrinken.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlInventarTrinken.gridx = 1;
 		gbc_pnlInventarTrinken.gridy = 6;
-		panel_6.add(pnlInventarTrinken, gbc_pnlInventarTrinken);
-		
+		pnlGetraenke.add(pnlInventarTrinken, gbc_pnlInventarTrinken);
+
 		fillDrinkInventarPanel(pnlInventarTrinken);
+
+		lblFehlermeldungTrinken = new JLabel("Fehlermeldung");
+		lblFehlermeldungTrinken.setForeground(Color.RED);
+		GridBagConstraints gbc_lblFehlermeldungTrinken;
+		gbc_lblFehlermeldungTrinken = new GridBagConstraints();
+		gbc_lblFehlermeldungTrinken.insets = new Insets(0, 0, 0, 5);
+		gbc_lblFehlermeldungTrinken.gridx = 1;
+		gbc_lblFehlermeldungTrinken.gridy = 7;
+		pnlGetraenke.add(lblFehlermeldungTrinken, gbc_lblFehlermeldungTrinken);
+		
+		GridBagConstraints gbc_label_3 = new GridBagConstraints();
+		gbc_label_3.insets = new Insets(0, 0, 5, 5);
+		gbc_label_3.gridx = 2;
+		gbc_label_3.gridy = 1;
+		pnlGetraenke.add(lblGeld, gbc_label_3);
+		
+		GridBagConstraints gbc_label_4 = new GridBagConstraints();
+		gbc_label_4.insets = new Insets(0, 0, 5, 5);
+		gbc_label_4.gridx = 3;
+		gbc_label_4.gridy = 1;
 		
 		setVisible(true);
 	}
