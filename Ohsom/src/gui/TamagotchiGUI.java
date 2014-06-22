@@ -97,6 +97,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private JButton[] btnInvList = {new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?")};
 	private JLabel lblMedizin;
 	private JLabel valMedizin;
+	private JLabel lblMuedigkeit;
+	private JLabel valMuede;
 
 	/**
 	 * Create the application.
@@ -245,6 +247,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		
 		lblHunger = new JLabel("Hunger:");
 		GridBagConstraints gbc_lblHunger = new GridBagConstraints();
+		gbc_lblHunger.anchor = GridBagConstraints.WEST;
 		gbc_lblHunger.insets = new Insets(0, 0, 5, 5);
 		gbc_lblHunger.gridx = 0;
 		gbc_lblHunger.gridy = 0;
@@ -259,6 +262,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		
 		lblDurst = new JLabel("Durst:");
 		GridBagConstraints gbc_lblDurst = new GridBagConstraints();
+		gbc_lblDurst.anchor = GridBagConstraints.WEST;
 		gbc_lblDurst.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDurst.gridx = 3;
 		gbc_lblDurst.gridy = 0;
@@ -273,6 +277,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		
 		lblSchmutzigkeit = new JLabel("Schmutzigkeit:");
 		GridBagConstraints gbc_lblSchmutzigkeit = new GridBagConstraints();
+		gbc_lblSchmutzigkeit.anchor = GridBagConstraints.WEST;
 		gbc_lblSchmutzigkeit.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSchmutzigkeit.gridx = 6;
 		gbc_lblSchmutzigkeit.gridy = 0;
@@ -287,6 +292,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		
 		lblZustand = new JLabel("Zustand:");
 		GridBagConstraints gbc_lblZustand = new GridBagConstraints();
+		gbc_lblZustand.anchor = GridBagConstraints.WEST;
 		gbc_lblZustand.insets = new Insets(0, 0, 5, 5);
 		gbc_lblZustand.gridx = 9;
 		gbc_lblZustand.gridy = 0;
@@ -301,6 +307,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		
 		lblMedizin = new JLabel("Medizin:");
 		GridBagConstraints gbc_lblMedizin = new GridBagConstraints();
+		gbc_lblMedizin.anchor = GridBagConstraints.WEST;
 		gbc_lblMedizin.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMedizin.gridx = 0;
 		gbc_lblMedizin.gridy = 1;
@@ -312,6 +319,21 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		gbc_valMedizin.gridx = 1;
 		gbc_valMedizin.gridy = 1;
 		panel_2.add(valMedizin, gbc_valMedizin);
+		
+		lblMuedigkeit = new JLabel("Müdigkeit:");
+		GridBagConstraints gbc_lblMuedigkeit = new GridBagConstraints();
+		gbc_lblMuedigkeit.anchor = GridBagConstraints.WEST;
+		gbc_lblMuedigkeit.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMuedigkeit.gridx = 3;
+		gbc_lblMuedigkeit.gridy = 1;
+		panel_2.add(lblMuedigkeit, gbc_lblMuedigkeit);
+		
+		valMuede = new JLabel("valMüde");
+		GridBagConstraints gbc_valMuede = new GridBagConstraints();
+		gbc_valMuede.insets = new Insets(0, 0, 5, 5);
+		gbc_valMuede.gridx = 4;
+		gbc_valMuede.gridy = 1;
+		panel_2.add(valMuede, gbc_valMuede);
 		
 		panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));

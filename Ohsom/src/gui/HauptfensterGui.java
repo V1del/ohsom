@@ -158,8 +158,8 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 			}
 			else
 			{
-				TamagotchiGUI tGUI = new TamagotchiGUI();
 				this.dispose();
+				TamagotchiGUI tGUI = new TamagotchiGUI();
 			}
 		}
 	}
