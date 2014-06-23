@@ -11,7 +11,7 @@ import bo.Shopartikel;
 
 public class DAOShoppartikelImpl implements DAOShopartikel{
 
-	OhsomDBDAOImpl DBDAO = new OhsomDBDAOImpl();
+	OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 	
 	public ArrayList<Shopartikel> getFilteredShopartikel(Kategorie kat) throws SQLException {
 		ArrayList<Shopartikel> ShopartikelList = new ArrayList<Shopartikel>();

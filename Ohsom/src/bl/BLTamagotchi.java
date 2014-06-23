@@ -10,7 +10,7 @@ import db.DAOTamagotchiImpl;
 import db.DAOUserImpl;
 import bo.*;
 /**
- * Businesslogik fÃ¼r Tamagotchiangelegenheiten
+ * Businesslogik für Tamagotchiangelegenheiten
  * @author Snatsch
  *
  */
@@ -64,11 +64,21 @@ public class BLTamagotchi {
 	public boolean washTamagotchi() throws SQLException
 	{
 		// Tamagotchi ist schmutzig?
-		return DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteWaschzeit");
+		if(currentUser.getTamagotchi().isDirty())
+		{
+			if(DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteWaschzeit"))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
 	 * Tamagotchi schlafenlegen
+	 * @return
+	 * @throws SQLException
 	 */
 	public boolean layTamagotchiToSleep() throws SQLException
 	{
@@ -83,7 +93,7 @@ public class BLTamagotchi {
 	}
 	
 	/**
-	 * Tamagotchi fÃ¼ttern
+	 * Tamagotchi füttern
 	 * @param FoodItem
 	 * @return
 	 * @throws SQLException
@@ -116,7 +126,7 @@ public class BLTamagotchi {
 	
 	/**
 	 * Methode Medizin verwenden
-	 * @return
+	 * @return War Medizinübergabe erfolgreich?
 	 * @throws SQLException
 	 */
 	public boolean gibMedizin() throws SQLException
@@ -135,14 +145,17 @@ public class BLTamagotchi {
 	 * 
 	 * @param Menge
 	 * @param Preis
-	 * @return
+	 * @return War Kauf erfolgreich?
 	 * @throws SQLException
 	 */
 	public boolean kaufeMedizin(int Menge, int Preis) throws SQLException
 	{
 		boolean KaufErfolgreich = false;
 		
-		if(currentUser.getTamagotchi().GibGeldAus(Menge * Preis) & currentUser.getTamagotchi().kaufeMedizin(Menge))
+		System.out.println(currentUser.getTamagotchi().GibGeldAus(Menge * Preis));
+		System.out.println(currentUser.getTamagotchi().kaufeMedizin(Menge));
+		
+		if(currentUser.getTamagotchi().GibGeldAus(Menge * Preis) && currentUser.getTamagotchi().kaufeMedizin(Menge))
 		{
 			KaufErfolgreich = DAOT.changeTamagotchi(currentUser.getTamagotchi());
 		}
@@ -180,7 +193,7 @@ public class BLTamagotchi {
 		ArrayList<Item> ItemList = new ArrayList<Item>();
 		for(Item Item : DAOT.getInventar(currentUser.getTamagotchi().getId()))
 		{
-			if(Item.getShopartikel().getKategorie() == kat && !Item.istVerwendet())
+			if(!Item.istVerwendet() && (Item.getShopartikel().getKategorie() == kat || kat == null))
 			{
 				ItemList.add(Item);
 			}
@@ -205,11 +218,11 @@ public class BLTamagotchi {
 	 */
 	public ArrayList<Item> getDrinkItems() throws SQLException
 	{
-		return getInventory(Kategorie.GETRÃ„NK);
+		return getInventory(Kategorie.GETRÄNK);
 	}
 	
 	/**
-	 * zurÃ¼cksetzen Tamagotchi
+	 * zurücksetzen Tamagotchi
 	 * @param name
 	 * @return
 	 * @throws SQLException
@@ -218,10 +231,32 @@ public class BLTamagotchi {
 	{
 		Tamagotchi resetedTamagotchi = new Tamagotchi(name, currentUser);
 		
-		if(DAOT.setToActualDate(resetedTamagotchi, "letzteWaschzeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteSchlafenszeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteSpielzeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteFuetterungszeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteTrinkzeit") & changeTamagotchi(resetedTamagotchi))
+		if(name.length() < 10 && name.length() != 0)
 		{
-			currentUser.setTamagotchi(resetedTamagotchi);
-			return true;
+			if(DAOT.setToActualDate(resetedTamagotchi, "letzteWaschzeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteSchlafenszeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteSpielzeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteFuetterungszeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteTrinkzeit") & changeTamagotchi(resetedTamagotchi))
+			{
+				return true;
+			}
+		}
+			
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean addTamagotchi(String name) throws SQLException
+	{
+		Tamagotchi newTamagotchi = new Tamagotchi(name, currentUser);
+		if(name.length() < 10 && name.length() != 0)
+		{
+			if(DAOT.addTamagotchi(newTamagotchi))
+			{
+				return true;
+			}
 		}
 		
 		return false;

@@ -27,6 +27,7 @@ public class BLUser {
 	{
 		User currentUser = DAOU.getUser(Nickname, Passwort); 
 		setCurrentUser(currentUser);
+		
 		return !(currentUser == null);
 	}
 
@@ -240,7 +241,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Update Methode fÃ¼r den Highscore
+	 * Update Methode für den Highscore
 	 */
 	public boolean updateHighscore(int Punkte) throws SQLException
 	{

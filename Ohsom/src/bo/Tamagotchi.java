@@ -98,6 +98,7 @@ public class Tamagotchi {
 			if(getAlter() < 20)
 			{
 				return Entwicklungsstadium.JUNGES;
+				
 			}
 			else if(getAlter() < 40)
 			{
@@ -151,22 +152,18 @@ public class Tamagotchi {
 		return Geschlechtw;
 	}
 	
-	
 	/**
 	 * Getter Alter (beruhend auf Geburtsdatum)
 	 * @return
 	 */
 	public int getAlter() {
-		Long Today_Long = new java.util.Date().getTime();
-		Date Today_date = new Date(Today_Long);
-		return (int) ((int) Today_date.getTime() - Geburtsdatum.getTime());
+		return (int) TimeUnit.MILLISECONDS.toDays(new Date(new java.util.Date().getTime()).getTime() - Geburtsdatum.getTime());
 	}
 	
 	/**
 	 * Getter Geburtsdatum 
 	 * @return
 	 */
-	
 	public Date getGeburtsdatum()
 	{
 		return Geburtsdatum;
@@ -262,6 +259,82 @@ public class Tamagotchi {
 	}
 	
 	/**
+	 * Erfragen ob das Tamagotchi krank ist oder nicht
+	 * @return
+	 */
+	public boolean isKrank()
+	{
+		aktualisiereCondition();
+		
+		return (Gesundheitszustand == Gesundheitszustand.KRANK);
+	}
+	
+	/**
+	 * Erfragen, ob das Tamagotchi tot ist oder nicht
+	 * @return
+	 */
+	public boolean isDead()
+	{
+		aktualisiereCondition();
+		
+		return (Gesundheitszustand == Gesundheitszustand.TOT);
+	}
+	
+	/**
+	 * Checker der aktuellen Kondition des Tamagotchis (wie gesund ist es)
+	 */
+	public void aktualisiereCondition()
+	{
+		int survivingChance = 10;
+		
+		if(getBoringState() > 2)
+		{
+			survivingChance--;
+		}
+		
+		if(getThirst() > 4)
+		{
+			survivingChance -= 2;
+		}
+		
+		if(getHunger() > 4)
+		{
+			survivingChance -= 2;
+		}
+		
+		if(isTired())
+		{
+			survivingChance--;
+		}
+		
+		if(isDirty())
+		{
+			survivingChance--;
+		}
+				
+		if(Gesundheitszustand == Gesundheitszustand.KRANK)
+		{
+			survivingChance--;
+		}
+		
+		if(survivingChance < 4 || Gesundheitszustand == Gesundheitszustand.TOT || getAlter() > 70)
+		{
+			aktualisiereGesundheitszustand(Gesundheitszustand.TOT);
+		}
+		else if(survivingChance >= 4 && survivingChance <= 6 || Gesundheitszustand == Gesundheitszustand.KRANK)
+		{
+			aktualisiereGesundheitszustand(Gesundheitszustand.KRANK);
+		}
+		else
+		{
+			if(Gesundheitszustand != Gesundheitszustand.KRANK && Gesundheitszustand != Gesundheitszustand.TOT)
+			{
+				aktualisiereGesundheitszustand(Gesundheitszustand.GESUND);
+			}
+		}
+	}
+	
+	/**
 	 * Getter Fuetterungszeit
 	 * @return
 	 */
@@ -279,7 +352,7 @@ public class Tamagotchi {
 		
 		return Hunger;
 	}
-	
+
 	/**
 	 * Getter Thirst
 	 * @return
@@ -303,6 +376,28 @@ public class Tamagotchi {
 	}
 	
 	/**
+	 * Getter BoringState
+	 * @return
+	 */
+	public int getBoringState()
+	{		
+		long hours = TimeUnit.MILLISECONDS.toHours(new Date(new java.util.Date().getTime()).getTime() - letzteSpielzeit.getTime());
+
+		int BoringState = 0;
+		
+		if(hours < 3)
+		{
+			BoringState =(int) hours;
+		}
+		else
+		{
+			BoringState = 3;
+		}
+		
+		return BoringState;
+	}
+	
+	/**
 	 * Ist Tamagotchi hungrig?
 	 * @return
 	 */
@@ -321,6 +416,71 @@ public class Tamagotchi {
 	}
 	
 	/**
+	 * Ist Tamagotchi gelangweilt
+	 * @return
+	 */
+	public boolean isBored()
+	{
+		return (getBoringState() > 0);
+	}
+	
+	/**
+	 * Ist Tamagotchi müde?
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public boolean isTired()
+	{
+		long pastHoursSinceLastSleep = TimeUnit.MILLISECONDS.toHours(new Date(new java.util.Date().getTime()).getTime() - letzteSchlafenszeit.getTime());
+		
+		if(pastHoursSinceLastSleep > 8)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * Ist Tamagotchi schmutzig?
+	 * @return
+	 */
+	public boolean isDirty()
+	{
+		long pastHoursSinceLastWashingTime = TimeUnit.MILLISECONDS.toHours(new Date(new java.util.Date().getTime()).getTime() - letzteWaschzeit.getTime());
+		
+		if(pastHoursSinceLastWashingTime > 12)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * ist Tamagotchi noch am Schlafen?
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public boolean isStillSleeping()
+	{
+		long pastHoursSinceLastSleep = TimeUnit.MILLISECONDS.toHours(new Date(new java.util.Date().getTime()).getTime() - letzteSchlafenszeit.getTime());
+
+		if(pastHoursSinceLastSleep < 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
 	 * Setter Fuetterungszeit
 	 * @param letzteFuetterungszeit
 	 */
@@ -336,42 +496,7 @@ public class Tamagotchi {
 	{
 		return this.letzteFuetterungszeit;
 	}
-	
-	/**
-	 * ist Tamagotchi noch am Schlafen?
-	 * @return
-	 */
-	@SuppressWarnings("deprecation")
-	public boolean isStillSleeping()
-	{
-		if(getLetzteSchlafenszeit().getHours() < 2)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
-	 * Ist Tamagotchi müde?
-	 * @return
-	 */
-	@SuppressWarnings("deprecation")
-	public boolean isTired()
-	{
-		if(getLetzteSchlafenszeit().getHours() > 8)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	
+
 	/**
 	 * Getter letzteSchlafenszeit
 	 * @return
@@ -413,13 +538,18 @@ public class Tamagotchi {
 		return getUser().getNickname();
 	}
 	
+	/**
+	 * Getter Userid
+	 * @return
+	 * @throws SQLException
+	 */
 	public int getUserId() throws SQLException
 	{
 		return getUser().getId();
 	}
 	
 	/**
-	 * 
+	 * Getter User
 	 * @return
 	 * @throws SQLException 
 	 */
@@ -430,7 +560,7 @@ public class Tamagotchi {
 	}
 	
 	/**
-	 * 
+	 * Getter Inventar
 	 * @return
 	 * @throws SQLException 
 	 */

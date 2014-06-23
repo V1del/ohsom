@@ -35,8 +35,8 @@ public class Nachricht
 		Nachricht = NachrichtResultSet.getString("Nachricht");
 		Zeitpunkt = NachrichtResultSet.getDate("Zeitpunkt");
 		this.gelesen = NachrichtResultSet.getBoolean("gelesen");
-		idSender = NachrichtResultSet.getInt("Userid_Sender");
-		idEmpfaenger = NachrichtResultSet.getInt("Userid_Empfaenger");
+		idSender = NachrichtResultSet.getInt("idUser_Sender");
+		idEmpfaenger = NachrichtResultSet.getInt("idUser_Empfaenger");
 	}
 	
 	

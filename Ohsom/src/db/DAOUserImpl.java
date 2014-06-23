@@ -10,10 +10,13 @@ import bo.User;
 
 public class DAOUserImpl implements DAOUser {
 
-	private OhsomDBDAOImpl DBDAO;
+	private OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 
+	/**
+	 * Standardkonstruktor
+	 */
 	public DAOUserImpl() {
-		DBDAO = new OhsomDBDAOImpl();
+
 	}
 	
 	public boolean addConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException {

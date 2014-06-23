@@ -192,7 +192,7 @@ public class NewMessageGUI extends JFrame implements ActionListener {
 	public void sendNachricht() throws SQLException
 	{
 
-		Nachricht neueNachricht = new Nachricht(txtTitle.getText(), Text.getText(), blN.getCurrentUser().getId(), comboBoxValues.get(comboBox.getSelectedItem().toString()));
+		Nachricht neueNachricht = new Nachricht(txtTitle.getText(), Text.getText(), comboBoxValues.get(comboBox.getSelectedItem().toString()), blN.getCurrentUser().getId());
 		if(blN.sendNachricht(neueNachricht))
 		{
 			txtTitle.setText("");

@@ -53,7 +53,7 @@ public class BLNachrichten {
 			ObjectList[i][2] = n.getTitel();
 			ObjectList[i][3] = String.valueOf(n.getZeitpunkt());
 			ObjectList[i][4] = "lesen"; //new JButton("Test");
-			ObjectList[i][5] = "lÃ¶schen"; //new JButton("Test 2");
+			ObjectList[i][5] = "löschen"; //new JButton("Test 2");
 			i++;
 		};
 		

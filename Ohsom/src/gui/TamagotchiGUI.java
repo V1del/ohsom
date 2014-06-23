@@ -2,14 +2,18 @@ package gui;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
 import bl.BLNachrichten;
 import bl.BLTamagotchi;
 import bl.BLUser;
 import bo.Code;
+import bo.Item;
+import bo.Kategorie;
 import bo.Tamagotchi;
 import bo.TamagotchiConfig;
 import bo.User;
@@ -26,6 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.JLabel;
+import javax.swing.border.TitledBorder;
 
 import java.awt.Canvas;
 import java.awt.event.ActionEvent;
@@ -38,7 +43,8 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import javax.swing.border.TitledBorder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TamagotchiGUI is a GUI especially for playing with your Tamagotchi
@@ -47,7 +53,7 @@ import javax.swing.border.TitledBorder;
  */
 public class TamagotchiGUI implements ActionListener, KeyListener{
 
-	private Thread TamagotchiThread = new Thread(new TamagotchiThread());
+	private Thread TamagotchiThread = new Thread(new TamagotchiThread(this));
 
 	private BLTamagotchi blT = null;
 
@@ -71,41 +77,66 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 	private JPanel pnlTamagotchiButtons;
 
-	private JButton btnWerte;
+	private Map <JButton, Code> BtnTamagotchiMap = new HashMap<JButton, Code>();
 
-	private JButton btnFuettern;
+	private JButton btnWerte = new JButton();
 
-	private JButton btnTrinken;
+	private JButton btnFuettern = new JButton();
 
-	private JButton btnWaschen;
+	private JButton btnTrinken = new JButton();
 
-	private JButton btnSchlafen;
+	private JButton btnWaschen = new JButton();
 
-	private JButton btnSpielen;
+	private JButton btnSchlafen = new JButton();
+
+	private JButton btnSpielen = new JButton();
+
+	private JButton btnMedizin = new JButton();
+
+	private JButton btnShop = new JButton();
 	
-	private JButton btnMedizin;
-	private JPanel panel_2;
-	private JLabel lblHunger;
-	private JLabel lblDurst;
-	private JLabel lblSchmutzigkeit;
-	private JLabel valHunger;
-	private JLabel valDurst;
-	private JLabel valSchmutz;
-	private JLabel lblZustand;
-	private JLabel valZustand;
-	private JPanel panel_3;
-	private JButton[] btnInvList = {new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?"),new JButton("?")};
-	private JLabel lblMedizin;
-	private JLabel valMedizin;
-	private JLabel lblMuedigkeit;
-	private JLabel valMuede;
+	private JButton btnInventar = new JButton();
 
+	private JPanel pnlCondition;
+
+	private JLabel lblHunger;
+	private JLabel lblHungerValue;
+	private JLabel lblDurst;
+	private JLabel lblDurstValue;
+	private JLabel lblSchmutzigkeit;
+	private JLabel lblSchmutzigkeitValue;
+	private JLabel lblZustand;
+	private JLabel lblZustandValue;
+	private JLabel lblMuedigkeit;
+	private JLabel lblMuedigkeitValue;
+	private JLabel lblBoringState;
+	private JLabel lblBoringStateValue;
+
+	private JPanel pnlInventar;
+
+	private Map<JToggleButton, Item> btnInvListValue = new HashMap<JToggleButton, Item>();
+	
+	private JToggleButton[] btnInvList = {new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"), new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?")};
+
+	private JButton btnItemVerwenden = new JButton();
+	
 	/**
 	 * Create the application.
 	 * @throws SQLException 
 	 */
 	public TamagotchiGUI() throws SQLException {
 		blT = new BLTamagotchi();
+
+		BtnTamagotchiMap.put(btnWerte, Code.WERTE);
+		BtnTamagotchiMap.put(btnFuettern, Code.FUETTERN);
+		BtnTamagotchiMap.put(btnTrinken, Code.TRINKEN);
+		BtnTamagotchiMap.put(btnWaschen, Code.WASCHEN);
+		BtnTamagotchiMap.put(btnSchlafen, Code.SCHLAFENLEGEN);
+		BtnTamagotchiMap.put(btnSpielen, Code.SPIELEN);
+		BtnTamagotchiMap.put(btnMedizin, Code.MEDIZIN);
+		BtnTamagotchiMap.put(btnShop, Code.SHOP);
+		BtnTamagotchiMap.put(btnInventar, Code.INVENTAR);
+
 		initialize();
 
 		if(blT.getCurrentUser().hasTamagotchi())
@@ -123,12 +154,12 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private void initialize() throws SQLException {
 		frmOhsom = new JFrame();
 		frmOhsom.setFocusable(true);
-		frmOhsom.setResizable(false);
+		//	frmOhsom.setResizable(false);
 		frmOhsom.addKeyListener(this);
 		frmOhsom.setTitle("Ohsom");
-		frmOhsom.setBounds(100, 100, 750, 600);
+		frmOhsom.setBounds(100, 100, 780, 600);
 		frmOhsom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmOhsom.getContentPane().setLayout(new BorderLayout(20, 0));
+		frmOhsom.setLayout(new BorderLayout(20, 0));
 
 		JPanel panel = new JPanel();
 		frmOhsom.getContentPane().add(panel, BorderLayout.WEST);
@@ -193,15 +224,12 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		gbc_btnReset.gridwidth = 2;
 		gbc_btnReset.insets = new Insets(0, 0, 0, 5);
 		gbc_btnReset.gridx = 0;
-		gbc_btnReset.gridy = 9;
+		gbc_btnReset.gridy = 3;
 		if(blT.getCurrentUser().hasTamagotchi() == false)
 		{
 			btnReset.disable();
 		}
 		panel.add(btnReset, gbc_btnReset);
-
-		/*JPanel pnlTamagotchi = new JPanel();
-		frmOhsom.getContentPane().add(pnlTamagotchi, BorderLayout.CENTER);*/
 
 		JPanel panel_1 = new JPanel(new BorderLayout());
 		frmOhsom.getContentPane().add(panel_1, BorderLayout.CENTER);
@@ -211,190 +239,301 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 		pnlTamagotchiButtons = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
-		btnWerte = new JButton("Werte");
-		pnlTamagotchiButtons.add(btnWerte);
+		for(Map.Entry BtnEntry : BtnTamagotchiMap.entrySet())
+		{
+			JButton btnTamagotchi = (JButton) BtnEntry.getKey();
+			Code btnCode = (Code) BtnEntry.getValue();
+			btnTamagotchi.setText(btnCode.getCodeName());
+			btnTamagotchi.addActionListener(this);
+			pnlTamagotchiButtons.add(btnTamagotchi);
 
-		btnFuettern = new JButton("FÃ¼ttern");
-		pnlTamagotchiButtons.add(btnFuettern);
-
-		btnTrinken = new JButton("Trinken");
-		pnlTamagotchiButtons.add(btnTrinken);
-
-		btnWaschen = new JButton("Waschen");
-		pnlTamagotchiButtons.add(btnWaschen);
-
-		btnSchlafen = new JButton("Schlafen");
-		pnlTamagotchiButtons.add(btnSchlafen);
-
-		btnSpielen = new JButton("Spielen");
-		pnlTamagotchiButtons.add(btnSpielen);
-		
-		btnMedizin = new JButton("Medizin");
-		pnlTamagotchiButtons.add(btnMedizin);
+		}
 
 		panel_1.add(pnlTamagotchiButtons, BorderLayout.SOUTH);
 
 		panel_1.add(lblEreignis, BorderLayout.NORTH);
+
+		JPanel pnlInformations = new JPanel();
 		
-		panel_2 = new JPanel();
-		frmOhsom.getContentPane().add(panel_2, BorderLayout.SOUTH);
-		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panel_2.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		panel_2.setLayout(gbl_panel_2);
-		
+		pnlCondition = new JPanel();
+		pnlCondition.setBorder(new TitledBorder(null, "Werte", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+		frmOhsom.getContentPane().add(pnlInformations, BorderLayout.SOUTH);
+
+		GridBagLayout gbl_pnlCondition = new GridBagLayout();
+		gbl_pnlCondition.columnWidths = new int[]{0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0};
+
+		gbl_pnlCondition.rowHeights = new int[]{0, 0, 0, 0};
+
+		gbl_pnlCondition.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+
+		gbl_pnlCondition.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+
+		pnlCondition.setLayout(gbl_pnlCondition);
+
 		lblHunger = new JLabel("Hunger:");
 		GridBagConstraints gbc_lblHunger = new GridBagConstraints();
 		gbc_lblHunger.anchor = GridBagConstraints.WEST;
 		gbc_lblHunger.insets = new Insets(0, 0, 5, 5);
 		gbc_lblHunger.gridx = 0;
 		gbc_lblHunger.gridy = 0;
-		panel_2.add(lblHunger, gbc_lblHunger);
-		
-		valHunger = new JLabel("valHunger");
+		pnlCondition.add(lblHunger, gbc_lblHunger);
+
+		lblHungerValue = new JLabel("valHunger");
 		GridBagConstraints gbc_valHunger = new GridBagConstraints();
 		gbc_valHunger.insets = new Insets(0, 0, 5, 5);
 		gbc_valHunger.gridx = 1;
 		gbc_valHunger.gridy = 0;
-		panel_2.add(valHunger, gbc_valHunger);
-		
+		pnlCondition.add(lblHungerValue, gbc_valHunger);
+
 		lblDurst = new JLabel("Durst:");
 		GridBagConstraints gbc_lblDurst = new GridBagConstraints();
 		gbc_lblDurst.anchor = GridBagConstraints.WEST;
 		gbc_lblDurst.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDurst.gridx = 3;
 		gbc_lblDurst.gridy = 0;
-		panel_2.add(lblDurst, gbc_lblDurst);
-		
-		valDurst = new JLabel("valDurst");
+		pnlCondition.add(lblDurst, gbc_lblDurst);
+
+		lblDurstValue = new JLabel("valDurst");
 		GridBagConstraints gbc_valDurst = new GridBagConstraints();
 		gbc_valDurst.insets = new Insets(0, 0, 5, 5);
 		gbc_valDurst.gridx = 4;
 		gbc_valDurst.gridy = 0;
-		panel_2.add(valDurst, gbc_valDurst);
-		
-		lblSchmutzigkeit = new JLabel("Schmutzigkeit:");
+		pnlCondition.add(lblDurstValue, gbc_valDurst);
+
+		lblSchmutzigkeit = new JLabel("schmutzig?:");
 		GridBagConstraints gbc_lblSchmutzigkeit = new GridBagConstraints();
 		gbc_lblSchmutzigkeit.anchor = GridBagConstraints.WEST;
 		gbc_lblSchmutzigkeit.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSchmutzigkeit.gridx = 6;
 		gbc_lblSchmutzigkeit.gridy = 0;
-		panel_2.add(lblSchmutzigkeit, gbc_lblSchmutzigkeit);
-		
-		valSchmutz = new JLabel("valSchmutz");
+		pnlCondition.add(lblSchmutzigkeit, gbc_lblSchmutzigkeit);
+
+		lblSchmutzigkeitValue = new JLabel("valSchmutz");
 		GridBagConstraints gbc_valSchmutz = new GridBagConstraints();
 		gbc_valSchmutz.insets = new Insets(0, 0, 5, 5);
 		gbc_valSchmutz.gridx = 7;
 		gbc_valSchmutz.gridy = 0;
-		panel_2.add(valSchmutz, gbc_valSchmutz);
-		
+		pnlCondition.add(lblSchmutzigkeitValue, gbc_valSchmutz);
+
 		lblZustand = new JLabel("Zustand:");
 		GridBagConstraints gbc_lblZustand = new GridBagConstraints();
 		gbc_lblZustand.anchor = GridBagConstraints.WEST;
 		gbc_lblZustand.insets = new Insets(0, 0, 5, 5);
 		gbc_lblZustand.gridx = 9;
 		gbc_lblZustand.gridy = 0;
-		panel_2.add(lblZustand, gbc_lblZustand);
-		
-		valZustand = new JLabel("valZustand");
+		pnlCondition.add(lblZustand, gbc_lblZustand);
+
+		lblZustandValue = new JLabel("valZustand");
 		GridBagConstraints gbc_valZustand = new GridBagConstraints();
 		gbc_valZustand.insets = new Insets(0, 0, 5, 0);
 		gbc_valZustand.gridx = 10;
 		gbc_valZustand.gridy = 0;
-		panel_2.add(valZustand, gbc_valZustand);
-		
-		lblMedizin = new JLabel("Medizin:");
-		GridBagConstraints gbc_lblMedizin = new GridBagConstraints();
-		gbc_lblMedizin.anchor = GridBagConstraints.WEST;
-		gbc_lblMedizin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMedizin.gridx = 0;
-		gbc_lblMedizin.gridy = 1;
-		panel_2.add(lblMedizin, gbc_lblMedizin);
-		
-		valMedizin = new JLabel("valMedizin");
-		GridBagConstraints gbc_valMedizin = new GridBagConstraints();
-		gbc_valMedizin.insets = new Insets(0, 0, 5, 5);
-		gbc_valMedizin.gridx = 1;
-		gbc_valMedizin.gridy = 1;
-		panel_2.add(valMedizin, gbc_valMedizin);
-		
-		lblMuedigkeit = new JLabel("MÃ¼digkeit:");
+		pnlCondition.add(lblZustandValue, gbc_valZustand);
+
+		lblBoringState = new JLabel("BoringState:");
+		GridBagConstraints gbc_lblBoringState = new GridBagConstraints();
+		gbc_lblBoringState.anchor = GridBagConstraints.WEST;
+		gbc_lblBoringState.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBoringState.gridx = 0;
+		gbc_lblBoringState.gridy = 1;
+		pnlCondition.add(lblBoringState, gbc_lblBoringState);
+
+		lblBoringStateValue = new JLabel("valBoringState");
+		GridBagConstraints gbc_lblBoringStateValue = new GridBagConstraints();
+		gbc_lblBoringStateValue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBoringStateValue.gridx = 1;
+		gbc_lblBoringStateValue.gridy = 1;
+		pnlCondition.add(lblBoringStateValue, gbc_lblBoringStateValue);
+
+		lblMuedigkeit = new JLabel("müde?:");
 		GridBagConstraints gbc_lblMuedigkeit = new GridBagConstraints();
 		gbc_lblMuedigkeit.anchor = GridBagConstraints.WEST;
 		gbc_lblMuedigkeit.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMuedigkeit.gridx = 3;
 		gbc_lblMuedigkeit.gridy = 1;
-		panel_2.add(lblMuedigkeit, gbc_lblMuedigkeit);
-		
-		valMuede = new JLabel("valMÃ¼de");
+		pnlCondition.add(lblMuedigkeit, gbc_lblMuedigkeit);
+
+		lblMuedigkeitValue = new JLabel("valMüde");
 		GridBagConstraints gbc_valMuede = new GridBagConstraints();
 		gbc_valMuede.insets = new Insets(0, 0, 5, 5);
 		gbc_valMuede.gridx = 4;
 		gbc_valMuede.gridy = 1;
-		panel_2.add(valMuede, gbc_valMuede);
+		pnlCondition.add(lblMuedigkeitValue, gbc_valMuede);
+
+		pnlInventar = new JPanel();
+		pnlInventar.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+		GridBagConstraints gbc_pnlInventar = new GridBagConstraints();
+		gbc_pnlInventar.gridheight = 2;
+		gbc_pnlInventar.gridwidth = 11;
+		gbc_pnlInventar.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlInventar.fill = GridBagConstraints.BOTH;
+		gbc_pnlInventar.gridx = 0;
+		gbc_pnlInventar.gridy = 10;
+
+		//pnlCondition.add(pnlInventar, gbc_pnlInventar);
+		pnlInformations.add(pnlCondition);
+		pnlInformations.add(pnlInventar, gbc_pnlInventar);
 		
-		panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
-		gbc_panel_3.gridheight = 2;
-		gbc_panel_3.gridwidth = 11;
-		gbc_panel_3.fill = GridBagConstraints.BOTH;
-		gbc_panel_3.gridx = 0;
-		gbc_panel_3.gridy = 2;
-		panel_2.add(panel_3, gbc_panel_3);
-		
-		for(JButton btnInv : btnInvList) 
-		{
-			panel_3.add(btnInv);
-		}
+		pnlCondition.setVisible(false);
+
+		pnlInventar.setVisible(false);
 
 		frmOhsom.setVisible(true);
 		frmOhsom.requestFocusInWindow();
 	}
 
-	public static void refreshTamagotchiArea()
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public void refreshTamagotchiPanel() throws SQLException
 	{
-		//lblNeueNachrichten.setText("Neue Nachrichten (" + blN.getCountOfUnreadNachrichten() + ")");
+		Tamagotchi TamagotchiTemporary = blT.getCurrentUser().getTamagotchi();
+		if(TamagotchiTemporary.isDead())
+		{
+			setEreignisLabel("Dein Tamagotchi ist gestorben :(");
+			pnlTamagotchi.setDead(TamagotchiTemporary.isDead());
+		}
+		else
+		{
+			pnlTamagotchi.setShit(TamagotchiTemporary.isDirty());
+
+			pnlTamagotchi.setSleeping(TamagotchiTemporary.isStillSleeping(), TamagotchiTemporary.isKrank());
+
+			if(!TamagotchiTemporary.isStillSleeping())
+			{
+				pnlTamagotchi.moveTamagotchi(TamagotchiTemporary.isKrank());
+			}
+		}
 	}
 
-	public void resetTamagotchi() throws SQLException
+	/**
+	 * Befüllen des Wertepanels
+	 * @throws SQLException
+	 */
+	public void showCondition() throws SQLException
 	{
-		String Name = null;
-		while((Name == null) || (Name).length() == 0 || (Name).length() > 10) {
-			String askForName = (String)JOptionPane.showInputDialog(
-					new JFrame(),
-					"Type in the Name of your Tamagotchi (not longer than 10 letters)",
-					"Ohsom - Tamagotchi Name",
-					JOptionPane.PLAIN_MESSAGE,
-					null,
-					null, 
-					"Name...");
-			Name = askForName;
+		pnlCondition.setVisible(true);
+
+		Tamagotchi currentTamagotchi = blT.getCurrentUser().getTamagotchi();
+		lblDurstValue.setText(String.valueOf(currentTamagotchi.getThirst()) + "/5");
+		lblHungerValue.setText(String.valueOf(currentTamagotchi.getHunger()) + "/5");
+		lblBoringStateValue.setText(String.valueOf(currentTamagotchi.getBoringState()) + "/3");
+		lblSchmutzigkeitValue.setText(String.valueOf(currentTamagotchi.isDirty()));
+		lblMuedigkeitValue.setText(String.valueOf(currentTamagotchi.isTired()));
+		lblZustandValue.setText(currentTamagotchi.getGesundheitszustand().name());
+	}
+
+	/**
+	 * 
+	 * @param katInv
+	 * @throws SQLException
+	 */
+	public void showInventar(Kategorie katInv) throws SQLException
+	{
+		int InventarIndex = 0;
+
+		pnlInventar.removeAll();
+		btnInvListValue.clear();
+		
+		for(Item Item: blT.getInventory(katInv))
+		{
+			JToggleButton currentItemButton = btnInvList[InventarIndex];
+			btnInvListValue.put(currentItemButton, Item);
+			currentItemButton.setIcon(new ImageIcon("Sources/Shopartikel/" + Item.getShopartikel().getArtikelImage()));
+			currentItemButton.setText("");
+			currentItemButton.addActionListener(this);
+			pnlInventar.add(currentItemButton);
+			
+			InventarIndex++;
 		}
 		
-		if(blT.resetTamagotchi(Name))
+		pnlInventar.add(btnItemVerwenden);
+		btnItemVerwenden.setVisible(false);
+		
+		pnlInventar.setVisible(true);
+	}
+
+	/**
+	 * GUI - Logik zum Reseting des Tamagotchis
+	 * @throws SQLException
+	 */
+	public void setTamagotchi(boolean reseting) throws SQLException
+	{
+		String askForName = (String)JOptionPane.showInputDialog(
+				new JFrame(),
+				"Type in Name of Tamagotchi (not > 10 letters)",
+				"Ohsom - Tamagotchi Name",
+				JOptionPane.PLAIN_MESSAGE,
+				null,
+				null, 
+				"Name...");
+
+		if(askForName == null)
 		{
-			setEreignisLabel("Du hast dein Tamagotchi erfolgreich resetet");
+			askForName = "";
+		}
+
+		if(reseting)
+		{
+			resetTamagotchi(askForName);
+		}
+		else
+		{
+			createNewTamagotchi(askForName);
 		}
 
 	}
 
 	/**
 	 * 
+	 * @param resetName
+	 * @throws SQLException
 	 */
-	public void actionPerformed(ActionEvent e) {
+	public void resetTamagotchi(String resetName) throws SQLException
+	{
+		if(blT.resetTamagotchi(resetName))
+		{
+			setEreignisLabel("Du hast dein Tamagotchi erfolgreich resetet");
+		}
+		else
+		{
+			setEreignisLabel("Dein Tamagotchi konnte nicht resetet werden.");
+		}
+	}
+
+	/**
+	 * @throws SQLException 
+	 * 
+	 */
+	public void createNewTamagotchi(String newName) throws SQLException
+	{
+		if(blT.addTamagotchi(newName))
+		{
+			setEreignisLabel("Du hast dein Tamagotchi " + newName + " erfolgreich erstellt.");
+		}
+		else
+		{
+			setEreignisLabel("Dein Tamagotchi konnte nicht erstellt werden :(");
+		}
+	}
+
+	/**
+	 * ActionEvents für TamagotchiGui
+	 */
+	public void actionPerformed(ActionEvent ae) {
 		try {
-			if (e.getSource() == lblNeueNachrichten)
+			if (ae.getSource() == lblNeueNachrichten)
 			{
 				MessagesGUI msggui = new MessagesGUI();
 			}
-			else if(e.getSource() == btnReset)
+			else if(ae.getSource() == btnReset)
 			{
-				resetTamagotchi();
+				setTamagotchi(true);
 			}
-			else if (e.getSource() == lblNachrichtVerfassen)
+			else if (ae.getSource() == lblNachrichtVerfassen)
 			{
 				try {
 					NewMessageGUI nmgui = new NewMessageGUI();
@@ -403,15 +542,24 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 					e1.printStackTrace();
 				}
 			}
-			else if (e.getSource() == btnPref)
+			else if (ae.getSource() == btnPref)
 			{
 
 				ConfigurationGUI cgui = new ConfigurationGUI(blT.getCurrentUser());	
 
 			}
-			else if(e.getSource() == btnHelp)
+			else if(ae.getSource() == btnHelp)
 			{
 				// TODO: Hier sollte ein Handbuch aufgerufen werden
+			}
+			else if(BtnTamagotchiMap.get(ae.getSource()) != null)
+			{
+				reactToAction((Code) BtnTamagotchiMap.get(ae.getSource()));
+			}
+			else if(btnInvListValue.get(ae.getSource()) != null)
+			{
+				Item usedItem = (Item) btnInvListValue.get(ae.getSource());
+				giveItToTamagotchi(usedItem);
 			}
 		}
 		catch (SQLException e1) {
@@ -420,21 +568,70 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		}
 	}
 
+	private void giveItToTamagotchi(Item Item) throws SQLException {
+		if(Item.getShopartikel().getKategorie() == Kategorie.FUTTER)
+		{
+			if(blT.feedTamagotchi(Item))
+			{
+				setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr.");
+				pnlInventar.setVisible(false);
+			}
+			else
+			{
+				setEreignisLabel("Dein Tamagotchi hat noch keinen Hunger.");
+			}
+		}
+		else
+		{
+			if(blT.giveTamagotchiADrink(Item))
+			{
+				setEreignisLabel("Dein Tamagotchi hat nun keinen Durst mehr.");
+				pnlInventar.setVisible(false);
+			}
+			else
+			{
+				setEreignisLabel("Dein Tamagotchi hat noch keinen Durst.");
+			}
+		}
+		
+	}
+
+	/**
+	 * Methode, um das Tamagotchi zu waschen und es danach auf dem GUI auszugeben
+	 * @throws SQLException
+	 */
 	public void washTamagotchi() throws SQLException
 	{
 		if(blT.washTamagotchi())
 		{
-			setEreignisLabel("Dein Tamagotchi ist nun schÃ¶n sauber");
+			pnlTamagotchi.setShit(false);
+			setEreignisLabel("Dein Tamagotchi ist nun schön sauber");
 		}
-	}
-	
-	public void layTamagotchiToSleep() throws SQLException
-	{
-		if(blT.layTamagotchiToSleep()) {
-			setEreignisLabel("Dein Tamagotchi schlÃ¤ft nun");
+		else
+		{
+			setEreignisLabel("Dein Tamagotchi ist bereits sauber");
 		}
 	}
 
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public void layTamagotchiToSleep() throws SQLException
+	{
+		if(blT.layTamagotchiToSleep()) {
+			setEreignisLabel("Dein Tamagotchi schläft nun");
+		}
+		else
+		{
+			setEreignisLabel("Dein Tamagotchi ist nicht müde");
+		}
+	}
+
+	/**
+	 * 
+	 * @throws SQLException
+	 */
 	public void gibMedizin() throws SQLException
 	{
 		if(blT.gibMedizin())
@@ -443,12 +640,12 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		}
 		else
 		{
-			setEreignisLabel("He, dein Tamagotchi ist schon gesund!");
+			setEreignisLabel("Etwas mit der Heilung ging schief");
 		}
 	}
-	
+
 	/**
-	 * Setzen des Ereignislabels bei jeder VerÃ¤nderung
+	 * Setzen des Ereignislabels bei jeder Veränderung
 	 * @param Meldung
 	 */
 	public void setEreignisLabel(String Meldung) 
@@ -456,48 +653,63 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		lblEreignis.setText("Ereignis: " + Meldung);		
 	}
 
+	/**
+	 * 
+	 * @param CodeAction
+	 * @throws SQLException
+	 */
+	public void reactToAction(Code CodeAction) throws SQLException
+	{
+		pnlCondition.setVisible(false);
+		pnlInventar.setVisible(false);
+		switch(CodeAction)
+		{
+		case FUETTERN:
+			showInventar(Kategorie.FUTTER);
+			break;
+		case SCHLAFENLEGEN:
+			layTamagotchiToSleep();
+			break;
+		case SHOP:
+			ShopGUI sGUI = new ShopGUI();
+			break;
+		case INVENTAR:
+			showInventar(null);
+			break;
+		case SPIELEN:
+			setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
+			break;
+		case TRINKEN:
+			showInventar(Kategorie.GETRÄNK);
+			break;
+		case MEDIZIN:
+			gibMedizin();
+			break;
+		case WASCHEN:
+			washTamagotchi();
+			break;
+		case WERTE:
+			showCondition();
+			break;
+		}
+	}
+
+	/**
+	 * 
+	 * @param e
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		try {
 			Tamagotchi currentTamagotchiTemporary = blT.getCurrentUser().getTamagotchi(); 
 
-			Timestamp Today = new Timestamp(new java.util.Date().getTime());
 			for(TamagotchiConfig TamagotchiConfig : blT.getCurrentUser().getConfig())
 			{
 				char specialChar = e.getKeyText(e.getKeyCode()).charAt(0);
 
 				if(specialChar == TamagotchiConfig.getHotkey())
 				{
-					switch(TamagotchiConfig.getCode())
-					{
-					case FUETTERN:
-						setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
-						break;
-					case SCHLAFENLEGEN:
-						layTamagotchiToSleep();
-						break;
-					case SHOP:
-						ShopGUI sGUI = new ShopGUI();
-						break;
-					case INVENTAR:
-						setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
-						break;
-					case SPIELEN:
-						setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
-						break;
-					case TRINKEN:
-						setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
-						break;
-					case MEDIZIN:
-						gibMedizin();
-						break;
-					case WASCHEN:
-						washTamagotchi();
-						break;
-					case WERTE:
-						setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
-						break;
-					}
+					reactToAction(TamagotchiConfig.getCode());
 				}
 			}
 		} catch (SQLException e1) {
@@ -518,3 +730,4 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 	}
 }
+

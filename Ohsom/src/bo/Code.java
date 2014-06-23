@@ -1,15 +1,27 @@
 package bo;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public enum Code {
-	WERTE,
-	FUETTERN,
-	SCHLAFENLEGEN,
-	TRINKEN,
-	SPIELEN,
-	SHOP,
-	WASCHEN,
-	MEDIZIN,
-	INVENTAR;
+	WERTE("Werte"),
+	FUETTERN("Füttern"),
+	SCHLAFENLEGEN("Schlafenlegen"),
+	TRINKEN("Trinken geben"),
+	SPIELEN("Spielen"),
+	SHOP("Shop"),
+	WASCHEN("Waschen"),
+	MEDIZIN("Medizin geben"),
+	INVENTAR("Inventar");
+	
+	private String CodeName;
+	
+	Code(String CodeName)
+	{
+		this.CodeName = CodeName;
+	}
 	
 	public static Code getCodeByName(String codeName)
 	{
@@ -22,4 +34,10 @@ public enum Code {
 		}
 		return null;
 	}
+	
+	public String getCodeName()
+	{
+		return this.CodeName;
+	}
+	
 }

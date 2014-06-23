@@ -6,7 +6,7 @@ package bo;
  */
 public enum Kategorie {
 	FUTTER("Essen"), 
-	GETRÃ„NK("Getraenk"),
+	GETRÄNK("Getraenk"),
 	SONSTIGES("Sonstiges");
 	
 	private String btnName;

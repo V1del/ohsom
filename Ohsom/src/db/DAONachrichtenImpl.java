@@ -10,7 +10,7 @@ import bo.Nachricht;
 
 public class DAONachrichtenImpl implements DAONachrichten{
 
-	OhsomDBDAOImpl DBDAO = new OhsomDBDAOImpl();
+	OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 	
 	public boolean addNachricht(Nachricht n) throws SQLException {
 		boolean isInsertingSuccessfull = false;
@@ -60,12 +60,13 @@ public class DAONachrichtenImpl implements DAONachrichten{
 	public ArrayList<Nachricht> getNachrichten(int idUser) throws SQLException{
 		ArrayList<Nachricht> NachrichtenList = new ArrayList<Nachricht>();
 		PreparedStatement NachrichtPstmt = null;
-		String NachrichtSQL = "SELECT * FROM nachrichten ORDER BY ZEITPUNKT DESC";
+		String NachrichtSQL = "SELECT * FROM nachrichten WHERE idUser_Empfaenger = ? ORDER BY ZEITPUNKT DESC";
 
 		NachrichtPstmt = DBDAO.getConnection().prepareStatement(NachrichtSQL);
+		NachrichtPstmt.setInt(1, idUser);
 
 		ResultSet NachrichtResultSet = DBDAO.SelectStatement(NachrichtPstmt);
-
+		
 		while(NachrichtResultSet.next())
 		{
 			Nachricht NachrichtObject = new Nachricht(NachrichtResultSet);

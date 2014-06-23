@@ -14,7 +14,7 @@ import bo.User;
 
 public class DAOTamagotchiImpl implements DAOTamagotchi{
 
-	private OhsomDBDAOImpl DBDAO = new OhsomDBDAOImpl();
+	private OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 	
 	public boolean setToActualDate(Tamagotchi Tamagotchi, String Eigenschaft) throws SQLException
 	{
@@ -38,18 +38,17 @@ public class DAOTamagotchiImpl implements DAOTamagotchi{
 				+ "Geburtsdatum, Geld, Medizin, Gesundheitszustand, letzteFuetterungszeit, "
 				+ "letzteSchlafenszeit, letzteWaschzeit, letzteSpielzeit, letzteTrinkzeit, "
 				+ "idUser) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, sysdate(), sysdate(), sysdate(), sysdate(), sysdate(), ?, ?)";
+				+ "VALUES (?, ?, ?, ?, ?, ?, sysdate(), sysdate(), sysdate(), sysdate(), sysdate(), ?)";
 
 		TamagotchiInsertpstmt = DBDAO.getConnection().prepareStatement(TamagotchiInsertSQL);
 		TamagotchiInsertpstmt.setString(1, Tamagotchi.getName());
-		TamagotchiInsertpstmt.setBoolean(2, (Tamagotchi.getGeschlecht().equals("mï¿½nnlich"))?false:true);
-		TamagotchiInsertpstmt.setDate(3, (java.sql.Date) Tamagotchi.getGeburtsdatum());
+		TamagotchiInsertpstmt.setBoolean(2, (Tamagotchi.getGeschlecht().equals("männlich"))?false:true);
+		TamagotchiInsertpstmt.setDate(3, Tamagotchi.getGeburtsdatum());
 		TamagotchiInsertpstmt.setInt(4, Tamagotchi.getGeld());
 		TamagotchiInsertpstmt.setInt(5, Tamagotchi.getMedizin());
 		TamagotchiInsertpstmt.setString(6, Tamagotchi.getGesundheitszustand().name());
 		TamagotchiInsertpstmt.setInt(7, Tamagotchi.getUserId());
-
-
+		
 		isInsertingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(TamagotchiInsertpstmt);
 
 		return isInsertingSuccessfull;
