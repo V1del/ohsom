@@ -132,10 +132,11 @@ public class BLTamagotchi {
 	public boolean gibMedizin() throws SQLException
 	{
 		boolean MedizinGebenErfolgreich = false;
+		Tamagotchi currentTamagotchiTemporary = currentUser.getTamagotchi();
 		
-		if(currentUser.getTamagotchi().verwendeMedizin())
+		if(currentTamagotchiTemporary.verwendeMedizin())
 		{
-			MedizinGebenErfolgreich = DAOT.changeTamagotchi(currentUser.getTamagotchi());
+			MedizinGebenErfolgreich = DAOT.changeTamagotchi(currentTamagotchiTemporary);
 		}
 		
 		return MedizinGebenErfolgreich;
@@ -151,11 +152,10 @@ public class BLTamagotchi {
 	public boolean kaufeMedizin(int Menge, int Preis) throws SQLException
 	{
 		boolean KaufErfolgreich = false;
+
+		Tamagotchi currentTamagotchiTemporary = currentUser.getTamagotchi();
 		
-		System.out.println(currentUser.getTamagotchi().GibGeldAus(Menge * Preis));
-		System.out.println(currentUser.getTamagotchi().kaufeMedizin(Menge));
-		
-		if(currentUser.getTamagotchi().GibGeldAus(Menge * Preis) && currentUser.getTamagotchi().kaufeMedizin(Menge))
+		if(currentTamagotchiTemporary.GibGeldAus(Menge * Preis) && currentTamagotchiTemporary.kaufeMedizin(Menge))
 		{
 			KaufErfolgreich = DAOT.changeTamagotchi(currentUser.getTamagotchi());
 		}
@@ -175,7 +175,9 @@ public class BLTamagotchi {
 		
 		boolean KaufErfolgreich = false;
 		
-		if(currentUser.getTamagotchi().GibGeldAus(Shopartikel.getPreis()) && getInventory(Shopartikel.getKategorie()).size() < 5)
+		Tamagotchi currentTamagotchiTemporary = currentUser.getTamagotchi();
+		
+		if(currentTamagotchiTemporary.GibGeldAus(Shopartikel.getPreis()) && getInventory(Shopartikel.getKategorie()).size() < 5)
 		{
 			KaufErfolgreich = DAOT.changeTamagotchi(currentUser.getTamagotchi()) && DAOT.addItem(ItemToBuy);
 		}
