@@ -40,18 +40,24 @@ public class BLNachrichten {
 		return DAON.getNachrichten(currentUser.getId());
 	}
 	
+	/**
+	 * Getter Nachrichten eines Users in Tabellenformat
+	 * @return
+	 * @throws SQLException
+	 */
 	public Object[][] getNachrichtenData() throws SQLException
 	{
 		ArrayList<Nachricht> NachrichtenList = getNachrichten();
-		Object[][] ObjectList = new String[NachrichtenList.size()][6];
+		Object[][] ObjectList = new String[NachrichtenList.size()][5];
 		
 		int i = 0;
 		for(Nachricht n : NachrichtenList)
 		{
-			ObjectList[i][0] = DAOU.getUser(n.getSender()).getNickname();
-			ObjectList[i][1] = String.valueOf(n.isGelesen()); //new JCheckBox("", n.isGelesen());
-			ObjectList[i][2] = n.getTitel();
-			ObjectList[i][3] = String.valueOf(n.getZeitpunkt());
+			ObjectList[i][0] = String.valueOf(n.getId());
+			ObjectList[i][1] = n.getSender().getNickname();
+			ObjectList[i][2] = String.valueOf(n.isGelesen()); //new JCheckBox("", n.isGelesen());
+			ObjectList[i][3] = n.getTitel();
+			ObjectList[i][4] = String.valueOf(n.getZeitpunkt());
 			i++;
 		};
 		
@@ -60,7 +66,7 @@ public class BLNachrichten {
 	
 	/**
 	 * Ungelesene Nachrichten zählen
-	 * @return
+	 * @return Anzahl ungelesene Nachrichten
 	 * @throws SQLException
 	 */
 	public int getCountOfUnreadNachrichten() throws SQLException
@@ -79,8 +85,8 @@ public class BLNachrichten {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Get Anzahl aller Nachrichten
+	 * @return Anzahl alle Nachrichten
 	 * @throws SQLException
 	 */
 	public int getCountOfAllNachrichten() throws SQLException
@@ -115,6 +121,17 @@ public class BLNachrichten {
 	public boolean deleteNachricht(Nachricht Nachricht) throws SQLException
 	{
 		return DAON.deleteNachricht(Nachricht);
+	}
+	
+	/**
+	 * Getter Nachricht nach Index
+	 * @param idNachricht
+	 * @return Nachricht
+	 * @throws SQLException
+	 */
+	public Nachricht getNachricht(int idNachricht) throws SQLException
+	{
+		return DAON.getNachricht(idNachricht);
 	}
 
 	/**

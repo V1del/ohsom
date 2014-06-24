@@ -34,6 +34,8 @@ import java.sql.SQLException;
 public class NachrichtLesenGUI extends JDialog implements ActionListener {
 
 	private BLNachrichten blN = null;
+	private BLUser blU = null;
+	
 	private Nachricht currentNachrichtTemporary = null;
 
 	private JPanel panel;
@@ -47,15 +49,18 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 	private JButton btnAntworten;
 	private JButton btnLoeschen;
 
-	public NachrichtLesenGUI(Nachricht Nachricht) {
+	public NachrichtLesenGUI(Nachricht Nachricht) throws SQLException {
 		new JDialog();
 		setTitle("Nachricht lesen");
 		setModal(true);
 		
+		currentNachrichtTemporary = Nachricht;
+		
 		blN = new BLNachrichten();
+		blU = new BLUser();
 
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Nachricht von " + Nachricht.getSender(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, "Nachricht von " + Nachricht.getSender().getNickname(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -113,14 +118,14 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 
 		lblNachrichtValue = new JLabel(Nachricht.getNachricht());
 		lblNachrichtValue.setFont(new Font("Dialog", Font.PLAIN, 12));
-		GridBagConstraints gbc_lblOhsomIstEin = new GridBagConstraints();
-		gbc_lblOhsomIstEin.anchor = GridBagConstraints.WEST;
-		gbc_lblOhsomIstEin.ipady = 10;
-		gbc_lblOhsomIstEin.gridwidth = 10;
-		gbc_lblOhsomIstEin.insets = new Insets(0, 0, 0, 5);
-		gbc_lblOhsomIstEin.gridx = 1;
-		gbc_lblOhsomIstEin.gridy = 4;
-		panel.add(lblNachrichtValue, gbc_lblOhsomIstEin);
+		GridBagConstraints gbc_lblNachrichtValue = new GridBagConstraints();
+		gbc_lblNachrichtValue.anchor = GridBagConstraints.WEST;
+		gbc_lblNachrichtValue.ipady = 10;
+		gbc_lblNachrichtValue.gridwidth = 10;
+		gbc_lblNachrichtValue.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNachrichtValue.gridx = 1;
+		gbc_lblNachrichtValue.gridy = 4;
+		panel.add(lblNachrichtValue, gbc_lblNachrichtValue);
 
 		pnlNachrichtenControls = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pnlNachrichtenControls.getLayout();
@@ -132,9 +137,12 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 		btnAntworten.addActionListener(this);
 		pnlNachrichtenControls.add(btnAntworten);
 
-		btnLoeschen = new JButton("LÃ¶schen");
+		btnLoeschen = new JButton("Löschen");
 		btnLoeschen.addActionListener(this);
 		pnlNachrichtenControls.add(btnLoeschen);
+		
+		this.pack();
+		this.setVisible(true);
 	}	
 	
 	/**
@@ -146,11 +154,10 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 
 			if(ae.getSource() == btnAntworten)
 			{
-
+					NewMessageGUI nmg = new NewMessageGUI();
 			}
 			else
 			{
-
 				if(blN.deleteNachricht(currentNachrichtTemporary))
 				{
 					this.dispose();

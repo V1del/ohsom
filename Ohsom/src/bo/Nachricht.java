@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import db.DAOUserImpl;
+
 /**
  * Nachricht - Klasse
  * @author vmuser
@@ -115,17 +117,21 @@ public class Nachricht
 	/**
 	 * Getter des Senders
 	 * @return
+	 * @throws SQLException 
 	 */
-	public int getSender() {
-		return idSender;
+	public User getSender() throws SQLException {
+		DAOUserImpl DAOU = new DAOUserImpl();
+		return DAOU.getUser(idSender);
 	}
 	
 	/**
 	 * Getter des Empfaengers
 	 * @return
+	 * @throws SQLException 
 	 */
-	public int getEmpfaenger() {
-		return idEmpfaenger;
+	public User getEmpfaenger() throws SQLException {
+		DAOUserImpl DAOU = new DAOUserImpl();
+		return DAOU.getUser(idEmpfaenger);
 	}
 
 }

@@ -14,4 +14,6 @@ public interface DAONachrichten {
 	public boolean deleteNachricht(Nachricht n) throws SQLException;
 	
 	public ArrayList<Nachricht> getNachrichten(int idUser) throws SQLException;
+	
+	public Nachricht getNachricht(int idNachricht) throws SQLException;
 }

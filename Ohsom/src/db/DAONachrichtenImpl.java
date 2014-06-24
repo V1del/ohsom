@@ -21,8 +21,8 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		Nachrichtpstmt = DBDAO.getConnection().prepareStatement(NachrichtSQL);
 		Nachrichtpstmt.setString(1, n.getTitel());
 		Nachrichtpstmt.setString(2, n.getNachricht());
-		Nachrichtpstmt.setInt(3, n.getEmpfaenger());
-		Nachrichtpstmt.setInt(4, n.getSender());
+		Nachrichtpstmt.setInt(3, n.getEmpfaenger().getId());
+		Nachrichtpstmt.setInt(4, n.getSender().getId());
 		
 		isInsertingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(Nachrichtpstmt);
 
@@ -48,7 +48,7 @@ public class DAONachrichtenImpl implements DAONachrichten{
 
 		PreparedStatement NachrichtDeletepstmt = null;
 		String NachrichtUpdateSQL = "DELETE FROM nachrichten WHERE IDNACHRICHT = ?	";
-
+		
 		NachrichtDeletepstmt = DBDAO.getConnection().prepareStatement(NachrichtUpdateSQL);
 		NachrichtDeletepstmt.setInt(1, n.getId());
 		
@@ -74,6 +74,26 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		}
 
 		return NachrichtenList;
+	}
+	
+	/**
+	 * Getter Nachricht mittels idNachricht - Übergabe
+	 */
+	public Nachricht getNachricht(int idNachricht) throws SQLException{
+		PreparedStatement NachrichtPstmt = null;
+		String NachrichtSQL = "SELECT * FROM nachrichten WHERE idNachricht = ?";
+
+		NachrichtPstmt = DBDAO.getConnection().prepareStatement(NachrichtSQL);
+		NachrichtPstmt.setInt(1, idNachricht);
+
+		ResultSet NachrichtResultSet = DBDAO.SelectStatement(NachrichtPstmt);
+		
+		if(NachrichtResultSet.next())
+		{
+			return new Nachricht(NachrichtResultSet);
+		}
+
+		return null;
 	}
 
 }
