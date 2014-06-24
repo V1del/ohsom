@@ -22,6 +22,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Hauptfenster GUI
+ * @author Snatsch
+ *
+ */
 public class HauptfensterGui extends JFrame implements ActionListener {
 
 	BLUser blU = new BLUser();
@@ -127,6 +132,9 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Actionevents des HauptfensterGuis
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnLogin)
 		{
@@ -143,6 +151,10 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Prüfen, ob die Eingaben valide sind
+	 * @throws SQLException
+	 */
 	public void validateInput() throws SQLException
 	{
 		if(!isUserInputValid())
@@ -163,6 +175,10 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Prüfen, ob alle notwendigen Eingaben gemacht wurden
+	 * @return
+	 */
 	public boolean isUserInputValid()
 	{
 		return !(txtPasswort.getText().equals("") || txtNickname.getText().equals(""));

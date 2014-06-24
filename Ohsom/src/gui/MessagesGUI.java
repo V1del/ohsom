@@ -33,6 +33,11 @@ import bo.Nachricht;
 
 import com.mysql.jdbc.Constants;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public class MessagesGUI extends JDialog implements ActionListener, ListSelectionListener {
 	private BLNachrichten blN = new BLNachrichten();
 	private JButton btnHelp;

@@ -94,7 +94,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private JButton btnMedizin = new JButton();
 
 	private JButton btnShop = new JButton();
-	
+
 	private JButton btnInventar = new JButton();
 
 	private JPanel pnlCondition;
@@ -115,18 +115,24 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private JPanel pnlInventar;
 
 	private Map<JToggleButton, Item> btnInvListValue = new HashMap<JToggleButton, Item>();
-	
+
 	private JToggleButton[] btnInvList = {new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"), new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?")};
 
 	private JButton btnItemVerwenden = new JButton();
-	
+
 	/**
 	 * Create the application.
 	 * @throws SQLException 
 	 */
 	public TamagotchiGUI() throws SQLException {
 		blT = new BLTamagotchi();
+		blN = new BLNachrichten();
 
+		while(!blT.getCurrentUser().hasTamagotchi())
+		{
+			setTamagotchi(false);
+		}
+		
 		BtnTamagotchiMap.put(btnWerte, Code.WERTE);
 		BtnTamagotchiMap.put(btnFuettern, Code.FUETTERN);
 		BtnTamagotchiMap.put(btnTrinken, Code.TRINKEN);
@@ -246,7 +252,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		panel_1.add(lblEreignis, BorderLayout.NORTH);
 
 		JPanel pnlInformations = new JPanel();
-		
+
 		pnlCondition = new JPanel();
 		pnlCondition.setBorder(new TitledBorder(null, "Werte", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
@@ -367,7 +373,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		//pnlCondition.add(pnlInventar, gbc_pnlInventar);
 		pnlInformations.add(pnlCondition);
 		pnlInformations.add(pnlInventar, gbc_pnlInventar);
-		
+
 		pnlCondition.setVisible(false);
 
 		pnlInventar.setVisible(false);
@@ -384,6 +390,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			JButton btnTamagotchi = (JButton) BtnEntry.getKey();
 			Code btnCode = (Code) BtnEntry.getValue();
 			btnTamagotchi.setText(btnCode.getCodeName());
+			
 			if(blT.getCurrentUser().getTamagotchi().isDead())
 			{
 				btnTamagotchi.setEnabled(false);
@@ -397,7 +404,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @throws SQLException
@@ -421,6 +428,11 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				pnlTamagotchi.moveTamagotchi(TamagotchiTemporary.isKrank());
 			}
 		}
+		
+		blT.changeTamagotchi(blT.getCurrentUser().getTamagotchi());
+		
+		lblNeueNachrichten.setText("Neue Nachrichten (" + blN.getCountOfUnreadNachrichten() + ")");
+	
 	}
 
 	/**
@@ -451,7 +463,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 		pnlInventar.removeAll();
 		btnInvListValue.clear();
-		
+
 		for(Item Item: blT.getInventory(katInv))
 		{
 			JToggleButton currentItemButton = btnInvList[InventarIndex];
@@ -460,13 +472,13 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			currentItemButton.setText("");
 			currentItemButton.addActionListener(this);
 			pnlInventar.add(currentItemButton);
-			
+
 			InventarIndex++;
 		}
-		
+
 		pnlInventar.add(btnItemVerwenden);
 		btnItemVerwenden.setVisible(false);
-		
+
 		pnlInventar.setVisible(true);
 	}
 
@@ -498,7 +510,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			createNewTamagotchi(askForName);
 		}
-		
+
 		fillButtonArea();
 
 	}
@@ -576,7 +588,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				Item usedItem = (Item) btnInvListValue.get(ae.getSource());
 				giveItToTamagotchi(usedItem);
 			}
-			
+
 			frmOhsom.requestFocus();
 		}
 		catch (SQLException e1) {
@@ -610,7 +622,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				setEreignisLabel("Dein Tamagotchi hat noch keinen Durst.");
 			}
 		}
-		
+
 	}
 
 	/**

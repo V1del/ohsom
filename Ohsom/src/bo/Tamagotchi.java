@@ -243,7 +243,7 @@ public class Tamagotchi {
 	}
 
 	/**
-	 * 
+	 * Getter Gesundheitszustand
 	 * @return
 	 */
 	public Gesundheitszustand getGesundheitszustand() {

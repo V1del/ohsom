@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public class MessageThread extends Thread implements Runnable{
 	
 	MessagesGUI mGui = null;

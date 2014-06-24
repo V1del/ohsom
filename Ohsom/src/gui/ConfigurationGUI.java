@@ -35,6 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public class ConfigurationGUI extends JDialog implements ActionListener, KeyListener {
 	private BLUser blU;
 	private JTabbedPane tabbedPane;

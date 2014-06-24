@@ -17,6 +17,11 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import bo.InvaderObject;
 import bo.TamagotchiObj;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public class TamagotchiGfx extends JPanel {
 
 	private TamagotchiObj tamagotchibg, tamagotchiworld, tamagotchishit, tamagotchi;
