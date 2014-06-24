@@ -45,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.GridLayout;
 
 /**
  * TamagotchiGUI is a GUI especially for playing with your Tamagotchi
@@ -159,7 +160,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		frmOhsom.setTitle("Ohsom");
 		frmOhsom.setBounds(100, 100, 780, 600);
 		frmOhsom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmOhsom.setLayout(new BorderLayout(20, 0));
+		frmOhsom.getContentPane().setLayout(new BorderLayout(20, 0));
 
 		JPanel panel = new JPanel();
 		frmOhsom.getContentPane().add(panel, BorderLayout.WEST);
@@ -237,11 +238,12 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		pnlTamagotchi = new TamagotchiGfx();
 		panel_1.add(pnlTamagotchi, BorderLayout.CENTER);
 
-		pnlTamagotchiButtons = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		pnlTamagotchiButtons = new JPanel();
 
 		fillButtonArea();
 
 		panel_1.add(pnlTamagotchiButtons, BorderLayout.SOUTH);
+		pnlTamagotchiButtons.setLayout(new GridLayout(2, 5, 5, 5));
 
 		panel_1.add(lblEreignis, BorderLayout.NORTH);
 
@@ -338,7 +340,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		gbc_lblBoringStateValue.gridy = 1;
 		pnlCondition.add(lblBoringStateValue, gbc_lblBoringStateValue);
 
-		lblMuedigkeit = new JLabel("müde?:");
+		lblMuedigkeit = new JLabel("mï¿½de?:");
 		GridBagConstraints gbc_lblMuedigkeit = new GridBagConstraints();
 		gbc_lblMuedigkeit.anchor = GridBagConstraints.WEST;
 		gbc_lblMuedigkeit.insets = new Insets(0, 0, 5, 5);
@@ -346,7 +348,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		gbc_lblMuedigkeit.gridy = 1;
 		pnlCondition.add(lblMuedigkeit, gbc_lblMuedigkeit);
 
-		lblMuedigkeitValue = new JLabel("valMüde");
+		lblMuedigkeitValue = new JLabel("valMï¿½de");
 		GridBagConstraints gbc_valMuede = new GridBagConstraints();
 		gbc_valMuede.insets = new Insets(0, 0, 5, 5);
 		gbc_valMuede.gridx = 4;
@@ -424,7 +426,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * Befüllen des Wertepanels
+	 * Befï¿½llen des Wertepanels
 	 * @throws SQLException
 	 */
 	public void showCondition() throws SQLException
@@ -537,7 +539,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * ActionEvents für TamagotchiGui
+	 * ActionEvents fï¿½r TamagotchiGui
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		try {
@@ -622,7 +624,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		if(blT.washTamagotchi())
 		{
 			pnlTamagotchi.setShit(false);
-			setEreignisLabel("Dein Tamagotchi ist nun schön sauber");
+			setEreignisLabel("Dein Tamagotchi ist nun schï¿½n sauber");
 		}
 		else
 		{
@@ -637,11 +639,11 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	public void layTamagotchiToSleep() throws SQLException
 	{
 		if(blT.layTamagotchiToSleep()) {
-			setEreignisLabel("Dein Tamagotchi schläft nun");
+			setEreignisLabel("Dein Tamagotchi schlï¿½ft nun");
 		}
 		else
 		{
-			setEreignisLabel("Dein Tamagotchi ist nicht müde");
+			setEreignisLabel("Dein Tamagotchi ist nicht mï¿½de");
 		}
 	}
 
@@ -662,7 +664,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * Setzen des Ereignislabels bei jeder Veränderung
+	 * Setzen des Ereignislabels bei jeder Verï¿½nderung
 	 * @param Meldung
 	 */
 	public void setEreignisLabel(String Meldung) 
@@ -697,7 +699,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
 			break;
 		case TRINKEN:
-			showInventar(Kategorie.GETRÄNK);
+			showInventar(Kategorie.GETRAENK);
 			break;
 		case MEDIZIN:
 			gibMedizin();

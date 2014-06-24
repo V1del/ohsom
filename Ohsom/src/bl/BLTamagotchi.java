@@ -10,7 +10,7 @@ import db.DAOTamagotchiImpl;
 import db.DAOUserImpl;
 import bo.*;
 /**
- * Businesslogik für Tamagotchiangelegenheiten
+ * Businesslogik fï¿½r Tamagotchiangelegenheiten
  * @author Snatsch
  *
  */
@@ -93,7 +93,7 @@ public class BLTamagotchi {
 	}
 	
 	/**
-	 * Tamagotchi füttern
+	 * Tamagotchi fï¿½ttern
 	 * @param FoodItem
 	 * @return
 	 * @throws SQLException
@@ -126,7 +126,7 @@ public class BLTamagotchi {
 	
 	/**
 	 * Methode Medizin verwenden
-	 * @return War Medizinübergabe erfolgreich?
+	 * @return War Medizinï¿½bergabe erfolgreich?
 	 * @throws SQLException
 	 */
 	public boolean gibMedizin() throws SQLException
@@ -220,11 +220,11 @@ public class BLTamagotchi {
 	 */
 	public ArrayList<Item> getDrinkItems() throws SQLException
 	{
-		return getInventory(Kategorie.GETRÄNK);
+		return getInventory(Kategorie.GETRAENK);
 	}
 	
 	/**
-	 * zurücksetzen Tamagotchi
+	 * zurï¿½cksetzen Tamagotchi
 	 * @param name
 	 * @return
 	 * @throws SQLException

@@ -442,7 +442,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 	 */
 	public void fillDrinkInventarPanel(JPanel pnlInventar) throws SQLException
 	{
-		fillInventarPanel(pnlInventar, Kategorie.GETRÄNK);
+		fillInventarPanel(pnlInventar, Kategorie.GETRAENK);
 	}
 
 	/**
@@ -473,7 +473,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 	 */
 	public void fillDrinks(JPanel pnlTrinken) throws SQLException
 	{
-		fillArticlePanel(pnlTrinken, Kategorie.GETRÄNK);
+		fillArticlePanel(pnlTrinken, Kategorie.GETRAENK);
 	}
 	
 	/**

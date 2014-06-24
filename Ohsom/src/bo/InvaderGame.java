@@ -141,14 +141,14 @@ public class InvaderGame extends Canvas implements KeyListener{
 	}
 
 	private void initInvaderObjects() {
-		ship = new Ship(this, "gfx/Raumschiff.png", 370, 550);
+		ship = new Ship(this, "Sources/gfx/Raumschiff.png", 370, 550);
 		invobjects.add(ship);
 
 		alienCount = 0;
 
 		for (int row = 0; row < 5; row++) {
 			for (int x = 0; x < 12; x++) {
-				InvaderObject alien = new InvaderAlien(this, "gfx/Raumschiff.png", 100+(x*50), 50+row*30);
+				InvaderObject alien = new InvaderAlien(this, "Sources/gfx/Raumschiff.png", 100+(x*50), 50+row*30);
 				invobjects.add(alien);
 				alienCount++;
 			}
@@ -161,7 +161,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 			return;
 
 		lastFired = System.currentTimeMillis();
-		Shot shot = new Shot(this, "gfx/Laser.png", (int) ship.getX()+10, (int) (ship.getY()-30));
+		Shot shot = new Shot(this, "Sources/gfx/Laser.png", (int) ship.getX()+10, (int) (ship.getY()-30));
 		invobjects.add(shot);
 	}
 

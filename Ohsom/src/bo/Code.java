@@ -7,13 +7,13 @@ package bo;
  */
 public enum Code {
 	WERTE("Werte"),
-	FUETTERN("Füttern"),
-	SCHLAFENLEGEN("Schlafenlegen"),
-	TRINKEN("Trinken geben"),
+	FUETTERN("FÃ¼ttern"),
+	SCHLAFENLEGEN("Schlafen"),
+	TRINKEN("Trinken"),
 	SPIELEN("Spielen"),
 	SHOP("Shop"),
 	WASCHEN("Waschen"),
-	MEDIZIN("Medizin geben"),
+	MEDIZIN("Medizin"),
 	INVENTAR("Inventar");
 	
 	private String CodeName;
