@@ -1,6 +1,6 @@
 package gui;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -31,7 +31,7 @@ import java.sql.SQLException;
  * @author Snatsch
  *
  */
-public class NachrichtLesenGUI extends JFrame implements ActionListener {
+public class NachrichtLesenGUI extends JDialog implements ActionListener {
 
 	private BLNachrichten blN = null;
 	private Nachricht currentNachrichtTemporary = null;
@@ -48,7 +48,10 @@ public class NachrichtLesenGUI extends JFrame implements ActionListener {
 	private JButton btnLoeschen;
 
 	public NachrichtLesenGUI(Nachricht Nachricht) {
-		super("Nachricht lesen");
+		new JDialog();
+		setTitle("Nachricht lesen");
+		setModal(true);
+		
 		blN = new BLNachrichten();
 
 		panel = new JPanel();

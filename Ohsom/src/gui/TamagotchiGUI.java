@@ -61,7 +61,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 	private JFrame frmOhsom;
 
-	private static JButton lblNeueNachrichten = new JButton("Neue Nachrichten");
+	private JButton lblNeueNachrichten = new JButton("Neue Nachrichten");
 
 	private JButton lblNachrichtVerfassen = new JButton("Nachricht verfassen");
 
@@ -239,15 +239,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 		pnlTamagotchiButtons = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
-		for(Map.Entry BtnEntry : BtnTamagotchiMap.entrySet())
-		{
-			JButton btnTamagotchi = (JButton) BtnEntry.getKey();
-			Code btnCode = (Code) BtnEntry.getValue();
-			btnTamagotchi.setText(btnCode.getCodeName());
-			btnTamagotchi.addActionListener(this);
-			pnlTamagotchiButtons.add(btnTamagotchi);
-
-		}
+		fillButtonArea();
 
 		panel_1.add(pnlTamagotchiButtons, BorderLayout.SOUTH);
 
@@ -384,6 +376,28 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		frmOhsom.requestFocusInWindow();
 	}
 
+	public void fillButtonArea() throws SQLException
+	{
+		pnlTamagotchiButtons.removeAll();
+		for(Map.Entry BtnEntry : BtnTamagotchiMap.entrySet())
+		{
+			JButton btnTamagotchi = (JButton) BtnEntry.getKey();
+			Code btnCode = (Code) BtnEntry.getValue();
+			btnTamagotchi.setText(btnCode.getCodeName());
+			if(blT.getCurrentUser().getTamagotchi().isDead())
+			{
+				btnTamagotchi.setEnabled(false);
+			}
+			else
+			{
+				btnTamagotchi.setEnabled(true);
+			}
+			btnTamagotchi.addActionListener(this);
+			pnlTamagotchiButtons.add(btnTamagotchi);
+
+		}
+	}
+	
 	/**
 	 * 
 	 * @throws SQLException
@@ -484,6 +498,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			createNewTamagotchi(askForName);
 		}
+		
+		fillButtonArea();
 
 	}
 
@@ -544,9 +560,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			}
 			else if (ae.getSource() == btnPref)
 			{
-
 				ConfigurationGUI cgui = new ConfigurationGUI(blT.getCurrentUser());	
-
+				frmOhsom.requestFocus();
 			}
 			else if(ae.getSource() == btnHelp)
 			{
@@ -561,6 +576,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				Item usedItem = (Item) btnInvListValue.get(ae.getSource());
 				giveItToTamagotchi(usedItem);
 			}
+			
+			frmOhsom.requestFocus();
 		}
 		catch (SQLException e1) {
 			// TODO Auto-generated catch block

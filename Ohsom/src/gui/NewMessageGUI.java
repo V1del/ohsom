@@ -2,7 +2,7 @@ package gui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Snatsch
  *
  */
-public class NewMessageGUI extends JFrame implements ActionListener {
+public class NewMessageGUI extends JDialog implements ActionListener {
 
 	private Map<String, Integer> comboBoxValues = new HashMap<String, Integer>();
 	private BLUser blU = new BLUser();
@@ -62,10 +62,11 @@ public class NewMessageGUI extends JFrame implements ActionListener {
 	 * @throws SQLException 
 	 */
 	private void initialize() throws SQLException {
-		new JFrame();
+		new JDialog();
+		setModal(true);
 		setTitle("Neue Nachricht verfassen");
 		setBounds(100, 100, 450, 300);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Neue Nachricht", TitledBorder.LEADING, TitledBorder.TOP, null, null));

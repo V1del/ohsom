@@ -52,8 +52,6 @@ public class BLNachrichten {
 			ObjectList[i][1] = String.valueOf(n.isGelesen()); //new JCheckBox("", n.isGelesen());
 			ObjectList[i][2] = n.getTitel();
 			ObjectList[i][3] = String.valueOf(n.getZeitpunkt());
-			ObjectList[i][4] = "lesen"; //new JButton("Test");
-			ObjectList[i][5] = "löschen"; //new JButton("Test 2");
 			i++;
 		};
 		
@@ -78,6 +76,23 @@ public class BLNachrichten {
 		}
 		
 		return unreadMessages.size();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getCountOfAllNachrichten() throws SQLException
+	{
+		ArrayList<Nachricht> Messages = new ArrayList<Nachricht>();
+		
+		for(Nachricht Nachricht : getNachrichten())
+		{
+			Messages.add(Nachricht);
+		}
+		
+		return Messages.size();
 	}
 	
 	/**

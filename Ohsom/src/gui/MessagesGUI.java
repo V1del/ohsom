@@ -1,7 +1,8 @@
 package gui;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JButton;
+import javax.swing.ListSelectionModel;
 
 import java.awt.BorderLayout;
 import java.awt.Insets;
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 
 import javax.swing.border.TitledBorder;
@@ -24,11 +27,11 @@ import bl.BLNachrichten;
 
 import com.mysql.jdbc.Constants;
 
-public class MessagesGUI extends JFrame implements ActionListener {
+public class MessagesGUI extends JDialog implements ActionListener, MouseListener {
 	private BLNachrichten blN = new BLNachrichten();
 	private JButton btnHelp;
 	private JPanel panel;
-	private JPanel panel_1;
+	private JPanel pnlNachrichten;
 	private JPanel panel_2;
 	private JButton btnNachrichtVerfassen;
 	private JScrollPane scrollPane;
@@ -39,7 +42,8 @@ public class MessagesGUI extends JFrame implements ActionListener {
 	private JButton btnVorwaerts;
 
 	public MessagesGUI() throws SQLException {
-		super("Nachrichten");
+		new JDialog();
+		setTitle("Nachrichten");
 
 		panel = new JPanel();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -51,32 +55,34 @@ public class MessagesGUI extends JFrame implements ActionListener {
 		panel.add(btnHelp);
 		btnHelp.setHorizontalAlignment(SwingConstants.LEFT);
 
-		panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Posteingang (0/2)", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		getContentPane().add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BorderLayout(0, 20));
+		pnlNachrichten = new JPanel();
+		countNachrichten();
+		getContentPane().add(pnlNachrichten, BorderLayout.CENTER);
+		pnlNachrichten.setLayout(new BorderLayout(0, 20));
 
 		scrollPane = new JScrollPane();
-		panel_1.add(scrollPane, BorderLayout.CENTER);
+		pnlNachrichten.add(scrollPane, BorderLayout.CENTER);
 
 		tblNachrichten = new JTable();
 		tblNachrichten.setModel(new DefaultTableModel(
 				blN.getNachrichtenData(),
 				new String[] {
-					"Schreiber", "gelesen", "Titel", "Zeitpunkt", "lesen?", "l\u00F6schen"
+					"Schreiber", "gelesen", "Titel", "Zeitpunkt"
 				}
 				));
 
 		tblNachrichten.getColumnModel().getColumn(2).setPreferredWidth(240);
 		tblNachrichten.getColumnModel().getColumn(3).setPreferredWidth(182);
+		tblNachrichten.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblNachrichten.addMouseListener(this);
 		scrollPane.setViewportView(tblNachrichten);
 
 		panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setHgap(30);
-		panel_1.add(panel_3, BorderLayout.SOUTH);
+		pnlNachrichten.add(panel_3, BorderLayout.SOUTH);
 
-		btnZurueck = new JButton("<< zurï¿½ckblï¿½ttern");
+		btnZurueck = new JButton("<< zurückblättern");
 
 		btnZurueck.setMargin(new Insets(0, 0, 0, 0));
 		btnZurueck.setContentAreaFilled(false);
@@ -88,7 +94,7 @@ public class MessagesGUI extends JFrame implements ActionListener {
 		lblSeite = new JLabel("S 1 / 1");
 		panel_3.add(lblSeite);
 
-		btnVorwaerts = new JButton("vorwï¿½rtsblï¿½ttern >>");
+		btnVorwaerts = new JButton("vorwärtsblättern>>");
 
 		btnVorwaerts.setMargin(new Insets(0, 0, 0, 0));
 		btnVorwaerts.setContentAreaFilled(false);
@@ -115,6 +121,13 @@ public class MessagesGUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
+	public void countNachrichten() throws SQLException
+	{
+		int allMessages = blN.getCountOfAllNachrichten();
+		int unreadMessages = blN.getCountOfUnreadNachrichten();
+		pnlNachrichten.setBorder(new TitledBorder(null, "Posteingang ("+ unreadMessages +"/" + allMessages + ")", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		try {
@@ -127,5 +140,35 @@ public class MessagesGUI extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

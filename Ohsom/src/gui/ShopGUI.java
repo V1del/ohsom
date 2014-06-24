@@ -2,7 +2,7 @@ package gui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
@@ -49,7 +49,7 @@ import bo.User;
  * @author Snatsch
  *
  */
-public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
+public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 
 	private BLShopartikel blS = null;
 	private BLTamagotchi blT = null;
@@ -88,7 +88,6 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 	JLabel lblGeld, lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue, lblFehlermeldung;
 	private JLabel lblFehlermeldungTrinken;
 	private JLabel lblFehlermeldungEssen;
-
 	/**
 	 * Konstruktor, der die Map fÃ¼llt => Ersatz zu variablen Variablen
 	 * @throws SQLException
@@ -122,10 +121,11 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		initialize();
 	}
 	private void initialize() throws SQLException {
-		new JFrame();
+		new JDialog();
+		setModal(true);
 		setTitle("Shop");
 		setBounds(100, 100, 450, 350);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -313,7 +313,11 @@ public class ShopGUI extends JFrame implements ActionListener, ChangeListener{
 		btnTrinkenKaufen = new JButton("Getränk kaufen");
 		btnTrinkenKaufen.addActionListener(this);
 		//panel_6.add(lblGeldValue, gbc_label_4);
-
+		
+		btnTrinkenKaufen = new JButton("Getränk kaufen");
+		btnTrinkenKaufen.addActionListener(this);
+		//panel_6.add(lblGeldValue, gbc_label_4);
+		
 		pnlGetraenkeAuswahl = new JPanel();
 		pnlGetraenkeAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();

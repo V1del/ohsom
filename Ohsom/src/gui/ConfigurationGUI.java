@@ -1,6 +1,6 @@
 package gui;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigurationGUI extends JFrame implements ActionListener, KeyListener {
+public class ConfigurationGUI extends JDialog implements ActionListener, KeyListener {
 	private BLUser blU;
 	private JTabbedPane tabbedPane;
 	private JPanel panel;
@@ -69,8 +69,10 @@ public class ConfigurationGUI extends JFrame implements ActionListener, KeyListe
 	private JLabel lblFehlermeldung;
 
 	public ConfigurationGUI(User currentUser) throws SQLException {
-		super("Konfigurationseinstellung");
+		new JDialog();
+		setTitle("Konfigurationseinstellung");
 
+		setModal(true);
 		blU = new BLUser();
 		blU.setCurrentUser(currentUser);
 
@@ -109,7 +111,7 @@ public class ConfigurationGUI extends JFrame implements ActionListener, KeyListe
 		pnlOptionen.add(txtWerteAnzeigen, gbc_txtWerteAnzeigen);
 		txtWerteAnzeigen.setColumns(10);
 
-		lblFuettern = new JLabel("FÃ¼ttern");
+		lblFuettern = new JLabel("Füttern");
 		GridBagConstraints gbc_lblFuettern = new GridBagConstraints();
 		gbc_lblFuettern.anchor = GridBagConstraints.WEST;
 		gbc_lblFuettern.insets = new Insets(0, 0, 5, 5);

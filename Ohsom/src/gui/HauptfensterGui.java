@@ -104,7 +104,6 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		
 		
 		JScrollPane scrollPane = new JScrollPane(tblHighscore);
-		
 
 		pnlHighscore.setBorder(new TitledBorder("Highscore"));
 		pnlHighscore.add(scrollPane, BorderLayout.CENTER);
