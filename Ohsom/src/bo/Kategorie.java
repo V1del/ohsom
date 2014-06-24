@@ -6,16 +6,25 @@ package bo;
  */
 public enum Kategorie {
 	FUTTER("Essen"), 
-	GETRÄNK("Getraenk"),
+	GETRAENK("Getraenk"),
 	SONSTIGES("Sonstiges");
 	
 	private String btnName;
 	
+	/**
+	 * Konstruktor für Kategorie Enumeration
+	 * @param btnName
+	 */
 	Kategorie(String btnName)
 	{
 		this.btnName = btnName;
 	}
 	
+	/**
+	 * Getter einer Kategorie mittels KategorieName
+	 * @param KategorieName
+	 * @return
+	 */
 	public static Kategorie getKategorieByName(String KategorieName)
 	{
 		for(Kategorie kat : Kategorie.values())
@@ -28,6 +37,10 @@ public enum Kategorie {
 		return null;
 	}
 	
+	/**
+	 * Benennung der Buttonnamen im Shopgui
+	 * @return
+	 */
 	public String getBtnName()
 	{
 		return this.btnName;

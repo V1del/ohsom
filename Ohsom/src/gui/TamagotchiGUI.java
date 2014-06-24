@@ -132,7 +132,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			setTamagotchi(false);
 		}
-		
+
 		BtnTamagotchiMap.put(btnWerte, Code.WERTE);
 		BtnTamagotchiMap.put(btnFuettern, Code.FUETTERN);
 		BtnTamagotchiMap.put(btnTrinken, Code.TRINKEN);
@@ -390,7 +390,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			JButton btnTamagotchi = (JButton) BtnEntry.getKey();
 			Code btnCode = (Code) BtnEntry.getValue();
 			btnTamagotchi.setText(btnCode.getCodeName());
-			
+
 			if(blT.getCurrentUser().getTamagotchi().isDead())
 			{
 				btnTamagotchi.setEnabled(false);
@@ -428,11 +428,11 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				pnlTamagotchi.moveTamagotchi(TamagotchiTemporary.isKrank());
 			}
 		}
-		
+
 		blT.changeTamagotchi(blT.getCurrentUser().getTamagotchi());
-		
+
 		lblNeueNachrichten.setText("Neue Nachrichten (" + blN.getCountOfUnreadNachrichten() + ")");
-	
+
 	}
 
 	/**
@@ -691,36 +691,37 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	{
 		pnlCondition.setVisible(false);
 		pnlInventar.setVisible(false);
-		switch(CodeAction)
-		{
-		case FUETTERN:
-			showInventar(Kategorie.FUTTER);
-			break;
-		case SCHLAFENLEGEN:
-			layTamagotchiToSleep();
-			break;
-		case SHOP:
-			ShopGUI sGUI = new ShopGUI();
-			break;
-		case INVENTAR:
-			showInventar(null);
-			break;
-		case SPIELEN:
-			setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
-			break;
-		case TRINKEN:
-			showInventar(Kategorie.GETRÄNK);
-			break;
-		case MEDIZIN:
-			gibMedizin();
-			break;
-		case WASCHEN:
-			washTamagotchi();
-			break;
-		case WERTE:
-			showCondition();
-			break;
-		}
+		if(blT.getCurrentUser().getTamagotchi().isDead() == false) {
+			switch(CodeAction)
+			{
+			case FUETTERN:
+				showInventar(Kategorie.FUTTER);
+				break;
+			case SCHLAFENLEGEN:
+				layTamagotchiToSleep();
+				break;
+			case SHOP:
+				ShopGUI sGUI = new ShopGUI();
+				break;
+			case INVENTAR:
+				showInventar(null);
+				break;
+			case SPIELEN:
+				setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
+				break;
+			case TRINKEN:
+				showInventar(Kategorie.GETRAENK);
+				break;
+			case MEDIZIN:
+				gibMedizin();
+				break;
+			case WASCHEN:
+				washTamagotchi();
+				break;
+			case WERTE:
+				showCondition();
+				break;
+			}}
 	}
 
 	/**

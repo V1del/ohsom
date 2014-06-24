@@ -220,7 +220,7 @@ public class BLTamagotchi {
 	 */
 	public ArrayList<Item> getDrinkItems() throws SQLException
 	{
-		return getInventory(Kategorie.GETRÄNK);
+		return getInventory(Kategorie.GETRAENK);
 	}
 	
 	/**

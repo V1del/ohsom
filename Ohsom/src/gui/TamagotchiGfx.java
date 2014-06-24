@@ -136,8 +136,8 @@ public class TamagotchiGfx extends JPanel {
 		CoordinateList[4][0] = 175;
 		CoordinateList[4][1] = 175;
 
-		Random r = new Random();
-		int r_index = r.nextInt(5);
+		int x = (int) ((202 - 120) * Math.random() + 120);
+		int y = (int) ((210 - 140) * Math.random() + 140);
 
 		String fileLocTemporary = "Snatschikus.png";
 
@@ -146,7 +146,7 @@ public class TamagotchiGfx extends JPanel {
 			fileLocTemporary = "Snatschikus_krank.png";
 		}
 
-		tamagotchi = new TamagotchiObj(this, "Sources/gfx/" + fileLocTemporary, CoordinateList[r_index][0], CoordinateList[r_index][1]);
+		tamagotchi = new TamagotchiObj(this, "Sources/gfx/" + fileLocTemporary, x, y);
 
 		this.repaint();
 	}

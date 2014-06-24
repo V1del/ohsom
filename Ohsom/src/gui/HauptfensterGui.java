@@ -40,7 +40,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JPasswordField txtPasswort = new JPasswordField();
 	JButton btnLogin = new JButton("Login");
 	JLabel lblFehlermeldung = new JLabel("");	
-	JPanel pnlHighscore = new JPanel();
+	JPanel pnlHighscore = new JPanel(new BorderLayout());
 	JTable tblHighscore = new JTable();
 	JButton btnCreate = new JButton("Create Account");
 
