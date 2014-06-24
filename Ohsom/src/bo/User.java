@@ -18,6 +18,7 @@ public class User {
 	private String Email;
 	private String Nickname;
 	public String Passwort;
+	public Tamagotchi Tamagotchi;
 	
 	/**
 	 * Konstruktor User, wenn Userdaten aus der Datenbank kommen
@@ -30,6 +31,9 @@ public class User {
 		Nickname = UserRS.getString("Nickname");
 		Email = UserRS.getString("Email");
 		Passwort = UserRS.getString("Passwort");
+		
+		DAOTamagotchiImpl DAOT = new DAOTamagotchiImpl();
+		this.Tamagotchi = DAOT.getTamagotchi(id);
 	}
 	
 	/**
@@ -107,8 +111,6 @@ public class User {
 	 * @throws SQLException
 	 */
 	public Tamagotchi getTamagotchi() throws SQLException {
-		DAOTamagotchiImpl DAOT = new DAOTamagotchiImpl();
-		Tamagotchi Tamagotchi = DAOT.getTamagotchi(id);
 		return Tamagotchi;
 	}
 

@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public class MessageThread extends Thread implements Runnable{
 	
 	MessagesGUI mGui = null;
@@ -32,7 +37,6 @@ public class MessageThread extends Thread implements Runnable{
 			  public void run() {
 				  
 				  try {
-					  System.out.println("Whyyyy :(");
 					mGui.refreshDialog();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
