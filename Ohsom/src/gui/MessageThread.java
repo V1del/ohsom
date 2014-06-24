@@ -37,7 +37,6 @@ public class MessageThread extends Thread implements Runnable{
 			  public void run() {
 				  
 				  try {
-					  System.out.println("Whyyyy :(");
 					mGui.refreshDialog();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
