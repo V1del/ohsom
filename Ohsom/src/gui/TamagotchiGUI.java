@@ -12,6 +12,7 @@ import bl.BLNachrichten;
 import bl.BLTamagotchi;
 import bl.BLUser;
 import bo.Code;
+import bo.InvaderGameThread;
 import bo.Item;
 import bo.Kategorie;
 import bo.Tamagotchi;
@@ -55,6 +56,8 @@ import java.awt.GridLayout;
 public class TamagotchiGUI implements ActionListener, KeyListener{
 
 	private Thread TamagotchiThread = new Thread(new TamagotchiThread(this));
+	
+	private Thread InvaderGameThread = new Thread(new InvaderGameThread());
 
 	private BLTamagotchi blT = null;
 
@@ -708,7 +711,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			showInventar(null);
 			break;
 		case SPIELEN:
-			setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
+			InvaderGameThread.start();
 			break;
 		case TRINKEN:
 			showInventar(Kategorie.GETRAENK);
