@@ -120,22 +120,6 @@ public class TamagotchiGfx extends JPanel {
 	 */
 	public void moveTamagotchi(boolean isIll)
 	{
-		int[][] CoordinateList = new int[5][5];
-		CoordinateList[0][0] = 202;
-		CoordinateList[0][1] = 200;
-
-		CoordinateList[1][0] = 120;
-		CoordinateList[1][1] = 190;
-
-		CoordinateList[2][0] = 140;
-		CoordinateList[2][1] = 210;
-
-		CoordinateList[3][0] = 150;
-		CoordinateList[3][1] = 205;
-
-		CoordinateList[4][0] = 175;
-		CoordinateList[4][1] = 175;
-
 		int x = (int) ((202 - 120) * Math.random() + 120);
 		int y = (int) ((210 - 140) * Math.random() + 140);
 

@@ -516,7 +516,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * 
+	 * Tamagotchi zurücksetzen
 	 * @param resetName
 	 * @throws SQLException
 	 */
@@ -533,6 +533,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
+	 * Neues Tamagotchi erstellen
 	 * @throws SQLException 
 	 * 
 	 */
@@ -597,6 +598,11 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		}
 	}
 
+	/**
+	 * Tamagotchi Item geben
+	 * @param Item
+	 * @throws SQLException
+	 */
 	private void giveItToTamagotchi(Item Item) throws SQLException {
 		if(Item.getShopartikel().getKategorie() == Kategorie.FUTTER)
 		{
@@ -643,7 +649,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * 
+	 * Tamagotchi schlafenlegen
 	 * @throws SQLException
 	 */
 	public void layTamagotchiToSleep() throws SQLException
@@ -658,7 +664,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * 
+	 * Tamagotchi Medizin geben
 	 * @throws SQLException
 	 */
 	public void gibMedizin() throws SQLException
@@ -683,7 +689,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * 
+	 * Code - Actions ausführen
 	 * @param CodeAction
 	 * @throws SQLException
 	 */

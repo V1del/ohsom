@@ -50,6 +50,11 @@ public class User {
 	}
 	
 	
+	/**
+	 * Getter Nachrichten
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Nachricht> getNachrichten() throws SQLException
 	{
 		DAONachrichtenImpl DAON = new DAONachrichtenImpl();
@@ -57,8 +62,8 @@ public class User {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Getter ID
+	 * @return idUser
 	 */
 	public int getId()
 	{
@@ -66,7 +71,7 @@ public class User {
 	}
 	
 	/**
-	 * 
+	 * Getter Email 
 	 * @return
 	 */
 	public String getEmail() {
@@ -74,7 +79,7 @@ public class User {
 	}
 
 	/**
-	 * 
+	 * Setter Email
 	 * @param email
 	 */
 	public void setEmail(String email) {
@@ -82,23 +87,23 @@ public class User {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Getter Nickname
+	 * @return Nickname
 	 */
 	public String getNickname() {
 		return Nickname;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Getter Passwort 
+	 * @return Passwort
 	 */
 	public String getPasswort() {
 		return Passwort;
 	}
 
 	/**
-	 * 
+	 * Getter Highscorefile
 	 */
 	public Highscore getHighscore() throws SQLException {
 		DAOUserImpl DAOU = new DAOUserImpl();
@@ -106,17 +111,27 @@ public class User {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Getter Tamagotchi
+	 * @return Tamagotchi
 	 * @throws SQLException
 	 */
 	public Tamagotchi getTamagotchi() throws SQLException {
 		return Tamagotchi;
 	}
+	
+	/**
+	 * Setter Tamagotchi
+	 * @param Tamagotchi
+	 * @throws SQLException
+	 */
+	public void setTamagotchi(Tamagotchi Tamagotchi) throws SQLException
+	{
+		this.Tamagotchi = Tamagotchi;
+	}
 
 	/**
-	 * 
-	 * @return
+	 * Hat User bereits ein Tamagotchi
+	 * @return hat User Tamagotchi
 	 * @throws SQLException
 	 */
 	public boolean hasTamagotchi() throws SQLException
@@ -125,7 +140,7 @@ public class User {
 	}
 
 	/**
-	 * get Config-Data
+	 * Getter Config-Data
 	 * @return
 	 * @throws SQLException
 	 */

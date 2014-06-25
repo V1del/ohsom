@@ -245,7 +245,7 @@ public class BLTamagotchi {
 	}
 
 	/**
-	 * 
+	 * Hinzfügen eines neuen Tamagotchis
 	 * @param name
 	 * @return
 	 * @throws SQLException
@@ -257,6 +257,7 @@ public class BLTamagotchi {
 		{
 			if(DAOT.addTamagotchi(newTamagotchi))
 			{
+				DAOT.getTamagotchi
 				return true;
 			}
 		}
