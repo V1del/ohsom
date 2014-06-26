@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import bl.BLTamagotchi;
 import bl.BLUser;
 
 public class InvaderGame extends Canvas implements KeyListener{
 
 	private BLUser blU = new BLUser();
+	private BLTamagotchi blT = new BLTamagotchi();
 	private BufferStrategy strategy;
 	private boolean gameRunning;
 	private ArrayList<InvaderObject> invobjects = new ArrayList<InvaderObject>();
@@ -173,8 +175,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 		removeList.add(obj);
 	}
 
-	public void lost() {
+	public void lost() throws SQLException {
 		message = "You lost what a bummer";
+		
+		getReward();
 
 	}
 
@@ -200,11 +204,21 @@ public class InvaderGame extends Canvas implements KeyListener{
 		message = "Hey you win, motherfucking loser";
 		points += 50;
 		
+		getReward();
+
+	}
+	
+	private void getReward() throws SQLException
+	{
 		if(blU.updateHighscore(points))
 		{
+			blU.getCurrentUser().getTamagotchi().VerdienGeld(Math.round(points * 2));
 			
+			if(blT.changeTamagotchi(blU.getCurrentUser().getTamagotchi()))
+			{
+				System.out.println("Oh yeah");
+			}
 		}
-
 	}
 
 	@Override

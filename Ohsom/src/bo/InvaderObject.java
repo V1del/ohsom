@@ -80,8 +80,9 @@ public abstract class InvaderObject {
 
 	/**
 	 * Only relevant for Alien movement, but defining here because we're going to use this as base class for our list
+	 * @throws SQLException 
 	 */
-	public void switchDirection() {
+	public void switchDirection() throws SQLException {
 	}
 
 }

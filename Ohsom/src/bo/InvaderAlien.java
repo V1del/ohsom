@@ -1,5 +1,7 @@
 package bo;
 
+import java.sql.SQLException;
+
 public class InvaderAlien extends InvaderObject {
 
 	private InvaderGame game;
@@ -31,16 +33,23 @@ public class InvaderAlien extends InvaderObject {
 	}
 
 	@Override
-	public void switchDirection() {
-		speedX = -speedX;
-		y += 10;
+	public void switchDirection() throws SQLException {
+		try {
+			{
+				speedX = -speedX;
+				y += 10;
 
-		if (y > 750) {
-			game.lost();
+				if (y > 750) {
+					game.lost();
+				}
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
+
+
 	}
-
-
-
 }
