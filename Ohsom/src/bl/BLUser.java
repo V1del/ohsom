@@ -7,7 +7,7 @@ import bo.*;
 import db.*;
 
 /**
- * Businesslogik für die Userangelegenheiten
+ * Businesslogik fÃ¼r die Userangelegenheiten
  * @author Snatsch
  *
  */
@@ -17,7 +17,7 @@ public class BLUser {
 	private User currentUser = Login.getInstance().getUserInstance();
 
 	/**
-	 * Überprüfung der Validität der Daten im Bezug auf das Vorhandensein in der Datenbank
+	 * ÃœberprÃ¼fung der ValiditÃ¤t der Daten im Bezug auf das Vorhandensein in der Datenbank
 	 * @param Nickname
 	 * @param Passwort
 	 * @return
@@ -30,11 +30,18 @@ public class BLUser {
 		
 		return !(currentUser == null);
 	}
-
+/**
+ * Getter des aktuell eingeloggten Users
+ * @return aktueller User
+ */
 	public User getCurrentUser() {
 		return currentUser;
 	}
 
+	/**
+	 * Einloggen des aktuellen Users
+	 * @param currentUser
+	 */
 	public void setCurrentUser(User currentUser) {
 		Login.getInstance().logInUser(currentUser);
 	}
@@ -53,43 +60,43 @@ public class BLUser {
 		User newUser = null;
 		Highscore newHighscore = null;
 
-		if((DAOU.getUser(User.getNickname(), true) == null))
+		if(getAllUsers().size() < 50)
 		{
-			if((DAOU.getUser(User.getEmail(), false) == null))
-			{ 
-				newUser = new User(User.getNickname(), User.getPasswort(), User.getEmail());
-
-
-
-				if(DAOU.addUser(newUser))
-				{
-					newUser = DAOU.getUser(User.getNickname(), User.getPasswort());
-
-					newHighscore = new Highscore(0, newUser.getId());
-					if(!DAOU.addHighscore(newHighscore))
+			if((DAOU.getUser(User.getNickname(), true) == null))
+			{
+				if((DAOU.getUser(User.getEmail(), false) == null))
+				{ 
+					newUser = new User(User.getNickname(), User.getPasswort(), User.getEmail());
+					if(DAOU.addUser(newUser))
 					{
-						ResultCreatingUser = "Das zugeh�rige Highscorefile konnte nicht erstellt werden.";
+						newUser = DAOU.getUser(User.getNickname(), User.getPasswort());
+
+						newHighscore = new Highscore(0, newUser.getId());
+						if(!DAOU.addHighscore(newHighscore))
+						{
+							ResultCreatingUser = "Das zugehörige Highscorefile konnte nicht erstellt werden.";
+						}
+					}
+					else
+					{
+						ResultCreatingUser = "Der Account konnte nicht erstellt werden.";
 					}
 				}
 				else
 				{
-					ResultCreatingUser = "Der Account konnte nicht erstellt werden.";
+					ResultCreatingUser = "Einen User mit dieser Email gibt es schon!";
 				}
-
-
-
-
 			}
 			else
 			{
-				ResultCreatingUser = "Einen User mit dieser Email gibt es schon!";
+				ResultCreatingUser = "Diesen User gibt es bereits (wähle anderen Nickname).";
 			}
 		}
 		else
 		{
-			ResultCreatingUser = "Diesen User gibt es bereits (w�hle anderen Nickname).";
+			ResultCreatingUser = "Es gibt bereits 50 User!";
 		}
-
+		
 		return ResultCreatingUser;		
 	}
 
@@ -106,7 +113,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Funktion zur Überprüfung der Passwortsicherheit
+	 * Funktion zur ÃœberprÃ¼fung der Passwortsicherheit
 	 * @param Password
 	 * @return Passwortsicherheit
 	 */
@@ -130,7 +137,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Funktion zur Formatierung der Highscore Datensätze 
+	 * Funktion zur Formatierung der Highscore DatensÃ¤tze 
 	 * @return
 	 * @throws SQLException
 	 */
@@ -152,7 +159,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Insert der Config Datensätze
+	 * Insert der Config DatensÃ¤tze
 	 * @param TamagotchiConfig
 	 * @return
 	 * @throws SQLException
@@ -163,7 +170,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Update der Config Datensätze
+	 * Update der Config DatensÃ¤tze
 	 * @param TamagotchiConfig
 	 * @return
 	 * @throws SQLException
@@ -174,7 +181,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Delete der Config Datensätze
+	 * Delete der Config DatensÃ¤tze
 	 * @param TamagotchiConfig
 	 * @return
 	 * @throws SQLException
@@ -185,7 +192,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Editieren der Config Datensätze, die dem User zugehörig sind
+	 * Editieren der Config DatensÃ¤tze, die dem User zugehÃ¶rig sind
 	 * @param TamagotchiConfig
 	 * @return
 	 * @throws SQLException
@@ -241,7 +248,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Update Methode f�r den Highscore
+	 * Update Methode für den Highscore
 	 */
 	public boolean updateHighscore(int Punkte) throws SQLException
 	{

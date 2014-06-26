@@ -75,7 +75,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 	private TamagotchiGfx pnlTamagotchi;
 
-	private JPanel pnlTamagotchiButtons;
+	private JPanel pnlTamagotchiButtons = new JPanel();
 
 	private Map <JButton, Code> BtnTamagotchiMap = new HashMap<JButton, Code>();
 
@@ -111,6 +111,10 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private JLabel lblMuedigkeitValue;
 	private JLabel lblBoringState;
 	private JLabel lblBoringStateValue;
+	private JLabel lblMedizin;
+	private JLabel lblMedizinValue;
+	private JLabel lblEvolutionsstadium;
+	private JLabel lblEvolutionsstadiumValue;
 
 	private JPanel pnlInventar;
 
@@ -303,29 +307,29 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		GridBagConstraints gbc_lblSchmutzigkeit = new GridBagConstraints();
 		gbc_lblSchmutzigkeit.anchor = GridBagConstraints.WEST;
 		gbc_lblSchmutzigkeit.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSchmutzigkeit.gridx = 6;
+		gbc_lblSchmutzigkeit.gridx = 5;
 		gbc_lblSchmutzigkeit.gridy = 0;
 		pnlCondition.add(lblSchmutzigkeit, gbc_lblSchmutzigkeit);
 
 		lblSchmutzigkeitValue = new JLabel("valSchmutz");
 		GridBagConstraints gbc_valSchmutz = new GridBagConstraints();
 		gbc_valSchmutz.insets = new Insets(0, 0, 5, 5);
-		gbc_valSchmutz.gridx = 7;
+		gbc_valSchmutz.gridx = 6;
 		gbc_valSchmutz.gridy = 0;
 		pnlCondition.add(lblSchmutzigkeitValue, gbc_valSchmutz);
-
+		
 		lblZustand = new JLabel("Zustand:");
 		GridBagConstraints gbc_lblZustand = new GridBagConstraints();
 		gbc_lblZustand.anchor = GridBagConstraints.WEST;
 		gbc_lblZustand.insets = new Insets(0, 0, 5, 5);
-		gbc_lblZustand.gridx = 9;
+		gbc_lblZustand.gridx = 7;
 		gbc_lblZustand.gridy = 0;
 		pnlCondition.add(lblZustand, gbc_lblZustand);
 
 		lblZustandValue = new JLabel("valZustand");
 		GridBagConstraints gbc_valZustand = new GridBagConstraints();
 		gbc_valZustand.insets = new Insets(0, 0, 5, 0);
-		gbc_valZustand.gridx = 10;
+		gbc_valZustand.gridx = 8;
 		gbc_valZustand.gridy = 0;
 		pnlCondition.add(lblZustandValue, gbc_valZustand);
 
@@ -358,6 +362,38 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		gbc_valMuede.gridx = 4;
 		gbc_valMuede.gridy = 1;
 		pnlCondition.add(lblMuedigkeitValue, gbc_valMuede);
+		
+		lblMedizin = new JLabel("Medizin:");
+		GridBagConstraints gbc_lblMedizin = new GridBagConstraints();
+		gbc_lblMedizin.anchor = GridBagConstraints.WEST;
+		gbc_lblMedizin.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMedizin.gridx = 5;
+		gbc_lblMedizin.gridy = 1;
+		pnlCondition.add(lblMedizin, gbc_lblMedizin);
+
+		lblMedizinValue = new JLabel("valMedizin");
+		GridBagConstraints gbc_lblMedizinValue = new GridBagConstraints();
+		gbc_lblMedizinValue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMedizinValue.gridx = 6;
+		gbc_lblMedizinValue.gridy = 1;
+		pnlCondition.add(lblMedizinValue, gbc_lblMedizinValue);
+		
+		lblEvolutionsstadium = new JLabel("Evolutionsstadium:");
+		GridBagConstraints gbc_lblEvolutionsstadium = new GridBagConstraints();
+		gbc_lblEvolutionsstadium.anchor = GridBagConstraints.WEST;
+		gbc_lblEvolutionsstadium.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEvolutionsstadium.gridx = 7;
+		gbc_lblEvolutionsstadium.gridy = 1;
+		pnlCondition.add(lblEvolutionsstadium, gbc_lblEvolutionsstadium);
+
+		lblEvolutionsstadiumValue = new JLabel("valEvolutionsstadium");
+		GridBagConstraints gbc_lblEvolutionsstadiumValue = new GridBagConstraints();
+		gbc_lblEvolutionsstadiumValue.anchor = GridBagConstraints.WEST;
+		gbc_lblEvolutionsstadiumValue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEvolutionsstadiumValue.gridx = 8;
+		gbc_lblEvolutionsstadiumValue.gridy = 1;
+		pnlCondition.add(lblEvolutionsstadiumValue, gbc_lblEvolutionsstadiumValue);
+
 
 		pnlInventar = new JPanel();
 		pnlInventar.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -382,6 +418,10 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		frmOhsom.requestFocusInWindow();
 	}
 
+	/**
+	 * Befüllen des TamagotchiButtons - Panels
+	 * @throws SQLException
+	 */
 	public void fillButtonArea() throws SQLException
 	{
 		pnlTamagotchiButtons.removeAll();
@@ -406,7 +446,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * 
+	 * Refresh Tamagotchi Panel nach Ablauf des Timers um immer wieder den Zustand zu überprüfen
 	 * @throws SQLException
 	 */
 	public void refreshTamagotchiPanel() throws SQLException
@@ -421,11 +461,11 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			pnlTamagotchi.setShit(TamagotchiTemporary.isDirty());
 
-			pnlTamagotchi.setSleeping(TamagotchiTemporary.isStillSleeping(), TamagotchiTemporary.isKrank());
+			pnlTamagotchi.setSleeping(TamagotchiTemporary.isStillSleeping(), TamagotchiTemporary.isKrank(), TamagotchiTemporary.isGeschlechtw(), TamagotchiTemporary.getEvolutionsstadium());
 
 			if(!TamagotchiTemporary.isStillSleeping())
 			{
-				pnlTamagotchi.moveTamagotchi(TamagotchiTemporary.isKrank());
+				pnlTamagotchi.moveTamagotchi(TamagotchiTemporary.isKrank(), TamagotchiTemporary.isGeschlechtw(), TamagotchiTemporary.getEvolutionsstadium());
 			}
 		}
 
@@ -450,6 +490,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		lblSchmutzigkeitValue.setText(String.valueOf(currentTamagotchi.isDirty()));
 		lblMuedigkeitValue.setText(String.valueOf(currentTamagotchi.isTired()));
 		lblZustandValue.setText(currentTamagotchi.getGesundheitszustand().name());
+		lblEvolutionsstadiumValue.setText(currentTamagotchi.getEvolutionsstadium().name());
+		lblMedizinValue.setText(currentTamagotchi.getMedizin() + "/100");
 	}
 
 	/**
@@ -488,6 +530,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	 */
 	public void setTamagotchi(boolean reseting) throws SQLException
 	{
+		boolean successfullSetting = false;
 		String askForName = (String)JOptionPane.showInputDialog(
 				new JFrame(),
 				"Type in Name of Tamagotchi (not > 10 letters)",
@@ -510,9 +553,6 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			createNewTamagotchi(askForName);
 		}
-
-		fillButtonArea();
-
 	}
 
 	/**
@@ -525,6 +565,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		if(blT.resetTamagotchi(resetName))
 		{
 			setEreignisLabel("Du hast dein Tamagotchi erfolgreich resetet");
+			fillButtonArea();
 		}
 		else
 		{
@@ -542,6 +583,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		if(blT.addTamagotchi(newName))
 		{
 			setEreignisLabel("Du hast dein Tamagotchi " + newName + " erfolgreich erstellt.");
+			fillButtonArea();
 		}
 		else
 		{

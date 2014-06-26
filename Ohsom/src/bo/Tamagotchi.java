@@ -141,11 +141,12 @@ public class Tamagotchi {
 	 * @return
 	 */
 	public String getGeschlecht() {
-		return (Geschlechtw == false) ? "m�nnlich" : "weiblich";
+		return (Geschlechtw == false) ? "männlich" : "weiblich";
 	}
 	
 	/**
-	 * Getter Geschlecht as boolean 
+	 * Getter Geschlechtw as boolean 
+	 * @return is Geschlecht weiblich
 	 */
 	public boolean isGeschlechtw()
 	{
@@ -153,7 +154,7 @@ public class Tamagotchi {
 	}
 	
 	/**
-	 * Getter Alter (beruhend auf Geburtsdatum)
+	 * Getter Alter (abhängig vom Geburtsdatum)
 	 * @return
 	 */
 	public int getAlter() {

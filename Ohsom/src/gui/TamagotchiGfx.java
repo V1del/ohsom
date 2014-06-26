@@ -16,6 +16,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 
 import bo.InvaderObject;
 import bo.TamagotchiObj;
+import bo.Entwicklungsstadium;
 
 /**
  * 
@@ -79,27 +80,64 @@ public class TamagotchiGfx extends JPanel {
 	 * @param setSleeping (im Schlafzustand?)
 	 * @param isIll (ist krank? => nur, wenn nicht schlafend)
 	 */
-	public void setSleeping(boolean setSleeping, boolean isIll)
+	public void setSleeping(boolean setSleeping, boolean isIll, boolean female, Entwicklungsstadium State)
 	{
+		String fileLocTemporary = getCurrentTamagotchi(State,female,isIll, setSleeping);
+		int y = 200;
 		if(setSleeping)
 		{
 			tamagotchiworld = new TamagotchiObj(this, "Sources/gfx/Tamagotchiwelt_Nacht.jpg", 99, 135);
-
-			tamagotchi = new TamagotchiObj(this, "Sources/gfx/Snatschikus_Schlaf.png", 202, 260);
+			y = 260;
 		}
 		else
 		{
 			tamagotchiworld = new TamagotchiObj(this, "Sources/gfx/Tamagotchiwelt.png", 99, 135);
-			String fileLocTemporary = "Snatschikus.png";
-
-			if(isIll)
-			{
-				fileLocTemporary = "Snatschikus_krank.png";
-			}
-			tamagotchi = new TamagotchiObj(this, "Sources/gfx/" + fileLocTemporary, 202, 200);
+			y = 200;
 		}
+		tamagotchi = new TamagotchiObj(this, "Sources/gfx/" + fileLocTemporary, 202, y);
 
 		this.repaint();
+	}
+	
+	/**
+	 * Getter des aktuellen Tamagotchis
+	 * @param State
+	 * @param female
+	 * @param isIll
+	 * @param isSleeping
+	 * @return
+	 */
+	public String getCurrentTamagotchi(Entwicklungsstadium State, boolean female, boolean isIll, boolean isSleeping)
+	{
+		if(State == Entwicklungsstadium.EI)
+		{
+				return "Ei.png";
+		}
+		else if(State == Entwicklungsstadium.JUNGES)
+		{
+			if(female)
+			{
+				return "Baby_weibl.png";
+			}
+			else
+			{
+				return "Baby_maennl.png";
+			}
+		}
+		else
+		{
+			if(isSleeping)
+			{
+				return "Snatschikus_Schlaf.png";
+			}
+			
+			if(isIll)
+			{
+				return "Snatschikus_krank.png";
+			}
+		}
+		
+		return "Snatschikus.png";
 	}
 
 	/**
@@ -118,17 +156,12 @@ public class TamagotchiGfx extends JPanel {
 	 * Zufälliges Setzen des Tamagotchis auf seinem Bildschirm
 	 * @param isIll (ist Tamagotchi krank)
 	 */
-	public void moveTamagotchi(boolean isIll)
+	public void moveTamagotchi(boolean isIll, boolean female, Entwicklungsstadium State)
 	{
 		int x = (int) ((202 - 120) * Math.random() + 120);
 		int y = (int) ((210 - 140) * Math.random() + 140);
 
-		String fileLocTemporary = "Snatschikus.png";
-
-		if(isIll)
-		{
-			fileLocTemporary = "Snatschikus_krank.png";
-		}
+		String fileLocTemporary = getCurrentTamagotchi(State, female, isIll, false);
 
 		tamagotchi = new TamagotchiObj(this, "Sources/gfx/" + fileLocTemporary, x, y);
 

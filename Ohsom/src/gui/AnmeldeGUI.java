@@ -257,14 +257,6 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
-	/*public void ClearForm()
-	{
-		txtUsername.setText("");
-		txtPassword.setText("");
-		txtPasswordSecurity.setText("");
-		txtEmail.setText("");
-	}*/
-
 	/**
 	 * formale Korrektheit der Daten
 	 * @return
@@ -280,18 +272,18 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 			{
 				if(!txtEmail.getText().contains(".") || !txtEmail.getText().contains("@"))
 				{
-					UserFormDataValidateResult += "Dies ist kein zulï¿½ssiges Mailformat\n";
+					UserFormDataValidateResult += "Dies ist kein zulässiges Mailformat\n";
 				}
 			}
 			else
 			{
-				UserFormDataValidateResult += "Die beiden Passwï¿½rter stimmen nicht ï¿½berein\n";				
+				UserFormDataValidateResult += "Die beiden Passwörter stimmen nicht überein\n";				
 			}
 
 		}
 		else
 		{
-			UserFormDataValidateResult += "Du hast nicht alle Felder ausgefï¿½llt\n";
+			UserFormDataValidateResult += "Du hast nicht alle Felder ausgefüllt\n";
 		}
 
 		return UserFormDataValidateResult;

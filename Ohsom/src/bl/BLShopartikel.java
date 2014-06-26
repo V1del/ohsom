@@ -7,7 +7,7 @@ import db.DAOShoppartikelImpl;
 import bo.Kategorie;
 import bo.Shopartikel;
 /**
- * Businesslogik fÃ¼r die Shopartikel
+ * Businesslogik für die Shopartikel
  * @author Snatsch
  *
  */
@@ -16,7 +16,7 @@ public class BLShopartikel {
 	private DAOShoppartikelImpl DAOS = new DAOShoppartikelImpl();
 	
 	/**
-	 * 
+	 * Getter alle Shopartikel für den aktuellen Shopaufruf
 	 * @param filterKat
 	 * @return
 	 * @throws SQLException
@@ -27,7 +27,7 @@ public class BLShopartikel {
 	}
 	
 	/**
-	 * 
+	 *  Getter Medizinpreis mit Menge Medizin
 	 * @param Amount
 	 * @return
 	 * @throws SQLException
@@ -39,9 +39,9 @@ public class BLShopartikel {
 	}
 	
 	/**
-	 * 
+	 * Getter Article mit IDArticle
 	 * @param idArticle
-	 * @return
+	 * @return Shopartikel
 	 * @throws SQLException
 	 */
 	public Shopartikel getArticle(int idArticle) throws SQLException

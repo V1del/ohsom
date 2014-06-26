@@ -49,6 +49,7 @@ public class BLTamagotchi {
 			{
 				if(DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteTrinkzeit"))
 				{
+					currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 					return true;
 				}
 			}
@@ -68,6 +69,7 @@ public class BLTamagotchi {
 		{
 			if(DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteWaschzeit"))
 			{
+				currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 				return true;
 			}
 		}
@@ -106,6 +108,7 @@ public class BLTamagotchi {
 			{
 				if(DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteFuetterungszeit"))
 				{
+					currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 					return true;
 				}
 			}
@@ -137,6 +140,7 @@ public class BLTamagotchi {
 		if(currentTamagotchiTemporary.verwendeMedizin())
 		{
 			MedizinGebenErfolgreich = DAOT.changeTamagotchi(currentTamagotchiTemporary);
+			currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 		}
 		
 		return MedizinGebenErfolgreich;
@@ -237,6 +241,7 @@ public class BLTamagotchi {
 		{
 			if(DAOT.setToActualDate(resetedTamagotchi, "letzteWaschzeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteSchlafenszeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteSpielzeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteFuetterungszeit") & DAOT.setToActualDate(resetedTamagotchi, "letzteTrinkzeit") & changeTamagotchi(resetedTamagotchi))
 			{
+				currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 				return true;
 			}
 		}
@@ -257,7 +262,7 @@ public class BLTamagotchi {
 		{
 			if(DAOT.addTamagotchi(newTamagotchi))
 			{
-				DAOT.getTamagotchi
+				currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 				return true;
 			}
 		}

@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import bl.BLTamagotchi;
 import bo.User;
 import bo.Tamagotchi;
+import bo.Entwicklungsstadium;
 
 /**
  * TamagotchiThread - Klasse, die das TamagotchiGUI regelmässig repainten lässt
@@ -17,14 +18,19 @@ import bo.Tamagotchi;
 public class TamagotchiThread implements Runnable {
 
 	TamagotchiGUI tGui = null;
+	BLTamagotchi blT = new BLTamagotchi();
+	Entwicklungsstadium lastState = null; 
 	
 	/**
 	 * Konstruktor
 	 * @param tGui
+	 * @param tamagotchi 
+	 * @throws SQLException 
 	 */
-	public TamagotchiThread(TamagotchiGUI tGui) 
+	public TamagotchiThread(TamagotchiGUI tGui) throws SQLException 
 	{
 		this.tGui = tGui;
+		this.lastState = blT.getCurrentUser().getTamagotchi().getEvolutionsstadium();
 	}
 	
 	/**
@@ -32,7 +38,7 @@ public class TamagotchiThread implements Runnable {
 	 */
 	public void run()
 	{
-		run(new Date(), 10*60);
+		run(new Date(), 10*60*2);
 	}
 	
 	/**
@@ -49,6 +55,21 @@ public class TamagotchiThread implements Runnable {
 				  
 				  try {
 					tGui.refreshTamagotchiPanel();
+					
+					if(lastState == Entwicklungsstadium.EI)
+					{
+						if(lastState != blT.getCurrentUser().getTamagotchi().getEvolutionsstadium())
+						{
+							tGui.setEreignisLabel("Das Tamagotchi ist geschlüpft!");
+						}
+					}
+					else if(lastState ==  Entwicklungsstadium.JUNGES)
+					{
+						if(lastState != blT.getCurrentUser().getTamagotchi().getEvolutionsstadium())
+						{
+							tGui.setEreignisLabel("Dein Tamagotchi ist erwachsen geworden :).");
+						}
+					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

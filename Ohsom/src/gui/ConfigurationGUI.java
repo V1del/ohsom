@@ -310,6 +310,10 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		setVisible(true);
 	}
 
+	/**
+	 * Füllen der Map mit den Values
+	 * @throws SQLException
+	 */
 	public void fillMap() throws SQLException
 	{
 		ArrayList<TamagotchiConfig> TamagotchiConfigList = blU.getCurrentUser().getConfig();
