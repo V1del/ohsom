@@ -91,13 +91,17 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	private JLabel lblvalue;
 	private JProgressBar progressBar;
 
-	public ConfigurationGUI(User currentUser) throws SQLException {
+	/**
+	 * Konstruktor
+	 * @param currentUser
+	 * @throws SQLException
+	 */
+	public ConfigurationGUI() throws SQLException {
 		new JDialog();
 		setTitle("Konfigurationseinstellung");
 
 		setModal(true);
 		blU = new BLUser();
-		blU.setCurrentUser(currentUser);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -498,7 +502,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Prï¿½fen ob eines der Textfelder bereits diesen Hotkey enthï¿½lt
+	 * Prüfen ob eines der Textfelder bereits diesen Hotkey enthält
 	 * @param hotkey
 	 * @return
 	 */

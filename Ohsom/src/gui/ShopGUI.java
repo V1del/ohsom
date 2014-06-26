@@ -45,7 +45,7 @@ import bo.Tamagotchi;
 import bo.User;
 
 /**
- * GUI fÃ¼r den Shop
+ * GUI für den Shop
  * @author Snatsch
  *
  */

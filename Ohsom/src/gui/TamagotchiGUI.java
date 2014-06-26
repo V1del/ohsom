@@ -49,7 +49,7 @@ import java.util.Map;
 import java.awt.GridLayout;
 
 /**
- * TamagotchiGUI is a GUI especially for playing with your Tamagotchi
+ * GUI um mit deinem Tamagotchi zu spielen
  * @author Snatsch
  *
  */
@@ -623,7 +623,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 			}
 			else if (ae.getSource() == btnPref)
 			{
-				ConfigurationGUI cgui = new ConfigurationGUI(blT.getCurrentUser());	
+				ConfigurationGUI cgui = new ConfigurationGUI();	
 				requestFocus();
 			}
 			else if(ae.getSource() == btnHelp)
