@@ -4,14 +4,22 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -37,6 +45,11 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private boolean shoot;
 	private long shotDelay = 500;
 	private long lastFired;
+	private int Timer;
+	
+	private static Font sanSerifFont = new Font("SanSerif", Font.PLAIN, 18);
+	private static Color m_tWhite = new Color(255, 255, 255, 150);
+	
 
 	/*public static void main(String[] args) {
 		InvaderGame g = new InvaderGame();
@@ -44,6 +57,16 @@ public class InvaderGame extends Canvas implements KeyListener{
 		g.gameLoop();
 
 	}*/
+	
+	public void setTimer(int seconds)
+	{
+		this.Timer = seconds;
+	}
+	
+	public int getTimer()
+	{
+		return this.Timer;
+	}
 
 	public InvaderGame() {
 		JFrame gameTest = new JFrame("Space invaders test");
@@ -74,7 +97,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 		gameRunning = true;
 	}
 
-	public void gameLoop() throws SQLException {
+	public void gameLoop() throws SQLException, IOException {
 		long lastLoopTime = System.currentTimeMillis();
 
 		while (gameRunning) {
@@ -82,10 +105,18 @@ public class InvaderGame extends Canvas implements KeyListener{
 			lastLoopTime = System.currentTimeMillis();	//Update last loop time
 
 			Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+			
 			g.setColor(Color.black);
 			g.fillRect(0, 0, 800, 600);
-
-
+			
+			g.setColor(m_tWhite);
+			
+			g.setFont(sanSerifFont);
+		    FontMetrics fm = g.getFontMetrics();
+		    int w = fm.stringWidth("Punkte: " + points);
+		    int h = fm.getAscent();
+		    g.drawString("Punkte: " + points, 50, 30);
+			
 			for(InvaderObject invobj : invobjects)
 			{
 				invobj.move(passedTime);
@@ -142,10 +173,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 			catch (Exception e) {
 
 			}
-
+			
 		}
 	}
-
+	
 	private void initInvaderObjects() {
 		ship = new Ship(this, "Sources/gfx/Raumschiff.png", 370, 550);
 		invobjects.add(ship);
@@ -210,13 +241,22 @@ public class InvaderGame extends Canvas implements KeyListener{
 	
 	private void getReward() throws SQLException
 	{
-		if(blU.updateHighscore(points))
-		{
 			blU.getCurrentUser().getTamagotchi().VerdienGeld(Math.round(points * 2));
 			
 			if(blT.changeTamagotchi(blU.getCurrentUser().getTamagotchi()))
 			{
 				System.out.println("Oh yeah");
+			}
+		
+	}
+	
+	private void setHighscore() throws SQLException
+	{
+		if(blU.getCurrentUser().getHighscore().getPunkte() < points)
+		{
+			if(blU.updateHighscore(points))
+			{
+				
 			}
 		}
 	}

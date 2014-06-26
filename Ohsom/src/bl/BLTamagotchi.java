@@ -59,7 +59,7 @@ public class BLTamagotchi {
 	
 	/**
 	 * Tamagotchi waschen
-	 * @return
+	 * @return waschen erfolgreich
 	 * @throws SQLException
 	 */
 	public boolean washTamagotchi() throws SQLException
@@ -74,6 +74,24 @@ public class BLTamagotchi {
 			}
 		}
 		
+		return false;
+	}
+	
+	/**
+	 * mit Tamagotchi spielen
+	 * @return spielen erfolgreich
+	 * @throws SQLException
+	 */
+	public boolean playWithTamagotchi() throws SQLException
+	{
+		if(currentUser.getTamagotchi().isBored())
+		{
+			if(DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteSpielzeit"))
+			{
+				currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
+				return true;
+			}
+		}
 		return false;
 	}
 	

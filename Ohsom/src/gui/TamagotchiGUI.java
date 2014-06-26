@@ -649,7 +649,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * Tamagotchi Item geben
+	 * Methode um Tamagotchi ein Item zu geben und danach auf dem GUI auszugeben
 	 * @param Item
 	 * @throws SQLException
 	 */
@@ -696,6 +696,22 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		{
 			setEreignisLabel("Dein Tamagotchi ist bereits sauber");
 		}
+	}
+	
+	/**
+	 * Methode, um mit dem Tamagotchi zu spielen (Minispiel Start)
+	 * @throws SQLException
+	 */
+	public void playWithTamagotchi() throws SQLException
+	{
+		//if(blT.playWithTamagotchi())
+	//	{
+			InvaderGameThread.start();
+		//}
+		/*else
+		{
+			setEreignisLabel("Das Tamagotchi hat keine Lust zu spielen");
+		}*/
 	}
 
 	/**
@@ -771,7 +787,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 				showInventar(null);
 				break;
 			case SPIELEN:
-				InvaderGameThread.start();
+				playWithTamagotchi();
 				break;
 			case TRINKEN:
 				showInventar(Kategorie.GETRAENK);
