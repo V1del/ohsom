@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -47,7 +48,7 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 	JButton btnSubmit, btnCancel;
 	JTextArea Text;
 	JLabel lblFehlermeldung;
-	
+
 	Nachricht currentNachricht = null;
 
 	/**
@@ -68,6 +69,7 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 		new JDialog();
 		setModal(true);
 		setTitle("Neue Nachricht verfassen");
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -169,7 +171,7 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 				comboBoxValues.put(UserItem.getNickname(), UserItem.getId());
 			}
 		}
-		
+
 		if(currentNachricht != null)
 		{
 			comboBox.setSelectedItem(currentNachricht.getSender().getNickname());
@@ -177,36 +179,37 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * ÃœberprÃ¼fung der ValiditÃ¤t der Nachrichtendaten => GUI - Logik
-	 * @return
-	 */
-	public boolean isMessageInputValid()
-	{
-		if(txtTitle.getText().equalsIgnoreCase(""))
-		{
-			return false;
-		}
-
-		if(Text.getText().equalsIgnoreCase(""))
-		{
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Nachricht vorbereiten zum Verarbeiten in der Businesslogik
 	 */
 	public void sendNachricht() throws SQLException
 	{
-
 		Nachricht neueNachricht = new Nachricht(txtTitle.getText(), Text.getText(), comboBoxValues.get(comboBox.getSelectedItem().toString()), blN.getCurrentUser().getId());
-		if(blN.sendNachricht(neueNachricht))
+
+		if(isMessageInputValid())
 		{
-			txtTitle.setText("");
-			Text.setText("");
+			if(blN.sendNachricht(neueNachricht))
+			{
+				txtTitle.setText("");
+				Text.setText("");
+			}
+			else
+			{
+				// lblFehlermeldung füllen
+			}
 		}
+		else
+		{
+			// lblFehlermeldung füllen
+		}
+	}
+
+	/**
+	 * Überprüfung der Validität der Nachrichtendaten => GUI - Logik
+	 * @return Messageeingaben sind valide
+	 */
+	public boolean isMessageInputValid()
+	{
+		return (!txtTitle.getText().equals("") && !Text.equals(""));
 	}
 
 	/**

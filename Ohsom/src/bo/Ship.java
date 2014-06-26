@@ -1,5 +1,7 @@
 package bo;
 
+import java.sql.SQLException;
+
 public class Ship extends InvaderObject {
 
 	private InvaderGame game;
@@ -25,7 +27,7 @@ public class Ship extends InvaderObject {
 	}
 
 	@Override
-	public void confirmCollision(InvaderObject other) {
+	public void confirmCollision(InvaderObject other) throws SQLException {
 		if (other instanceof InvaderAlien) {
 			game.lost();
 		}

@@ -182,9 +182,12 @@ public class BLTamagotchi {
 		
 		Tamagotchi currentTamagotchiTemporary = currentUser.getTamagotchi();
 		
-		if(currentTamagotchiTemporary.GibGeldAus(Shopartikel.getPreis()) && getInventory(Shopartikel.getKategorie()).size() < 5)
-		{
-			KaufErfolgreich = DAOT.changeTamagotchi(currentUser.getTamagotchi()) && DAOT.addItem(ItemToBuy);
+		if(getInventory(Shopartikel.getKategorie()).size() < 5)
+		{	
+			if(currentTamagotchiTemporary.GibGeldAus(Shopartikel.getPreis()))
+			{
+				KaufErfolgreich = DAOT.changeTamagotchi(currentUser.getTamagotchi()) && DAOT.addItem(ItemToBuy);
+			}
 		}
 		return KaufErfolgreich;
 	}

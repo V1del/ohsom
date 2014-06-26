@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,6 +52,7 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 		super("Account erstellen");
 		getContentPane().setLayout(new BorderLayout(20,20));
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 
 		pnlNewAccount.setBorder(new TitledBorder(null, "Neuer Account", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(pnlNewAccount, BorderLayout.CENTER);

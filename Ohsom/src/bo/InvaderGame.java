@@ -9,19 +9,25 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import bl.BLTamagotchi;
+import bl.BLUser;
+
 public class InvaderGame extends Canvas implements KeyListener{
 
-
+	private BLUser blU = new BLUser();
+	private BLTamagotchi blT = new BLTamagotchi();
 	private BufferStrategy strategy;
 	private boolean gameRunning;
 	private ArrayList<InvaderObject> invobjects = new ArrayList<InvaderObject>();
 	private ArrayList<InvaderObject> removeList = new ArrayList<InvaderObject>();
 	private String message;
+	private int points = 0;
 	private boolean isTimeForSwitch;
 	private Ship ship;
 	private int moveSpeed = 300;
@@ -68,7 +74,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 		gameRunning = true;
 	}
 
-	public void gameLoop() {
+	public void gameLoop() throws SQLException {
 		long lastLoopTime = System.currentTimeMillis();
 
 		while (gameRunning) {
@@ -169,8 +175,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 		removeList.add(obj);
 	}
 
-	public void lost() {
+	public void lost() throws SQLException {
 		message = "You lost what a bummer";
+		
+		getReward();
 
 	}
 
@@ -178,8 +186,9 @@ public class InvaderGame extends Canvas implements KeyListener{
 		isTimeForSwitch = true;
 	}
 
-	public void AlienKilled() {
+	public void AlienKilled() throws SQLException {
 		alienCount--;
+		points++;
 
 		if (alienCount == 0)
 			win();
@@ -191,9 +200,25 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	}
 
-	private void win() {
-		message = "Hey you win";
+	private void win() throws SQLException {
+		message = "Hey you win, motherfucking loser";
+		points += 50;
+		
+		getReward();
 
+	}
+	
+	private void getReward() throws SQLException
+	{
+		if(blU.updateHighscore(points))
+		{
+			blU.getCurrentUser().getTamagotchi().VerdienGeld(Math.round(points * 2));
+			
+			if(blT.changeTamagotchi(blU.getCurrentUser().getTamagotchi()))
+			{
+				System.out.println("Oh yeah");
+			}
+		}
 	}
 
 	@Override

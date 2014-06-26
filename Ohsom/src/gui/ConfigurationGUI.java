@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.JComponent;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;

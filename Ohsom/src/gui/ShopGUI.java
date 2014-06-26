@@ -124,6 +124,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		new JDialog();
 		setModal(true);
 		setTitle("Shop");
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		setBounds(100, 100, 450, 350);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -548,7 +549,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 				}
 				else
 				{
-					lblFehlermeldungEssen.setText("Du kannst dir dieses Essen nicht leisten");
+					lblFehlermeldungEssen.setText("Das Item konnte nicht gekauft werden.");
 					lblFehlermeldungEssen.setVisible(true);
 				}
 			}
@@ -559,7 +560,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 				}
 				else
 				{
-					lblFehlermeldungTrinken.setText("Du kannst dir dieses Trinken nicht leisten.");
+					lblFehlermeldungTrinken.setText("Das Trinken konnte nicht gekauft werden.");
 					lblFehlermeldungTrinken.setVisible(true);
 				}
 			}

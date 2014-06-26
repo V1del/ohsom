@@ -113,7 +113,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Funktion zur ÃœberprÃ¼fung der Passwortsicherheit
+	 * Funktion zur Überprüfung der Passwortsicherheit
 	 * @param Password
 	 * @return Passwortsicherheit
 	 */

@@ -1,10 +1,12 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Insets;
 
 import javax.swing.SwingConstants;
@@ -41,7 +43,8 @@ import com.mysql.jdbc.Constants;
 public class MessagesGUI extends JDialog implements ActionListener, ListSelectionListener {
 	private BLNachrichten blN = new BLNachrichten();
 	private JButton btnHelp;
-	private JPanel panel;
+	private JPanel pnlHeaderMessages;
+	private JLabel lblWarning = new JLabel("Warning: Dein Postfach ist voll!");
 	private JPanel pnlNachrichten;
 	private JPanel panel_2;
 	private JButton btnNachrichtVerfassen;
@@ -75,17 +78,21 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		new JDialog();
 		setTitle("Nachrichten");
 		setModal(true);
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		
-		
-		panel = new JPanel();
+		pnlHeaderMessages = new JPanel();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		FlowLayout flowLayout = (FlowLayout) pnlHeaderMessages.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		getContentPane().add(panel, BorderLayout.NORTH);
+		getContentPane().add(pnlHeaderMessages, BorderLayout.NORTH);
 
-		btnHelp = new JButton("?");
-		panel.add(btnHelp);
+		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
+		pnlHeaderMessages.add(btnHelp);
 		btnHelp.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		lblWarning.setVisible(false);
+		lblWarning.setForeground(Color.red);
+		pnlHeaderMessages.add(lblWarning);
 
 		pnlNachrichten = new JPanel();
 		int allMessages = blN.getCountOfAllNachrichten();
@@ -94,6 +101,11 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		getContentPane().add(pnlNachrichten, BorderLayout.CENTER);
 		pnlNachrichten.setLayout(new BorderLayout(0, 20));
 
+		if(allMessages == 20)
+		{
+			lblWarning.setVisible(true);
+		}
+		
 		scrollPane = new JScrollPane();
 		pnlNachrichten.add(scrollPane, BorderLayout.CENTER);
 
@@ -194,6 +206,8 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		int unreadMessages = blN.getCountOfUnreadNachrichten();
 		pnlNachrichten.setBorder(new TitledBorder(null, "Posteingang ("+ unreadMessages +"/" + allMessages + ")", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
+		lblWarning.setVisible(allMessages == 20);
+		
 		this.repaint();
 	}
 
@@ -225,6 +239,9 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent lse) {
 		int indexRow = tblNachrichten.getSelectedRow();
