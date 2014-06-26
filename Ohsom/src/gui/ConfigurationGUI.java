@@ -334,12 +334,12 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Passwort \u00E4ndern", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlSplit.add(panel_4);
-		GridBagLayout gbl_pnlPasswordSecurity = new GridBagLayout();
-		gbl_pnlPasswordSecurity.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_pnlPasswordSecurity.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_pnlPasswordSecurity.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlPasswordSecurity.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_4.setLayout(gbl_pnlPasswordSecurity);
+		GridBagLayout gbl_pnlPassword = new GridBagLayout();
+		gbl_pnlPassword.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_pnlPassword.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnlPassword.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlPassword.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_4.setLayout(gbl_pnlPassword);
 		
 		lblAltesPasswort = new JLabel("Altes Passwort:");
 		GridBagConstraints gbc_lblAltesPasswort = new GridBagConstraints();
