@@ -1,13 +1,13 @@
 package bo;
 
 /**
- * Code Enumeration für die verschiedenen Pflegecodes
+ * 
  * @author Snatsch
  *
  */
 public enum Code {
 	WERTE("Werte"),
-	FUETTERN("Füttern"),
+	FUETTERN("FÃ¼ttern"),
 	SCHLAFENLEGEN("Schlafen"),
 	TRINKEN("Trinken"),
 	SPIELEN("Spielen"),
@@ -18,20 +18,11 @@ public enum Code {
 	
 	private String CodeName;
 	
-	/**
-	 * Konstruktor für Codes
-	 * @param CodeName
-	 */
 	Code(String CodeName)
 	{
 		this.CodeName = CodeName;
 	}
 	
-	/**
-	 * Methode um einen Code mittels seines Namens zu erhalten
-	 * @param codeName
-	 * @return
-	 */
 	public static Code getCodeByName(String codeName)
 	{
 		for(Code code : Code.values())
@@ -44,10 +35,6 @@ public enum Code {
 		return null;
 	}
 	
-	/**
-	 * Getter CodeName
-	 * @return
-	 */
 	public String getCodeName()
 	{
 		return this.CodeName;

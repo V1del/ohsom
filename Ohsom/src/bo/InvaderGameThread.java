@@ -5,16 +5,15 @@ package bo;
  * @author Snatsch
  *
  */
-public class InvaderGameThread extends Thread implements Runnable {
 
-/**
- * Thread starten
- */
-@Override
-public void run() {
-InvaderGame g = new InvaderGame();
-g.gameLoop();
 
-}
+public class InvaderGameThread implements Runnable {
+
+	@Override
+	public void run() {
+		InvaderGame g = new InvaderGame();
+		g.gameLoop();
+		
+	}
 
 }
