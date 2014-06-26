@@ -116,7 +116,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		pnlOptionen.add(txtWerteAnzeigen, gbc_txtWerteAnzeigen);
 		txtWerteAnzeigen.setColumns(10);
 
-		lblFuettern = new JLabel("Füttern");
+		lblFuettern = new JLabel("Fï¿½ttern");
 		GridBagConstraints gbc_lblFuettern = new GridBagConstraints();
 		gbc_lblFuettern.anchor = GridBagConstraints.WEST;
 		gbc_lblFuettern.insets = new Insets(0, 0, 5, 5);
@@ -331,6 +331,11 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent ke) {
 		JTextField currentTextField = (JTextField) ke.getSource();
 
 		if(ke.getKeyText(ke.getKeyCode()).length() == 1) {currentTextField.setText(ke.getKeyText(ke.getKeyCode()));} else { currentTextField.setText("");}
@@ -338,14 +343,8 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	@Override
-	public void keyReleased(KeyEvent ke) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void keyTyped(KeyEvent ke) {
-		// TODO Auto-generated method stub
+
 
 	}
 	
@@ -410,6 +409,10 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 			if(!saveData)
 			{
 				lblFehlermeldung.setText("Die Daten konnten nicht gespeichert werden.");
+			}
+			else 
+			{
+				this.dispose();
 			}
 		}
 		else

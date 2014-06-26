@@ -719,6 +719,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	 */
 	public void gibMedizin() throws SQLException
 	{
+<<<<<<< HEAD
 		if(blT.gibMedizin())
 		{
 			setEreignisLabel("Dein Tamagotchi ist nun wieder gesund");
@@ -727,6 +728,21 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			setEreignisLabel("Du kannst jetzt keine Medizin verabreichen (keine Medizin oder gesundes Tamagotchi)");
 		}
+=======
+	 try {
+		 if(blT.gibMedizin())
+			{
+				setEreignisLabel("Dein Tamagotchi ist nun wieder gesund");
+			}
+			else
+			{
+				setEreignisLabel("Dein Tamagotchi ist bereits wohlauf");
+			}
+	} catch (SQLException e) {
+		setEreignisLabel("Etwas mit der Heilung ging schief. Ist die Datenbank verbunden?");
+	}
+		
+>>>>>>> branch 'master' of https://github.com/V1del/ohsom
 	}
 
 	/**

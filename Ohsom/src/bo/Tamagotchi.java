@@ -236,7 +236,11 @@ public class Tamagotchi {
 		boolean VerwendungErfolgreich = false;
 		
 		if(Medizin >= 1 && getGesundheitszustand() == Gesundheitszustand.KRANK)
+<<<<<<< HEAD
  		{
+=======
+		{
+>>>>>>> branch 'master' of https://github.com/V1del/ohsom
 			Medizin--;
 			aktualisiereGesundheitszustand(Gesundheitszustand.GESUND);
 			VerwendungErfolgreich = true;
