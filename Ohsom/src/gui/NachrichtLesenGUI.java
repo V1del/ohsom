@@ -54,11 +54,15 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 		setTitle("Nachricht lesen");
 		setModal(true);
 		
-		currentNachrichtTemporary = Nachricht;
-		
 		blN = new BLNachrichten();
 		blU = new BLUser();
-
+		currentNachrichtTemporary = Nachricht;
+		
+		if(blN.changeNachricht(currentNachrichtTemporary))
+		{
+			// Konnte erfolgreich gelesen werden
+		}
+		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Nachricht von " + Nachricht.getSender().getNickname(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -154,7 +158,7 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 
 			if(ae.getSource() == btnAntworten)
 			{
-					NewMessageGUI nmg = new NewMessageGUI();
+					NewMessageGUI nmg = new NewMessageGUI(currentNachrichtTemporary);
 			}
 			else
 			{

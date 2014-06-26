@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ * Gui für die Configurationgui
  * @author Snatsch
  *
  */
@@ -316,15 +316,19 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	 */
 	public void fillMap() throws SQLException
 	{
-		ArrayList<TamagotchiConfig> TamagotchiConfigList = blU.getCurrentUser().getConfig();
+		ArrayList<TamagotchiConfig> TamagotchiConfigList = blU.getTamagotchiConfig();
 
 		for(TamagotchiConfig TamagotchiConfig : TamagotchiConfigList)
 		{
+			// existiert bereits ein Code mit diesem Hotkey
 			JTextField CurrentConfigField = txtFieldMap.get(TamagotchiConfig.getCode());	
 			CurrentConfigField.setText(TamagotchiConfig.getHotkey() + "");
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
 		JTextField currentTextField = (JTextField) ke.getSource();
@@ -344,7 +348,32 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		// TODO Auto-generated method stub
 
 	}
+	
+	/**
+	 * Prüfen ob eines der Textfelder bereits diesen Hotkey enthält
+	 * @param hotkey
+	 * @return
+	 */
+	public boolean alreadyExistsHotkey(JTextField txtHotkey)
+	{
+		boolean alreadyExisting = false;
+		
+		for(Map.Entry ConfigEntry : txtFieldMap.entrySet() )
+		{
+			JTextField txtConfigField = (JTextField) ConfigEntry.getValue();
+			if(txtConfigField != txtHotkey && txtConfigField.getText().equals(txtHotkey.getText()))
+			{
+				alreadyExisting = true;
+			}
+		}
+		
+		return alreadyExisting;
+	}
 
+	/**
+	 * Actionevents für das TamagotchiGUI
+	 * @param ae ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == btnSpeichern)
@@ -365,11 +394,14 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 				}
 				
 				try {
+				if(!alreadyExistsHotkey(txtConfigField))
+				{
 					if(blU.editConfigData(TamagotchiConfig))
 					{
 						saveData = true;
 					}
-				} catch (SQLException e) {
+				}
+				}catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

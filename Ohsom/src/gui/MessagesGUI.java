@@ -202,7 +202,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		try {
 			if(ae.getSource() == btnNachrichtVerfassen)
 			{
-				new NewMessageGUI();
+				new NewMessageGUI(null);
 			}
 			else if(ae.getSource() == btnDelete)
 			{

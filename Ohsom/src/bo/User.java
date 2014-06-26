@@ -138,15 +138,5 @@ public class User {
 	{
 		return !(getTamagotchi() == null);
 	}
-
-	/**
-	 * Getter Config-Data
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<TamagotchiConfig> getConfig() throws SQLException {
-		DAOUserImpl DAOU = new DAOUserImpl();
-		return DAOU.getConfigData(id);
-	}
 	
 }

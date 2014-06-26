@@ -107,14 +107,6 @@ public class Nachricht
 	}
 	
 	/**
-	 * Setter des Gelesen - States
-	 * @param gelesen
-	 */
-	public void setGelesen(boolean gelesen) {
-		this.gelesen = gelesen;
-	}
-	
-	/**
 	 * Getter des Senders
 	 * @return
 	 * @throws SQLException 

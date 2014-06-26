@@ -32,12 +32,12 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private long shotDelay = 500;
 	private long lastFired;
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		InvaderGame g = new InvaderGame();
 
 		g.gameLoop();
 
-	}
+	}*/
 
 	public InvaderGame() {
 		JFrame gameTest = new JFrame("Space invaders test");

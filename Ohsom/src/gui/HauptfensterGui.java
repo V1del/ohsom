@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -49,6 +50,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		this.setSize(750, 300);
 		this.setLayout(new BorderLayout(20,20));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setIconImage(new ImageIcon("Sources/gfx/Snatschikus.png").getImage());
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		

@@ -12,6 +12,7 @@ import bl.BLNachrichten;
 import bl.BLTamagotchi;
 import bl.BLUser;
 import bo.Code;
+import bo.InvaderGameThread;
 import bo.Item;
 import bo.Kategorie;
 import bo.Tamagotchi;
@@ -54,10 +55,14 @@ import java.util.Map;
 public class TamagotchiGUI implements ActionListener, KeyListener{
 
 	private Thread TamagotchiThread = new Thread(new TamagotchiThread(this));
+	
+	private Thread InvaderGameThread = new Thread(new InvaderGameThread());
 
 	private BLTamagotchi blT = null;
 
 	private BLNachrichten blN = null;
+	
+	private BLUser blU = null;
 
 	private JFrame frmOhsom;
 
@@ -131,6 +136,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	public TamagotchiGUI() throws SQLException {
 		blT = new BLTamagotchi();
 		blN = new BLNachrichten();
+		blU = new BLUser();
 
 		while(!blT.getCurrentUser().hasTamagotchi())
 		{
@@ -487,8 +493,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		lblDurstValue.setText(String.valueOf(currentTamagotchi.getThirst()) + "/5");
 		lblHungerValue.setText(String.valueOf(currentTamagotchi.getHunger()) + "/5");
 		lblBoringStateValue.setText(String.valueOf(currentTamagotchi.getBoringState()) + "/3");
-		lblSchmutzigkeitValue.setText(String.valueOf(currentTamagotchi.isDirty()));
-		lblMuedigkeitValue.setText(String.valueOf(currentTamagotchi.isTired()));
+		lblSchmutzigkeitValue.setText((currentTamagotchi.isDirty())? "ja" : "nein");
+		lblMuedigkeitValue.setText((currentTamagotchi.isTired())? "ja" : "nein");
 		lblZustandValue.setText(currentTamagotchi.getGesundheitszustand().name());
 		lblEvolutionsstadiumValue.setText(currentTamagotchi.getEvolutionsstadium().name());
 		lblMedizinValue.setText(currentTamagotchi.getMedizin() + "/100");
@@ -607,7 +613,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			else if (ae.getSource() == lblNachrichtVerfassen)
 			{
 				try {
-					NewMessageGUI nmgui = new NewMessageGUI();
+					NewMessageGUI nmgui = new NewMessageGUI(null);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -717,7 +723,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		}
 		else
 		{
-			setEreignisLabel("Etwas mit der Heilung ging schief");
+			setEreignisLabel("Du kannst jetzt keine Medizin verabreichen (keine Medizin oder gesundes Tamagotchi)");
 		}
 	}
 
@@ -755,7 +761,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				showInventar(null);
 				break;
 			case SPIELEN:
-				setEreignisLabel("Dein Tamagotchi hat nun keinen Hunger mehr :)");
+				//InvaderGameThread.start();
 				break;
 			case TRINKEN:
 				showInventar(Kategorie.GETRAENK);
@@ -781,7 +787,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		try {
 			Tamagotchi currentTamagotchiTemporary = blT.getCurrentUser().getTamagotchi(); 
 
-			for(TamagotchiConfig TamagotchiConfig : blT.getCurrentUser().getConfig())
+			for(TamagotchiConfig TamagotchiConfig : blU.getTamagotchiConfig())
 			{
 				char specialChar = e.getKeyText(e.getKeyCode()).charAt(0);
 

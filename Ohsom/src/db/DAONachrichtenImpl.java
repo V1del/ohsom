@@ -16,8 +16,8 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		boolean isInsertingSuccessfull = false;
 
 		PreparedStatement Nachrichtpstmt = null;
-		String NachrichtSQL = "INSERT INTO nachrichten(titel, nachricht, zeitpunkt, userid_empfaenger, userid_sender) VALUES (?, ?, SYSDATE(), ?, ?)";
-
+		String NachrichtSQL = "INSERT INTO nachrichten(titel, nachricht, zeitpunkt, iduser_empfaenger, iduser_sender) VALUES (?, ?, SYSDATE(), ?, ?)";
+		
 		Nachrichtpstmt = DBDAO.getConnection().prepareStatement(NachrichtSQL);
 		Nachrichtpstmt.setString(1, n.getTitel());
 		Nachrichtpstmt.setString(2, n.getNachricht());
@@ -33,7 +33,7 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		boolean isChangingSuccessfull = false;
 
 		PreparedStatement NachrichtUpdatepstmt = null;
-		String NachrichtUpdateSQL = "UPDATE nachrichten SET GELESEN = 'Y' WHERE IDNACHRICHT = ?	";
+		String NachrichtUpdateSQL = "UPDATE nachrichten SET GELESEN = true WHERE IDNACHRICHT = ?	";
 
 		NachrichtUpdatepstmt = DBDAO.getConnection().prepareStatement(NachrichtUpdateSQL);
 		NachrichtUpdatepstmt.setInt(1, n.getId());

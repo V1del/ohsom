@@ -55,7 +55,7 @@ public class BLNachrichten {
 		{
 			ObjectList[i][0] = String.valueOf(n.getId());
 			ObjectList[i][1] = n.getSender().getNickname();
-			ObjectList[i][2] = String.valueOf(n.isGelesen()); //new JCheckBox("", n.isGelesen());
+			ObjectList[i][2] = String.valueOf((n.isGelesen()) ? "ja" : "nein"); //new JCheckBox("", n.isGelesen());
 			ObjectList[i][3] = n.getTitel();
 			ObjectList[i][4] = String.valueOf(n.getZeitpunkt());
 			i++;
@@ -104,7 +104,7 @@ public class BLNachrichten {
 	/**
 	 * Methode zur Versendung von Nachrichten (Insert in der Datenbank)
 	 * @param Nachricht
-	 * @return
+	 * @return Konnte die Nachricht erfolgreich versendet werden?
 	 * @throws SQLException
 	 */
 	public boolean sendNachricht(Nachricht Nachricht) throws SQLException
@@ -113,9 +113,20 @@ public class BLNachrichten {
 	}
 	
 	/**
-	 * Methode zur LÃ¶schung von Nachrichten (Delete in der Datenbank)
+	 * Methode zur Veränderung von Nachrichten (Update in der Datenbank)
 	 * @param Nachricht
-	 * @return
+	 * @return Konnte die Nachricht erfolgreich verändert werden?
+	 * @throws SQLException
+	 */
+	public boolean changeNachricht(Nachricht Nachricht) throws SQLException
+	{
+		return DAON.changeNachricht(Nachricht);
+	}
+	
+	/**
+	 * Methode zur Löschung von Nachrichten (Delete in der Datenbank)
+	 * @param Nachricht
+	 * @return Konnte die Nachricht erfolgreich gelöscht werden?
 	 * @throws SQLException
 	 */
 	public boolean deleteNachricht(Nachricht Nachricht) throws SQLException

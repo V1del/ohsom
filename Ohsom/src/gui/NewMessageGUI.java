@@ -47,13 +47,16 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 	JButton btnSubmit, btnCancel;
 	JTextArea Text;
 	JLabel lblFehlermeldung;
+	
+	Nachricht currentNachricht = null;
 
 	/**
 	 * Create the application.
 	 * @throws SQLException 
 	 */
-	public NewMessageGUI() throws SQLException {
+	public NewMessageGUI(Nachricht Nachricht) throws SQLException {
 		blN = new BLNachrichten();
+		currentNachricht = Nachricht;
 		initialize();
 	}
 
@@ -165,6 +168,11 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 				comboBox.addItem(UserItem.getNickname());
 				comboBoxValues.put(UserItem.getNickname(), UserItem.getId());
 			}
+		}
+		
+		if(currentNachricht != null)
+		{
+			comboBox.setSelectedItem(currentNachricht.getSender().getNickname());
 		}
 	}
 

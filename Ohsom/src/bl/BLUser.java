@@ -201,7 +201,7 @@ public class BLUser {
 	{
 		boolean isAlreadyInDataBase = false;
 
-		for(TamagotchiConfig TamagotchiConfigDataBase : currentUser.getConfig())
+		for(TamagotchiConfig TamagotchiConfigDataBase : getTamagotchiConfig())
 		{
 			if(TamagotchiConfigDataBase.getCode() == TamagotchiConfig.getCode())
 			{
@@ -239,7 +239,7 @@ public class BLUser {
 
 	/**
 	 * Select aller User
-	 * @return
+	 * @return alle User
 	 * @throws SQLException
 	 */
 	public ArrayList<User> getAllUsers() throws SQLException
@@ -249,10 +249,24 @@ public class BLUser {
 
 	/**
 	 * Update Methode für den Highscore
+	 * @param Punkte
+	 * @return Wurde Highscore erfolgreich geupdatet
 	 */
 	public boolean updateHighscore(int Punkte) throws SQLException
 	{
 		Highscore editedHighscore = new Highscore(Punkte, currentUser.getId());
 		return DAOU.updateHighscore(editedHighscore);
 	}
+	
+	/**
+	 * Getter alle TamagotchiConfig - Dateien
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<TamagotchiConfig> getTamagotchiConfig() throws SQLException
+	{
+		DAOUserImpl DAOU = new DAOUserImpl();
+		return DAOU.getConfigData(currentUser.getId());
+	}
+
 }
