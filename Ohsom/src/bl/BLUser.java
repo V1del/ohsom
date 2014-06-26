@@ -111,9 +111,9 @@ public class BLUser {
 	{
 		return strgToCheckForMatch.matches(BeforeAndAfter + Pattern + BeforeAndAfter) || strgToCheckForMatch.matches(Pattern + BeforeAndAfter) || strgToCheckForMatch.matches(BeforeAndAfter + Pattern);
 	}
-
+Snat
 	/**
-	 * Funktion zur ÃœberprÃ¼fung der Passwortsicherheit
+	 * Funktion zur Überprüfung der Passwortsicherheit
 	 * @param Password
 	 * @return Passwortsicherheit
 	 */

@@ -1,5 +1,7 @@
 package bo;
 
+import java.sql.SQLException;
+
 public class Shot extends InvaderObject {
 
 	private InvaderGame game;
@@ -23,13 +25,18 @@ public class Shot extends InvaderObject {
 	}
 
 	@Override
-	public void confirmCollision(InvaderObject other) {
+	public void confirmCollision(InvaderObject other) throws SQLException {
 
-		game.removeObject(this);
-		game.removeObject(other);
+		try {
+			game.removeObject(this);
 
-		game.AlienKilled();
+			game.removeObject(other);
 
+			game.AlienKilled();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 

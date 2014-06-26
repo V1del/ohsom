@@ -2,6 +2,7 @@ package bo;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.sql.SQLException;
 
 /**
  * Abstract Class handling movement and collision detection for all hitable objects
@@ -75,7 +76,7 @@ public abstract class InvaderObject {
 		return obj1.intersects(obj2);
 	}
 
-	public abstract void confirmCollision(InvaderObject other);
+	public abstract void confirmCollision(InvaderObject other) throws SQLException;
 
 	/**
 	 * Only relevant for Alien movement, but defining here because we're going to use this as base class for our list
