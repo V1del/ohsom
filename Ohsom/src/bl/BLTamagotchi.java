@@ -88,6 +88,7 @@ public class BLTamagotchi {
 		{
 			if(DAOT.setToActualDate(currentUser.getTamagotchi(), "letzteSchlafenszeit"))
 			{
+				currentUser.setTamagotchi(DAOT.getTamagotchi(currentUser.getId()));
 				return true;
 			}
 		}

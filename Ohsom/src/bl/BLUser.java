@@ -181,7 +181,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Delete der Config DatensÃ¤tze
+	 * Delete der Config Datensätze
 	 * @param TamagotchiConfig
 	 * @return
 	 * @throws SQLException
@@ -192,7 +192,7 @@ public class BLUser {
 	}
 
 	/**
-	 * Editieren der Config DatensÃ¤tze, die dem User zugehÃ¶rig sind
+	 * Editieren der Config Datensätze, die dem User zugehÃ¶rig sind
 	 * @param TamagotchiConfig
 	 * @return
 	 * @throws SQLException
@@ -209,15 +209,15 @@ public class BLUser {
 			}
 		}
 
-		if(!isAlreadyInDataBase & String.valueOf(TamagotchiConfig.getHotkey()).equals("") == false)
+		if(!isAlreadyInDataBase && String.valueOf(TamagotchiConfig.getHotkey()).equals("") == false)
 		{
 			return addConfigData(TamagotchiConfig);
 		}
-		else if(!isAlreadyInDataBase & TamagotchiConfig.getHotkey() == '\0')
+		else if(!isAlreadyInDataBase && TamagotchiConfig.getHotkey() == '\0')
 		{
 			return true;
 		}
-		else if(isAlreadyInDataBase && (TamagotchiConfig.getHotkey() + "").equals(""))
+		else if(isAlreadyInDataBase && String.valueOf(TamagotchiConfig.getHotkey()).equals(""))
 		{
 			return deleteConfigData(TamagotchiConfig);
 		}

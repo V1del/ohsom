@@ -572,6 +572,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	{
 		if(blT.resetTamagotchi(resetName))
 		{
+			TamagotchiThread = new Thread(new TamagotchiThread(this));
 			setEreignisLabel("Du hast dein Tamagotchi erfolgreich resetet");
 			fillButtonArea();
 		}
@@ -705,11 +706,18 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	public void layTamagotchiToSleep() throws SQLException
 	{
 		if(blT.layTamagotchiToSleep()) {
-			setEreignisLabel("Dein Tamagotchi schlï¿½ft nun");
+			setEreignisLabel("Dein Tamagotchi schläft nun");
 		}
 		else
 		{
-			setEreignisLabel("Dein Tamagotchi ist nicht mï¿½de");
+			if(blT.getCurrentUser().getTamagotchi().isStillSleeping())
+			{
+				setEreignisLabel("Dein Tamagotchi schläft bereits");
+			}
+			else
+			{
+				setEreignisLabel("Dein Tamagotchi ist nicht müde");	
+			}
 		}
 	}
 
@@ -719,7 +727,6 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	 */
 	public void gibMedizin() throws SQLException
 	{
-<<<<<<< HEAD
 		if(blT.gibMedizin())
 		{
 			setEreignisLabel("Dein Tamagotchi ist nun wieder gesund");
@@ -728,21 +735,6 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		{
 			setEreignisLabel("Du kannst jetzt keine Medizin verabreichen (keine Medizin oder gesundes Tamagotchi)");
 		}
-=======
-	 try {
-		 if(blT.gibMedizin())
-			{
-				setEreignisLabel("Dein Tamagotchi ist nun wieder gesund");
-			}
-			else
-			{
-				setEreignisLabel("Dein Tamagotchi ist bereits wohlauf");
-			}
-	} catch (SQLException e) {
-		setEreignisLabel("Etwas mit der Heilung ging schief. Ist die Datenbank verbunden?");
-	}
-		
->>>>>>> branch 'master' of https://github.com/V1del/ohsom
 	}
 
 	/**

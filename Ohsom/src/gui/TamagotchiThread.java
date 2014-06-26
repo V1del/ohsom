@@ -30,7 +30,6 @@ public class TamagotchiThread implements Runnable {
 	public TamagotchiThread(TamagotchiGUI tGui) throws SQLException 
 	{
 		this.tGui = tGui;
-		this.lastState = blT.getCurrentUser().getTamagotchi().getEvolutionsstadium();
 	}
 	
 	/**
@@ -38,6 +37,12 @@ public class TamagotchiThread implements Runnable {
 	 */
 	public void run()
 	{
+		try {
+			this.lastState = blT.getCurrentUser().getTamagotchi().getEvolutionsstadium();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		run(new Date(), 10*60*2);
 	}
 	
@@ -63,7 +68,7 @@ public class TamagotchiThread implements Runnable {
 							tGui.setEreignisLabel("Das Tamagotchi ist geschlüpft!");
 						}
 					}
-					else if(lastState ==  Entwicklungsstadium.JUNGES)
+					else if(lastState == Entwicklungsstadium.JUNGES)
 					{
 						if(lastState != blT.getCurrentUser().getTamagotchi().getEvolutionsstadium())
 						{

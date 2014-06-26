@@ -34,7 +34,7 @@ import bo.Nachricht;
 import com.mysql.jdbc.Constants;
 
 /**
- * 
+ * Gui für die Nachrichtenübersicht
  * @author Snatsch
  *
  */
@@ -197,6 +197,9 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		this.repaint();
 	}
 
+	/**
+	 * Actionevents für die Nachrichten
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		try {

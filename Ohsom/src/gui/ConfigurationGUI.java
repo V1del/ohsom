@@ -260,7 +260,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_txtMedizin.gridy = 8;
 		pnlOptionen.add(txtMedizin, gbc_txtMedizin);
 
-		
+
 		panel_2 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
 		flowLayout.setHgap(20);
@@ -274,7 +274,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(this);
 		panel_2.add(btnAbbrechen);
-		
+
 		lblFehlermeldung = new JLabel("Fehlermeldung");
 		lblFehlermeldung.setForeground(Color.RED);
 		lblFehlermeldung.setVisible(false);
@@ -331,23 +331,63 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
-
+		//
 	}
 
 	@Override
 	public void keyReleased(KeyEvent ke) {
-		JTextField currentTextField = (JTextField) ke.getSource();
-
-		if(ke.getKeyText(ke.getKeyCode()).length() == 1) {currentTextField.setText(ke.getKeyText(ke.getKeyCode()));} else { currentTextField.setText("");}
-
+		//
 	}
 
 	@Override
 	public void keyTyped(KeyEvent ke) {
+		JTextField currentTextField = (JTextField) ke.getSource();
 
-
+		if(ke.getKeyText(ke.getKeyCode()).length() == 1) {currentTextField.setText(ke.getKeyText(ke.getKeyCode()));} else { currentTextField.setText("");}
 	}
-	
+
+	/**
+	 * Methode zur Speicherung der Config-Einstellungen
+	 * @throws SQLException
+	 */
+	public void saveConfigData() throws SQLException
+	{
+		boolean saveData = false;
+		for(Map.Entry ConfigEntry : txtFieldMap.entrySet() )
+		{
+			JTextField txtConfigField = (JTextField) ConfigEntry.getValue();
+			TamagotchiConfig TamagotchiConfig = null;
+
+			if(!txtConfigField.getText().equals(""))
+			{
+				TamagotchiConfig = new TamagotchiConfig(blU.getCurrentUser().getId(), String.valueOf(ConfigEntry.getKey()), txtConfigField.getText().charAt(0));
+			}
+			else
+			{
+				TamagotchiConfig = new TamagotchiConfig(blU.getCurrentUser().getId(), String.valueOf(ConfigEntry.getKey()));
+			}
+
+
+			if(!alreadyExistsHotkey(txtConfigField))
+			{
+				if(blU.editConfigData(TamagotchiConfig))
+				{
+					saveData = true;
+				}
+			}
+		}
+
+
+		if(!saveData)
+		{
+			lblFehlermeldung.setText("Die Daten konnten nicht gespeichert werden.");
+		}
+		else 
+		{
+			this.dispose();
+		}
+	}
+
 	/**
 	 * Prüfen ob eines der Textfelder bereits diesen Hotkey enthält
 	 * @param hotkey
@@ -356,16 +396,16 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	public boolean alreadyExistsHotkey(JTextField txtHotkey)
 	{
 		boolean alreadyExisting = false;
-		
+
 		for(Map.Entry ConfigEntry : txtFieldMap.entrySet() )
 		{
 			JTextField txtConfigField = (JTextField) ConfigEntry.getValue();
-			if(txtConfigField != txtHotkey && txtConfigField.getText().equals(txtHotkey.getText()))
+			if(txtConfigField != txtHotkey && (txtConfigField.getText().equals(txtHotkey.getText()) && txtConfigField.getText().equals("") == false))
 			{
 				alreadyExisting = true;
 			}
 		}
-		
+
 		return alreadyExisting;
 	}
 
@@ -375,49 +415,19 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource() == btnSpeichern)
-		{
-			boolean saveData = false;
-			for(Map.Entry ConfigEntry : txtFieldMap.entrySet() )
+		try {
+			if(ae.getSource() == btnSpeichern)
 			{
-				JTextField txtConfigField = (JTextField) ConfigEntry.getValue();
-				TamagotchiConfig TamagotchiConfig = null;
-				
-				if(!txtConfigField.getText().equals(""))
-				{
-					TamagotchiConfig = new TamagotchiConfig(blU.getCurrentUser().getId(), String.valueOf(ConfigEntry.getKey()), txtConfigField.getText().charAt(0));
-				}
-				else
-				{
-					TamagotchiConfig = new TamagotchiConfig(blU.getCurrentUser().getId(), String.valueOf(ConfigEntry.getKey()));
-				}
-				
-				try {
-				if(!alreadyExistsHotkey(txtConfigField))
-				{
-					if(blU.editConfigData(TamagotchiConfig))
-					{
-						saveData = true;
-					}
-				}
-				}catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				saveConfigData();
 			}
-			
-			if(!saveData)
-			{
-				lblFehlermeldung.setText("Die Daten konnten nicht gespeichert werden.");
-			}
-			else 
+			else
 			{
 				this.dispose();
 			}
 		}
-		else
-		{
-			this.dispose();
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
