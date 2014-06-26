@@ -53,7 +53,7 @@ import java.awt.GridLayout;
  * @author Snatsch
  *
  */
-public class TamagotchiGUI implements ActionListener, KeyListener{
+public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener{
 
 	private Thread TamagotchiThread = new Thread(new TamagotchiThread(this));
 	
@@ -64,8 +64,6 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	private BLNachrichten blN = null;
 	
 	private BLUser blU = null;
-
-	private JFrame frmOhsom;
 
 	private JButton lblNeueNachrichten = new JButton("Neue Nachrichten");
 
@@ -169,17 +167,18 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	 */
 	@SuppressWarnings("deprecation")
 	private void initialize() throws SQLException {
-		frmOhsom = new JFrame();
-		frmOhsom.setFocusable(true);
-		//	frmOhsom.setResizable(false);
-		frmOhsom.addKeyListener(this);
-		frmOhsom.setTitle("Ohsom");
-		frmOhsom.setBounds(100, 100, 780, 600);
-		frmOhsom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmOhsom.getContentPane().setLayout(new BorderLayout(20, 0));
+		new JFrame();
+		setFocusable(true);
+		setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
+		//	setResizable(false);
+		addKeyListener(this);
+		setTitle("Ohsom");
+		setBounds(100, 100, 780, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(new BorderLayout(20, 0));
 
 		JPanel panel = new JPanel();
-		frmOhsom.getContentPane().add(panel, BorderLayout.WEST);
+		getContentPane().add(panel, BorderLayout.WEST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -249,7 +248,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		panel.add(btnReset, gbc_btnReset);
 
 		JPanel panel_1 = new JPanel(new BorderLayout());
-		frmOhsom.getContentPane().add(panel_1, BorderLayout.CENTER);
+		getContentPane().add(panel_1, BorderLayout.CENTER);
 
 		pnlTamagotchi = new TamagotchiGfx();
 		panel_1.add(pnlTamagotchi, BorderLayout.CENTER);
@@ -268,7 +267,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 		pnlCondition = new JPanel();
 		pnlCondition.setBorder(new TitledBorder(null, "Werte", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
-		frmOhsom.getContentPane().add(pnlInformations, BorderLayout.SOUTH);
+		getContentPane().add(pnlInformations, BorderLayout.SOUTH);
 
 		GridBagLayout gbl_pnlCondition = new GridBagLayout();
 		gbl_pnlCondition.columnWidths = new int[]{0, 0, 30, 0, 0, 30, 0, 0, 30, 0, 0, 0};
@@ -422,8 +421,8 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 
 		pnlInventar.setVisible(false);
 
-		frmOhsom.setVisible(true);
-		frmOhsom.requestFocusInWindow();
+		setVisible(true);
+		requestFocusInWindow();
 	}
 
 	/**
@@ -625,7 +624,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 			else if (ae.getSource() == btnPref)
 			{
 				ConfigurationGUI cgui = new ConfigurationGUI(blT.getCurrentUser());	
-				frmOhsom.requestFocus();
+				requestFocus();
 			}
 			else if(ae.getSource() == btnHelp)
 			{
@@ -641,7 +640,7 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 				giveItToTamagotchi(usedItem);
 			}
 
-			frmOhsom.requestFocus();
+			requestFocus();
 		}
 		catch (SQLException e1) {
 			// TODO Auto-generated catch block

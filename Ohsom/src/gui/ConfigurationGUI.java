@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JTabbedPane;
 
@@ -76,6 +77,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	public ConfigurationGUI(User currentUser) throws SQLException {
 		new JDialog();
 		setTitle("Konfigurationseinstellung");
+		setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 
 		setModal(true);
 		blU = new BLUser();
@@ -260,6 +262,14 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_txtMedizin.gridy = 8;
 		pnlOptionen.add(txtMedizin, gbc_txtMedizin);
 
+		txtFieldMap.put(Code.FUETTERN, txtFuettern);
+		txtFieldMap.put(Code.TRINKEN, txtZuTrinkenGeben);
+		txtFieldMap.put(Code.INVENTAR, txtInventar);
+		txtFieldMap.put(Code.SCHLAFENLEGEN, txtSchlafenlegen);
+		txtFieldMap.put(Code.SHOP, txtShop);
+		txtFieldMap.put(Code.WERTE, txtWerteAnzeigen);
+		txtFieldMap.put(Code.WASCHEN, txtWaschen);
+		txtFieldMap.put(Code.SPIELEN, txtSpielen);
 
 		panel_2 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
@@ -295,15 +305,6 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 
 		chosenImg = new Canvas();
 		panel_3.add(chosenImg);
-
-		txtFieldMap.put(Code.FUETTERN, txtFuettern);
-		txtFieldMap.put(Code.TRINKEN, txtZuTrinkenGeben);
-		txtFieldMap.put(Code.INVENTAR, txtInventar);
-		txtFieldMap.put(Code.SCHLAFENLEGEN, txtSchlafenlegen);
-		txtFieldMap.put(Code.SHOP, txtShop);
-		txtFieldMap.put(Code.WERTE, txtWerteAnzeigen);
-		txtFieldMap.put(Code.WASCHEN, txtWaschen);
-		txtFieldMap.put(Code.SPIELEN, txtSpielen);
 
 		fillMap();
 		pack();

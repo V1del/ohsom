@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
@@ -77,7 +78,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		new JDialog();
 		setTitle("Nachrichten");
 		setModal(true);
-		
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		
 		pnlHeaderMessages = new JPanel();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

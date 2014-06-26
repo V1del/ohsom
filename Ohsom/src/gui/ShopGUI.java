@@ -124,6 +124,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		new JDialog();
 		setModal(true);
 		setTitle("Shop");
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		setBounds(100, 100, 450, 350);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 

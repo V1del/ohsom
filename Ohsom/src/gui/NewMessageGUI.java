@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -68,6 +69,7 @@ public class NewMessageGUI extends JDialog implements ActionListener {
 		new JDialog();
 		setModal(true);
 		setTitle("Neue Nachricht verfassen");
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 

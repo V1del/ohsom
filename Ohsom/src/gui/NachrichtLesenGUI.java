@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
@@ -62,6 +63,8 @@ public class NachrichtLesenGUI extends JDialog implements ActionListener {
 		{
 			// Konnte erfolgreich gelesen werden
 		}
+		
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Nachricht von " + Nachricht.getSender().getNickname(), TitledBorder.LEADING, TitledBorder.TOP, null, null));

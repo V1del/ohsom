@@ -43,14 +43,16 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JLabel lblFehlermeldung = new JLabel("");	
 	JPanel pnlHighscore = new JPanel(new BorderLayout());
 	JTable tblHighscore = new JTable();
+	JPanel pnlFooter = new JPanel();
 	JButton btnCreate = new JButton("Create Account");
+	JButton btnPasswordForget = new JButton("Forgot Password?");
 
 	public HauptfensterGui() throws SQLException {
 		super("Ohsom");
 		this.setSize(750, 300);
 		this.setLayout(new BorderLayout(20,20));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setIconImage(new ImageIcon("Sources/gfx/Snatschikus.png").getImage());
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
@@ -122,11 +124,24 @@ public class HauptfensterGui extends JFrame implements ActionListener {
         btnCreate.setContentAreaFilled(false);
         btnCreate.setBorderPainted(false);
         btnCreate.setOpaque(false);
-        btnCreate.setHorizontalAlignment(SwingConstants.LEADING);
+        btnCreate.setHorizontalAlignment(SwingConstants.LEFT);
         
         btnCreate.addActionListener(this);
 
-		this.add(btnCreate, BorderLayout.SOUTH);
+        pnlFooter.add(btnCreate);
+        
+      //Modify Button L'n'F to look like a Label
+        btnPasswordForget.setMargin(new Insets(0, 0, 0, 0));
+        btnPasswordForget.setContentAreaFilled(false);
+        btnPasswordForget.setBorderPainted(false);
+        btnPasswordForget.setOpaque(false);
+        btnPasswordForget.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnPasswordForget.addActionListener(this);
+        
+        pnlFooter.add(btnPasswordForget);
+        
+		this.add(pnlFooter, BorderLayout.SOUTH);
 		
 		//lbCreate.action(arg0, arg1)n(arg0, arg1); // f�llen :D
 		
@@ -147,9 +162,13 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		else
+		else if(e.getSource() == btnCreate)
 		{
 			AnmeldeGUI fenster = new AnmeldeGUI();
+		}
+		else
+		{
+			
 		}
 	}
 
