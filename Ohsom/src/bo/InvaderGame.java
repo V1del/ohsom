@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class InvaderGame extends Canvas implements KeyListener{
+public class InvaderGame extends JPanel implements KeyListener{
 
 
 	private BufferStrategy strategy;
@@ -32,40 +32,23 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private long shotDelay = 500;
 	private long lastFired;
 
-	public static void main(String[] args) {
-		InvaderGame g = new InvaderGame();
-
-		g.gameLoop();
-
-	}
+//	public static void main(String[] args) {
+//		InvaderGame g = new InvaderGame();
+//
+//		g.gameLoop();
+//
+//	}
 
 	public InvaderGame() {
-		JFrame gameTest = new JFrame("Space invaders test");
-		gameTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		JPanel panel = (JPanel) gameTest.getContentPane();
-
-		panel.setPreferredSize(new Dimension(800, 600));
-		panel.setLayout(null);
-
-		setBounds(0, 0, 800, 600);
-		panel.add(this);
-
-		addKeyListener(this);
-
-		setIgnoreRepaint(true);
-
-		gameTest.pack();
-		gameTest.setResizable(false);
-		gameTest.setVisible(true);
-
-		createBufferStrategy(2);
-		strategy = getBufferStrategy();
 
 		initInvaderObjects();
 
 
 		gameRunning = true;
+	}
+	
+	public Dimension getPreferredSize() {
+		return new Dimension(580,475);
 	}
 
 	public void gameLoop() {
