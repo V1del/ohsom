@@ -86,7 +86,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		getContentPane().add(pnlHeaderMessages, BorderLayout.NORTH);
 
-		btnHelp = new JButton("?");
+		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
 		pnlHeaderMessages.add(btnHelp);
 		btnHelp.setHorizontalAlignment(SwingConstants.LEFT);
 		

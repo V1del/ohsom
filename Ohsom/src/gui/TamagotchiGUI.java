@@ -186,14 +186,14 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 
-		btnHelp = new JButton("?");
+		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 5, 5);
 		gbc_button.gridx = 0;
 		gbc_button.gridy = 0;
 		panel.add(btnHelp, gbc_button);
 
-		btnPref = new JButton("pref");
+		btnPref = new JButton(new ImageIcon("Sources/gfx/Configuration-icon.png"));
 		btnPref.addActionListener(this);
 		GridBagConstraints gbc_btnPref = new GridBagConstraints();
 		gbc_btnPref.insets = new Insets(0, 0, 5, 0);

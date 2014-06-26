@@ -118,6 +118,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		pnlHighscore.add(scrollPane, BorderLayout.CENTER);
 
 		this.add(pnlHighscore,BorderLayout.EAST);
+
 		
 		//Modify Button L'n'F to look like a Label
         btnCreate.setMargin(new Insets(0, 0, 0, 0));
@@ -135,7 +136,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
         btnPasswordForget.setContentAreaFilled(false);
         btnPasswordForget.setBorderPainted(false);
         btnPasswordForget.setOpaque(false);
-        btnPasswordForget.setHorizontalAlignment(SwingConstants.LEFT);
+        btnPasswordForget.setHorizontalAlignment(SwingConstants.RIGHT);
         
         btnPasswordForget.addActionListener(this);
         
