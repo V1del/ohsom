@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -32,14 +33,32 @@ public class InvaderGame extends JPanel implements KeyListener{
 	private long shotDelay = 500;
 	private long lastFired;
 
-//	public static void main(String[] args) {
-//		InvaderGame g = new InvaderGame();
-//
-//		g.gameLoop();
-//
-//	}
+	public static void main(String[] args) {
+		InvaderGame g = new InvaderGame();
+
+		g.gameLoop();
+
+	}
 
 	public InvaderGame() {
+		JFrame gameTest = new JFrame("Space invaders test");
+		gameTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JPanel panel = (JPanel) gameTest.getContentPane();
+
+		panel.setPreferredSize(new Dimension(800, 600));
+		panel.setLayout(null);
+
+		setBounds(0, 0, 800, 600);
+		panel.add(this);
+
+		addKeyListener(this);
+
+		setIgnoreRepaint(true);
+
+		gameTest.pack();
+		gameTest.setResizable(false);
+		gameTest.setVisible(true);
 
 		initInvaderObjects();
 
@@ -47,9 +66,24 @@ public class InvaderGame extends JPanel implements KeyListener{
 		gameRunning = true;
 	}
 	
-	public Dimension getPreferredSize() {
-		return new Dimension(580,475);
+	@Override
+	public void paintComponents(Graphics g) {
+		super.paintComponent(g);
+
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setColor(Color.black);
+		g2d.fillRect(0, 0, 800, 600);
+
+		for (InvaderObject invobj : invobjects)
+		{
+			invobj.draw(g2d);
+		}
 	}
+	
+//	public Dimension getPreferredSize() {
+//		return new Dimension(800,600);
+//	}
 
 	public void gameLoop() {
 		long lastLoopTime = System.currentTimeMillis();
@@ -58,20 +92,13 @@ public class InvaderGame extends JPanel implements KeyListener{
 			long passedTime = System.currentTimeMillis() - lastLoopTime;
 			lastLoopTime = System.currentTimeMillis();	//Update last loop time
 
-			Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
-			g.setColor(Color.black);
-			g.fillRect(0, 0, 800, 600);
-
 
 			for(InvaderObject invobj : invobjects)
 			{
 				invobj.move(passedTime);
 			}
 
-			for(InvaderObject invobj : invobjects)
-			{
-				invobj.draw(g);
-			}
+			repaint();
 
 			//Check for collision
 			for(int i=0; i < invobjects.size(); i++ )
@@ -98,9 +125,6 @@ public class InvaderGame extends JPanel implements KeyListener{
 				isTimeForSwitch = false;
 			}
 
-
-			g.dispose();
-			strategy.show();
 
 			ship.setSpeedX(0);
 
@@ -154,6 +178,7 @@ public class InvaderGame extends JPanel implements KeyListener{
 
 	public void lost() {
 		message = "You lost what a bummer";
+		System.out.println(message);
 
 	}
 
@@ -176,7 +201,7 @@ public class InvaderGame extends JPanel implements KeyListener{
 
 	private void win() {
 		message = "Hey you win";
-
+		System.out.println(message);
 	}
 
 	@Override
