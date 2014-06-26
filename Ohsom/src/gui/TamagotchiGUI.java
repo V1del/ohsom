@@ -704,14 +704,14 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	 */
 	public void playWithTamagotchi() throws SQLException
 	{
-		//if(blT.playWithTamagotchi())
-	//	{
+		if(blT.playWithTamagotchi())
+		{
 			InvaderGameThread.start();
-		//}
-		/*else
+		}
+		else
 		{
 			setEreignisLabel("Das Tamagotchi hat keine Lust zu spielen");
-		}*/
+		}
 	}
 
 	/**

@@ -112,9 +112,6 @@ public class InvaderGame extends Canvas implements KeyListener{
 			g.setColor(m_tWhite);
 			
 			g.setFont(sanSerifFont);
-		    FontMetrics fm = g.getFontMetrics();
-		    int w = fm.stringWidth("Punkte: " + points);
-		    int h = fm.getAscent();
 		    g.drawString("Punkte: " + points, 50, 30);
 			
 			for(InvaderObject invobj : invobjects)
@@ -206,6 +203,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 		removeList.add(obj);
 	}
 
+	/**
+	 * Spiel verloren
+	 * @throws SQLException
+	 */
 	public void lost() throws SQLException {
 		message = "You lost what a bummer";
 		
@@ -231,14 +232,23 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	}
 
+	/** 
+	 * Spiel gewonnen
+	 * @throws SQLException
+	 */
 	private void win() throws SQLException {
 		message = "Hey you win, motherfucking loser";
 		points += 50;
 		
 		getReward();
+		setHighscore();
 
 	}
 	
+	/** 
+	 * Vergeben der Belohnung an den User
+	 * @throws SQLException
+	 */
 	private void getReward() throws SQLException
 	{
 			blU.getCurrentUser().getTamagotchi().VerdienGeld(Math.round(points * 2));
@@ -250,6 +260,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 		
 	}
 	
+	/**
+	 * Setzen eines neuen Highscores
+	 * @throws SQLException
+	 */
 	private void setHighscore() throws SQLException
 	{
 		if(blU.getCurrentUser().getHighscore().getPunkte() < points)
