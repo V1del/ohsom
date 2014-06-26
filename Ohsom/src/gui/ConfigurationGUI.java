@@ -1,7 +1,11 @@
 package gui;
 
+import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
 
@@ -14,6 +18,7 @@ import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.JTextField;
@@ -36,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Gui für die Configurationgui
+ * Gui fï¿½r die Configurationgui
  * @author Snatsch
  *
  */
@@ -72,6 +77,18 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	private JTextField txtDurchsuchen;
 	private Canvas chosenImg;
 	private JLabel lblFehlermeldung;
+	private JPanel pnlresetPassword;
+	private JPanel pnlSplit;
+	private JPanel panel_4;
+	private JLabel lblAltesPasswort;
+	private JPasswordField txtPwOld;
+	private JLabel lblNeuesPasswort;
+	private JLabel lblNeuesPasswortWdh;
+	private JPasswordField txtPwNew;
+	private JPasswordField txtNewPwWdh;
+	private JPanel pnlPasswordSecurity;
+	private JLabel lblvalue;
+	private JProgressBar progressBar;
 
 	public ConfigurationGUI(User currentUser) throws SQLException {
 		new JDialog();
@@ -91,12 +108,12 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		pnlOptionen = new JPanel();
 		pnlOptionen.setBorder(new TitledBorder(null, "Optionen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.add(pnlOptionen, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{30, 0, 30, 30, 30, 30, 30, 30, 0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		pnlOptionen.setLayout(gbl_panel_1);
+		GridBagLayout gbl_PasswortÃ¤ndern = new GridBagLayout();
+		gbl_PasswortÃ¤ndern.columnWidths = new int[]{30, 0, 30, 30, 30, 30, 30, 30, 0, 0, 0};
+		gbl_PasswortÃ¤ndern.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_PasswortÃ¤ndern.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_PasswortÃ¤ndern.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		pnlOptionen.setLayout(gbl_PasswortÃ¤ndern);
 
 		lblWerteAnzeigen = new JLabel("Werte anzeigen");
 		GridBagConstraints gbc_lblWerteAnzeigen = new GridBagConstraints();
@@ -116,7 +133,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		pnlOptionen.add(txtWerteAnzeigen, gbc_txtWerteAnzeigen);
 		txtWerteAnzeigen.setColumns(10);
 
-		lblFuettern = new JLabel("Fï¿½ttern");
+		lblFuettern = new JLabel("FÃ¼ttern");
 		GridBagConstraints gbc_lblFuettern = new GridBagConstraints();
 		gbc_lblFuettern.anchor = GridBagConstraints.WEST;
 		gbc_lblFuettern.insets = new Insets(0, 0, 5, 5);
@@ -304,14 +321,105 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		txtFieldMap.put(Code.WERTE, txtWerteAnzeigen);
 		txtFieldMap.put(Code.WASCHEN, txtWaschen);
 		txtFieldMap.put(Code.SPIELEN, txtSpielen);
-
+		
+		pnlresetPassword = new JPanel();
+		tabbedPane.addTab("Passwort", null, pnlresetPassword, null);
+		pnlresetPassword.setLayout(new BorderLayout(20, 20));
+		
+		pnlSplit = new JPanel();
+		pnlresetPassword.add(pnlSplit, BorderLayout.CENTER);
+		pnlSplit.setLayout(new GridLayout(1, 2, 10, 0));
+		
+		panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(null, "Passwort \u00E4ndern", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlSplit.add(panel_4);
+		GridBagLayout gbl_pnlPasswordSecurity = new GridBagLayout();
+		gbl_pnlPasswordSecurity.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_pnlPasswordSecurity.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnlPasswordSecurity.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlPasswordSecurity.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_4.setLayout(gbl_pnlPasswordSecurity);
+		
+		lblAltesPasswort = new JLabel("Altes Passwort:");
+		GridBagConstraints gbc_lblAltesPasswort = new GridBagConstraints();
+		gbc_lblAltesPasswort.anchor = GridBagConstraints.WEST;
+		gbc_lblAltesPasswort.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAltesPasswort.gridx = 1;
+		gbc_lblAltesPasswort.gridy = 1;
+		panel_4.add(lblAltesPasswort, gbc_lblAltesPasswort);
+		
+		txtPwOld = new JPasswordField();
+		GridBagConstraints gbc_txtPwOld = new GridBagConstraints();
+		gbc_txtPwOld.insets = new Insets(0, 0, 5, 0);
+		gbc_txtPwOld.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPwOld.gridx = 2;
+		gbc_txtPwOld.gridy = 1;
+		panel_4.add(txtPwOld, gbc_txtPwOld);
+		
+		lblNeuesPasswort = new JLabel("Neues Passwort: ");
+		GridBagConstraints gbc_lblNeuesPasswort = new GridBagConstraints();
+		gbc_lblNeuesPasswort.anchor = GridBagConstraints.WEST;
+		gbc_lblNeuesPasswort.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNeuesPasswort.gridx = 1;
+		gbc_lblNeuesPasswort.gridy = 2;
+		panel_4.add(lblNeuesPasswort, gbc_lblNeuesPasswort);
+		
+		txtPwNew = new JPasswordField();
+		GridBagConstraints gbc_txtPwNew = new GridBagConstraints();
+		gbc_txtPwNew.insets = new Insets(0, 0, 5, 0);
+		gbc_txtPwNew.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPwNew.gridx = 2;
+		gbc_txtPwNew.gridy = 2;
+		panel_4.add(txtPwNew, gbc_txtPwNew);
+		
+		lblNeuesPasswortWdh = new JLabel("Neues Passwort wdh.: ");
+		GridBagConstraints gbc_lblNeuesPasswortWdh = new GridBagConstraints();
+		gbc_lblNeuesPasswortWdh.anchor = GridBagConstraints.WEST;
+		gbc_lblNeuesPasswortWdh.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNeuesPasswortWdh.gridx = 1;
+		gbc_lblNeuesPasswortWdh.gridy = 3;
+		panel_4.add(lblNeuesPasswortWdh, gbc_lblNeuesPasswortWdh);
+		
+		txtNewPwWdh = new JPasswordField();
+		GridBagConstraints gbc_txtNewPwWdh = new GridBagConstraints();
+		gbc_txtNewPwWdh.insets = new Insets(0, 0, 5, 0);
+		gbc_txtNewPwWdh.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNewPwWdh.gridx = 2;
+		gbc_txtNewPwWdh.gridy = 3;
+		panel_4.add(txtNewPwWdh, gbc_txtNewPwWdh);
+		
+		pnlPasswordSecurity = new JPanel();
+		pnlPasswordSecurity.setBorder(new TitledBorder(null, "Passwortsicherheit", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlSplit.add(pnlPasswordSecurity);
+		GridBagLayout gbl_pnlPasswordSecurity = new GridBagLayout();
+		gbl_pnlPasswordSecurity.columnWidths = new int[]{0, 0, 0};
+		gbl_pnlPasswordSecurity.rowHeights = new int[]{0, 0, 0};
+		gbl_pnlPasswordSecurity.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlPasswordSecurity.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		pnlPasswordSecurity.setLayout(gbl_pnlPasswordSecurity);
+		
+		lblvalue = new JLabel("lblValue");
+		GridBagConstraints gbc_lblvalue = new GridBagConstraints();
+		gbc_lblvalue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblvalue.gridx = 0;
+		gbc_lblvalue.gridy = 0;
+		pnlPasswordSecurity.add(lblvalue, gbc_lblvalue);
+		
+		progressBar = new JProgressBar();
+		progressBar.setMaximum(4);
+		GridBagConstraints gbc_progressBar = new GridBagConstraints();
+		gbc_progressBar.insets = new Insets(0, 0, 0, 5);
+		gbc_progressBar.gridx = 0;
+		gbc_progressBar.gridy = 1;
+		pnlPasswordSecurity.add(progressBar, gbc_progressBar);
+		
 		fillMap();
 		pack();
 		setVisible(true);
 	}
 
 	/**
-	 * Füllen der Map mit den Values
+	 * Fï¿½llen der Map mit den Values
 	 * @throws SQLException
 	 */
 	public void fillMap() throws SQLException
@@ -389,7 +497,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Prüfen ob eines der Textfelder bereits diesen Hotkey enthält
+	 * Prï¿½fen ob eines der Textfelder bereits diesen Hotkey enthï¿½lt
 	 * @param hotkey
 	 * @return
 	 */
@@ -410,7 +518,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Actionevents für das TamagotchiGUI
+	 * Actionevents fï¿½r das TamagotchiGUI
 	 * @param ae ActionEvent
 	 */
 	@Override
