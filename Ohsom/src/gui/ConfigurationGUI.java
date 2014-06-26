@@ -282,26 +282,6 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_txtMedizin.gridy = 8;
 		pnlOptionen.add(txtMedizin, gbc_txtMedizin);
 
-
-		panel_2 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
-		flowLayout.setHgap(20);
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panel.add(panel_2, BorderLayout.SOUTH);
-
-		btnSpeichern = new JButton("Speichern");
-		btnSpeichern.addActionListener(this);
-		panel_2.add(btnSpeichern);
-
-		btnAbbrechen = new JButton("Abbrechen");
-		btnAbbrechen.addActionListener(this);
-		panel_2.add(btnAbbrechen);
-
-		lblFehlermeldung = new JLabel("Fehlermeldung");
-		lblFehlermeldung.setForeground(Color.RED);
-		lblFehlermeldung.setVisible(false);
-		panel_2.add(lblFehlermeldung);
-
 		panel_3 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setHgap(50);
@@ -417,6 +397,26 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_progressBar.gridx = 0;
 		gbc_progressBar.gridy = 1;
 		pnlPasswordSecurity.add(progressBar, gbc_progressBar);
+		
+		
+				panel_2 = new JPanel();
+				getContentPane().add(panel_2, BorderLayout.SOUTH);
+				FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
+				flowLayout.setHgap(20);
+				flowLayout.setAlignment(FlowLayout.LEFT);
+				
+						btnSpeichern = new JButton("Speichern");
+						btnSpeichern.addActionListener(this);
+						panel_2.add(btnSpeichern);
+						
+								btnAbbrechen = new JButton("Abbrechen");
+								btnAbbrechen.addActionListener(this);
+								panel_2.add(btnAbbrechen);
+								
+										lblFehlermeldung = new JLabel("Fehlermeldung");
+										lblFehlermeldung.setForeground(Color.RED);
+										lblFehlermeldung.setVisible(false);
+										panel_2.add(lblFehlermeldung);
 		
 		fillMap();
 		pack();
