@@ -109,7 +109,13 @@ public class BLNachrichten {
 	 */
 	public boolean sendNachricht(Nachricht Nachricht) throws SQLException
 	{
-		return DAON.addNachricht(Nachricht);
+		ArrayList<Nachricht> EmpfaengerPostFach = DAON.getNachrichten(Nachricht.getEmpfaenger().getId());
+		
+		if(EmpfaengerPostFach.size() < 20)
+		{
+			return DAON.addNachricht(Nachricht);
+		}
+		return false;
 	}
 	
 	/**
