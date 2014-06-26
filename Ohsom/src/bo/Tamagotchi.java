@@ -234,7 +234,7 @@ public class Tamagotchi {
 	{
 		boolean VerwendungErfolgreich = false;
 		
-		if(Medizin >= 1 & getGesundheitszustand() == Gesundheitszustand.KRANK)
+		if(Medizin >= 1 && getGesundheitszustand() == Gesundheitszustand.KRANK)
 		{
 			Medizin--;
 			VerwendungErfolgreich = true;

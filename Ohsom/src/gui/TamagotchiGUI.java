@@ -668,14 +668,19 @@ public class TamagotchiGUI implements ActionListener, KeyListener{
 	 */
 	public void gibMedizin() throws SQLException
 	{
-		if(blT.gibMedizin())
-		{
-			setEreignisLabel("Dein Tamagotchi ist nun wieder gesund");
-		}
-		else
-		{
-			setEreignisLabel("Etwas mit der Heilung ging schief");
-		}
+	 try {
+		 if(blT.gibMedizin())
+			{
+				setEreignisLabel("Dein Tamagotchi ist nun wieder gesund");
+			}
+			else
+			{
+				setEreignisLabel("Dein Tamagotchi ist bereits wohlauf");
+			}
+	} catch (SQLException e) {
+		setEreignisLabel("Etwas mit der Heilung ging schief. Ist die Datenbank verbunden?");
+	}
+		
 	}
 
 	/**
