@@ -11,15 +11,29 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author Snatsch
+ *
+ */
 public class SpriteResources {
 	private static SpriteResources resources = new SpriteResources();
 	
 	private HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public static SpriteResources get() {
 		return resources;
 	}
 	
+	/**
+	 * 
+	 * @param fileLoc
+	 * @return
+	 */
 	public Sprite getSprite(String fileLoc) {
 		
 		if(sprites.get(fileLoc) != null)

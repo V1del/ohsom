@@ -8,10 +8,18 @@ import java.util.ArrayList;
 import bo.Highscore;
 import bo.Nachricht;
 
+/**
+ * Datenbanklogik für die Nachrichten
+ * @author Snatsch
+ *
+ */
 public class DAONachrichtenImpl implements DAONachrichten{
 
 	OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 	
+	/**
+	 * Insert einer neuen Nachricht
+	 */
 	public boolean addNachricht(Nachricht n) throws SQLException {
 		boolean isInsertingSuccessfull = false;
 
@@ -29,6 +37,10 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		return isInsertingSuccessfull;
 	}
 
+	/**
+	 * Updaten einer vorhandenen Nachricht
+	 * @param zu ändernde Nachricht
+	 */
 	public boolean changeNachricht(Nachricht n) throws SQLException {
 		boolean isChangingSuccessfull = false;
 
@@ -43,6 +55,11 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		return isChangingSuccessfull;
 	}
 
+	/**
+	 * Löschen einer vorhandenen Nachricht
+	 * @param zu löschende Nachricht
+	 * @return Löschen erfolgreich
+	 */
 	public boolean deleteNachricht(Nachricht n) throws SQLException {
 		boolean isDeletingSuccessfull = false;
 
@@ -57,6 +74,11 @@ public class DAONachrichtenImpl implements DAONachrichten{
 		return isDeletingSuccessfull;
 	}
 
+	/**
+	 * Getter aller Nachrichten
+	 * @param idUser
+	 * @return ArrayList mit Nachricthen
+	 */
 	public ArrayList<Nachricht> getNachrichten(int idUser) throws SQLException{
 		ArrayList<Nachricht> NachrichtenList = new ArrayList<Nachricht>();
 		PreparedStatement NachrichtPstmt = null;

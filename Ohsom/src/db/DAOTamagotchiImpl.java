@@ -12,10 +12,22 @@ import bo.Item;
 import bo.Tamagotchi;
 import bo.User;
 
+/**
+ * Datenbanklogik für Tamagotchis
+ * @author Snatsch
+ *
+ */
 public class DAOTamagotchiImpl implements DAOTamagotchi{
 
 	private OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 	
+	/**
+	 * Auf aktuelles Datum setzen eines bestimmten Werts des Tamagotchis
+	 * @param Tamagotchi
+	 * @param Eigenschaft
+	 * @return erfolgreiches Setzen
+	 * @throws SQLException
+	 */
 	public boolean setToActualDate(Tamagotchi Tamagotchi, String Eigenschaft) throws SQLException
 	{
 		PreparedStatement TamagotchiTimepstmt = null;

@@ -9,10 +9,19 @@ import bo.Highscore;
 import bo.Kategorie;
 import bo.Shopartikel;
 
+/**
+ * Datenbanklogik für die Shopartikel
+ * @author Snatsch
+ *
+ */
 public class DAOShoppartikelImpl implements DAOShopartikel{
 
 	OhsomDBDAOImpl DBDAO = OhsomDBDAOImpl.getInstance();
 	
+	/**
+	 * Getter von zufällig ausgewählten Shopartikeln 
+	 * @param kat Kategorie
+	 */
 	public ArrayList<Shopartikel> getFilteredShopartikel(Kategorie kat) throws SQLException {
 		ArrayList<Shopartikel> ShopartikelList = new ArrayList<Shopartikel>();
 		PreparedStatement ShopartikelPstmt = null;
@@ -35,6 +44,11 @@ public class DAOShoppartikelImpl implements DAOShopartikel{
 		return ShopartikelList;
 	}
 
+	/**
+	 * Getter eines bestimmten Shopartikels
+	 * @param idShopartikel
+	 * @return Shopartikel
+	 */
 	public Shopartikel getShopartikel(int idShopartikel) throws SQLException {
 		PreparedStatement ShopartikelPstmt = null;
 		String ShopartikelSQL = "SELECT * FROM shopartikel WHERE IDSHOP = ?";

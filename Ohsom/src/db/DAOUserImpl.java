@@ -18,28 +18,32 @@ public class DAOUserImpl implements DAOUser {
 	public DAOUserImpl() {
 
 	}
-	
+
 	/**
 	 * Insert Statement zum Hinzufügen einer ConfigData
+	 * @param TamagotchiConfig
+	 * @return erfolgreiches Hinzufügen
 	 */
 	public boolean addConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException {
 		boolean isInsertingSuccessfull = false;
-		
+
 		PreparedStatement ConfigInsertpstmt = null;
 		String ConfigInsertSQL = "INSERT INTO tamagotchiconfig(idUser, Hotkey, Code) VALUES (?,?,?)";
-		
+
 		ConfigInsertpstmt = DBDAO.getConnection().prepareStatement(ConfigInsertSQL);
 		ConfigInsertpstmt.setInt(1, TamagotchiConfig.getidUser());
 		ConfigInsertpstmt.setString(2, String.valueOf(TamagotchiConfig.getHotkey()));
 		ConfigInsertpstmt.setString(3, TamagotchiConfig.getCode().name());
-		
+
 		isInsertingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(ConfigInsertpstmt);
-		
+
 		return isInsertingSuccessfull;
 	}
 
 	/**
 	 * Insert Statement zum Hinzufügen eines Highscores
+	 * @param Highscore
+	 * @return erfolgreiches Hinzufügen
 	 */
 	public boolean addHighscore(Highscore Highscore) throws SQLException {
 		boolean isInsertingSuccessfull = false;
@@ -57,6 +61,8 @@ public class DAOUserImpl implements DAOUser {
 
 	/**
 	 * Insert Statement zum Hinzufügen eines Users
+	 * @param User
+	 * @return erfolgreiches Hinzufügen
 	 */
 	public boolean addUser(User User) throws SQLException {
 		boolean isInsertingSuccessfull = false;
@@ -70,27 +76,29 @@ public class DAOUserImpl implements DAOUser {
 		UserInsertpstmt.setString(3, User.getEmail());
 
 		isInsertingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(UserInsertpstmt);
-		
+
 		return isInsertingSuccessfull;
 	}
 
 	/**
 	 * Delete eines Config - Datensatzes
 	 * @throws SQLException 
+	 * @param TamagotchiConfig
+	 * @return Erfolgreiches Löschen der TamagotchiConfigData
 	 */
 	public boolean deleteConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException {
 		boolean isDeletingSuccessfull = false;
-		
+
 		PreparedStatement ConfigDeletepstmt = null;
 		String ConfigDeleteSQL = "DELETE FROM tamagotchiconfig WHERE idUser = ? and Code = ?";
-		
+
 		ConfigDeletepstmt = DBDAO.getConnection().prepareStatement(ConfigDeleteSQL);
 		ConfigDeletepstmt.setInt(1, TamagotchiConfig.getidUser());
 		ConfigDeletepstmt.setString(2, String.valueOf(TamagotchiConfig.getHotkey()));
 		ConfigDeletepstmt.setString(3, TamagotchiConfig.getCode().name());
-		
+
 		isDeletingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(ConfigDeletepstmt);
-		
+
 		return isDeletingSuccessfull;
 	}
 
@@ -115,6 +123,7 @@ public class DAOUserImpl implements DAOUser {
 
 	/**
 	 * Statement zum Erfragen der Highscores
+	 * @return Highscoredateien
 	 */
 	public ArrayList<Highscore> getAllHighscores() throws SQLException {
 		ArrayList<Highscore> HighscoreList = new ArrayList<Highscore>();
@@ -133,7 +142,13 @@ public class DAOUserImpl implements DAOUser {
 
 		return HighscoreList;
 	}
-	
+
+	/**
+	 * Getter Highscore eines Users
+	 * @param idUser
+	 * @return Highscore
+	 * @throws SQLException
+	 */
 	public Highscore getHighscore(int idUser) throws SQLException {
 		for(Highscore Highscore : getAllHighscores()) {
 			if(Highscore.getIdUser() == idUser)
@@ -207,18 +222,18 @@ public class DAOUserImpl implements DAOUser {
 	 * @throws SQLException 
 	 */
 	public boolean updateConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException {
-	boolean isUpdatingSuccessfull = false;
-		
+		boolean isUpdatingSuccessfull = false;
+
 		PreparedStatement ConfigUpdatepstmt = null;
 		String ConfigUpdateSQL = "UPDATE tamagotchiconfig SET Hotkey = ? WHERE idUser = ? and Code = ?";
-		
+
 		ConfigUpdatepstmt = DBDAO.getConnection().prepareStatement(ConfigUpdateSQL);
 		ConfigUpdatepstmt.setString(1, String.valueOf(TamagotchiConfig.getHotkey()));
 		ConfigUpdatepstmt.setInt(2, TamagotchiConfig.getidUser());
 		ConfigUpdatepstmt.setString(3, TamagotchiConfig.getCode().name());
-		
+
 		isUpdatingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(ConfigUpdatepstmt);
-		
+
 		return isUpdatingSuccessfull;
 	}
 
