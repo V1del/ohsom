@@ -60,8 +60,8 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 	private Map<JToggleButton, Integer> BtnAuswahlValuesMap = new HashMap<JToggleButton, Integer>();
 	private JPanel pnlEssenAuswahl, pnlGetraenkeAuswahl, pnlInventarEssen, pnlInventarTrinken;
 
-	private Map<String, JToggleButton> BtnInventarMap = new HashMap<String, JToggleButton>();
-	private Map<JToggleButton, Item> BtnInventarValuesMap = new HashMap<JToggleButton, Item>();
+	private Map<String, JButton> BtnInventarMap = new HashMap<String, JButton>();
+	private Map<JButton, Item> BtnInventarValuesMap = new HashMap<JButton, Item>();
 
 	JToggleButton btnEssen1 = new JToggleButton("?");
 	JToggleButton btnEssen2 = new JToggleButton("?");
@@ -74,16 +74,16 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 	JToggleButton btnGetraenk4 = new JToggleButton("?"); 
 	JToggleButton btnGetraenk5 = new JToggleButton("?");
 
-	JToggleButton btnItemEssen1 = new JToggleButton("?");
-	JToggleButton btnItemEssen2 = new JToggleButton("?");
-	JToggleButton btnItemEssen3 = new JToggleButton("?");
-	JToggleButton btnItemEssen4 = new JToggleButton("?");
-	JToggleButton btnItemEssen5 = new JToggleButton("?");
-	JToggleButton btnItemGetraenk1 = new JToggleButton("?");
-	JToggleButton btnItemGetraenk2 = new JToggleButton("?");
-	JToggleButton btnItemGetraenk3 = new JToggleButton("?");
-	JToggleButton btnItemGetraenk4 = new JToggleButton("?");
-	JToggleButton btnItemGetraenk5 = new JToggleButton("?");
+	JButton btnItemEssen1 = new JButton("?");
+	JButton btnItemEssen2 = new JButton("?");
+	JButton btnItemEssen3 = new JButton("?");
+	JButton btnItemEssen4 = new JButton("?");
+	JButton btnItemEssen5 = new JButton("?");
+	JButton btnItemGetraenk1 = new JButton("?");
+	JButton btnItemGetraenk2 = new JButton("?");
+	JButton btnItemGetraenk3 = new JButton("?");
+	JButton btnItemGetraenk4 = new JButton("?");
+	JButton btnItemGetraenk5 = new JButton("?");
 
 	JLabel lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue, lblFehlermeldung;
 	
@@ -421,10 +421,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_label_4.gridy = 1;
 		pnlGetraenke.add(lblGeld[2][1], gbc_label_4);
 
-		
-		RefreshMoneyLabels();
 		setVisible(true);
-		
 	}
 
 	/**
@@ -463,7 +460,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 
 		for(int i = 1; i < 6; i++)
 		{
-			JToggleButton btnItemEmpty = BtnInventarMap.get("btnItem" + katItem.getBtnName() + i);
+			JButton btnItemEmpty = BtnInventarMap.get("btnItem" + katItem.getBtnName() + i);
 			btnItemEmpty.setText("?");
 			btnItemEmpty.setIcon(null);
 			pnlInventar.add(btnItemEmpty);
@@ -471,7 +468,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		
 		for(Item Item : blT.getInventory(katItem))
 		{
-			JToggleButton btnItem = BtnInventarMap.get("btnItem" + katItem.getBtnName() + Index);
+			JButton btnItem = BtnInventarMap.get("btnItem" + katItem.getBtnName() + Index);
 			BtnInventarValuesMap.put(btnItem, Item);
 			btnItem.setText("");
 			btnItem.setIcon(new ImageIcon("Sources/Shopartikel/" + Item.getShopartikel().getArtikelImage()));
