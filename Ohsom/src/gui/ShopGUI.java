@@ -232,7 +232,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_lblKosten.gridy = 2;
 		panel_1.add(lblKosten[0][0], gbc_lblKosten);
 
-		lblKosten[0][1] = new JLabel("150");
+		lblKosten[0][1] = new JLabel("0");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -347,10 +347,6 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		btnTrinkenKaufen.addActionListener(this);
 		//panel_6.add(lblGeldValue, gbc_label_4);
 		
-		btnTrinkenKaufen = new JButton("Getränk kaufen");
-		btnTrinkenKaufen.addActionListener(this);
-		//panel_6.add(lblGeldValue, gbc_label_4);
-		
 		pnlGetraenkeAuswahl = new JPanel();
 		pnlGetraenkeAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
@@ -370,7 +366,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_lblKosten_2.gridy = 4;
 		pnlGetraenke.add(lblKosten[2][0], gbc_lblKosten_2);
 		
-		lblKosten[2][1] = new JLabel("100");
+		lblKosten[2][1] = new JLabel("0");
 		GridBagConstraints gbc_lblkostenvalue_2 = new GridBagConstraints();
 		gbc_lblkostenvalue_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblkostenvalue_2.gridx = 2;
@@ -443,6 +439,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 			btnArticle.setText("");
 			btnArticle.setIcon(new ImageIcon("Sources/Shopartikel/" + Artikel.getArtikelImage()));
 			pnlArticle.add(btnArticle);
+			btnArticle.addChangeListener(this);
 			
 			ArticleIndex++;
 		}
@@ -553,6 +550,11 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		return BuyingSuccessfully; 
 	}
 
+	/**
+	 * Füttern des Tamagotchis GUI Logik
+	 * @param Item
+	 * @throws SQLException
+	 */
 	public void feedTamagotchi(Item Item) throws SQLException
 	{
 		if(blT.feedTamagotchi(Item))
@@ -566,6 +568,11 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		}
 	}
 	
+	/**
+	 * Tamagotchi etwas zu Trinken geben GUI Logik
+	 * @param Item
+	 * @throws SQLException
+	 */
 	public void giveTamagotchiADrink(Item Item) throws SQLException
 	{
 		if(blT.giveTamagotchiADrink(Item))
@@ -641,9 +648,67 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		}
 		finally{}
 	}
-
+	
 	/**
-	 * VerÃ¤nderung des Spinners wird sofort überprüft
+	 * Getter alle Kosten der aktuellen Kategorie und aktuelle Artikel
+	 * @param kat
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getAllCosts(Kategorie kat) throws SQLException
+	{
+		int Gesamtkosten = 0;
+		for(Map.Entry BtnValueEntry : BtnAuswahlValuesMap.entrySet())
+		{
+			JToggleButton btnArticle = (JToggleButton) BtnValueEntry.getKey();
+			int Shopartikelid = (int) BtnAuswahlValuesMap.get(btnArticle);
+			Shopartikel Shopartikel = blS.getArticle(Shopartikelid);
+			
+			if(kat == Shopartikel.getKategorie())
+			{
+				Gesamtkosten += Shopartikel.getPreis();
+			}
+		}
+		
+		return Gesamtkosten;
+	}
+	
+	/**
+	 * Refreshen der Labels für die Kosten von Essen oder Trinken
+	 * @param kat
+	 * @throws SQLException 
+	 */
+	public void refreshCostLabelsObjects(Kategorie kat) throws SQLException
+	{
+		int Kosten = getAllCosts(kat);
+		for(Map.Entry BtnValueEntry : BtnAuswahlValuesMap.entrySet())
+		{
+			JToggleButton btnArticle = (JToggleButton) BtnValueEntry.getKey();
+			int Shopartikelid = (int) BtnAuswahlValuesMap.get(btnArticle);
+			Shopartikel Shopartikel = blS.getArticle(Shopartikelid);
+			
+			if(Shopartikel.getKategorie() == kat)
+			{
+				if(!btnArticle.isSelected())
+				{
+					Kosten -= Shopartikel.getPreis();
+				}
+			}
+		}
+		
+		if(kat == Kategorie.FUTTER)
+		{
+			lblKosten[1][1].setText(String.valueOf(Kosten));
+		}
+		else
+		{
+			lblKosten[2][1].setText(String.valueOf(Kosten));
+		}
+	}
+	
+	
+	/**
+	 * Veränderung des Spinners wird sofort überprüft
 	 * @param ce
 	 */
 	@Override
@@ -658,7 +723,10 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 			}
 			if(BtnAuswahlValuesMap.get(ce.getSource()) != null)
 			{
+				int Shopartikelid = (int) BtnAuswahlValuesMap.get(ce.getSource());
+				Shopartikel Shopartikel = blS.getArticle(Shopartikelid);
 				
+				refreshCostLabelsObjects(Shopartikel.getKategorie());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
