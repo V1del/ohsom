@@ -1,7 +1,7 @@
 package bo;
 
 /**
- * 
+ * Enumeration Pflegecodes
  * @author Snatsch
  *
  */
@@ -18,11 +18,20 @@ public enum Code {
 	
 	private String CodeName;
 	
+	/**
+	 * Konstruktor
+	 * @param CodeName
+	 */
 	Code(String CodeName)
 	{
 		this.CodeName = CodeName;
 	}
 	
+	/**
+	 * Getter Code abhängig vom Namen
+	 * @param codeName
+	 * @return
+	 */
 	public static Code getCodeByName(String codeName)
 	{
 		for(Code code : Code.values())
@@ -35,6 +44,10 @@ public enum Code {
 		return null;
 	}
 	
+	/**
+	 * Getter des CodeNamens
+	 * @return
+	 */
 	public String getCodeName()
 	{
 		return this.CodeName;
