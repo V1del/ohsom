@@ -85,9 +85,22 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 	JToggleButton btnItemGetraenk4 = new JToggleButton("?");
 	JToggleButton btnItemGetraenk5 = new JToggleButton("?");
 
-	JLabel lblGeld, lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue, lblFehlermeldung;
+	JLabel lblGeldValue, lblMedizin, lblMedizinValue, lblKostenValue, lblFehlermeldung;
+	
+	private JLabel[][] lblGeld = new JLabel[3][2];
+	private JLabel[][] lblKosten = new JLabel[3][2];
+	private JLabel lblGeldTrinken, lblKostenTrinken;
+	private JLabel lblGeldEssen, lblKostenEssen;
+
+	
 	private JLabel lblFehlermeldungTrinken;
 	private JLabel lblFehlermeldungEssen;
+	private JLabel lblGeldMedizinValue;
+	private JLabel lblKosten_1;
+	private JLabel lblKostenValue_1;
+	private JLabel lblKosten_2;
+	private JLabel lblkostenvalue_2;
+	
 	/**
 	 * Konstruktor, der die Map fÃ¼llt => Ersatz zu variablen Variablen
 	 * @throws SQLException
@@ -155,19 +168,19 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_lblMedizinValue.gridy = 1;
 		pnlMedizin.add(lblMedizinValue, gbc_lblMedizinValue);
 
-		lblGeld = new JLabel("Geld: ");
+		lblGeld[0][0] = new JLabel("Geld: ");
 		GridBagConstraints gbc_lblGeld = new GridBagConstraints();
 		gbc_lblGeld.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGeld.gridx = 4;
 		gbc_lblGeld.gridy = 1;
-		pnlMedizin.add(lblGeld, gbc_lblGeld);
+		pnlMedizin.add(lblGeld[0][0], gbc_lblGeld);
 
-		lblGeldValue = new JLabel("100");
+		lblGeld[0][1] = new JLabel("100");
 		GridBagConstraints gbc_lblGeldValue = new GridBagConstraints();
 		gbc_lblGeldValue.insets = new Insets(0, 0, 5, 0);
 		gbc_lblGeldValue.gridx = 5;
 		gbc_lblGeldValue.gridy = 1;
-		pnlMedizin.add(lblGeldValue, gbc_lblGeldValue);
+		pnlMedizin.add(lblGeld[0][1], gbc_lblGeldValue);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Medizin kaufen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -212,20 +225,20 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_btnKaufen.gridy = 1;
 		panel_1.add(btnMedizinKaufen, gbc_btnKaufen);
 
-		JLabel lblKosten = new JLabel("Kosten: ");
+		lblKosten[0][0] = new JLabel("Kosten: ");
 		GridBagConstraints gbc_lblKosten = new GridBagConstraints();
 		gbc_lblKosten.insets = new Insets(0, 0, 5, 5);
 		gbc_lblKosten.gridx = 0;
 		gbc_lblKosten.gridy = 2;
-		panel_1.add(lblKosten, gbc_lblKosten);
+		panel_1.add(lblKosten[0][0], gbc_lblKosten);
 
-		lblKostenValue = new JLabel("150");
+		lblKosten[0][1] = new JLabel("150");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 2;
-		panel_1.add(lblKostenValue, gbc_lblNewLabel);
+		panel_1.add(lblKosten[0][1], gbc_lblNewLabel);
 
 		lblFehlermeldung = new JLabel("Fehlermeldung");
 		lblFehlermeldung.setForeground(Color.RED);
@@ -247,18 +260,20 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbl_pnlEssen.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlEssen.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlEssen.setLayout(gbl_pnlEssen);
-
+		
+		lblGeld[1][0] = new JLabel("Geld: ");
 		GridBagConstraints gbc_lblGeld2 = new GridBagConstraints();
 		gbc_lblGeld2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGeld2.gridx = 2;
 		gbc_lblGeld2.gridy = 1;
-		pnlEssen.add(lblGeld, gbc_lblGeld2);
+		pnlEssen.add(lblGeld[1][0], gbc_lblGeld2);
 
+		lblGeld[1][1] = new JLabel("100");
 		GridBagConstraints gbc_label_2 = new GridBagConstraints();
 		gbc_label_2.insets = new Insets(0, 0, 5, 5);
 		gbc_label_2.gridx = 3;
 		gbc_label_2.gridy = 1;
-		pnlEssen.add(lblGeldValue, gbc_label_2);
+		pnlEssen.add(lblGeld[1][1], gbc_label_2);
 
 		pnlEssenAuswahl = new JPanel();
 		pnlEssenAuswahl.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -274,6 +289,21 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 
 		btnEssenKaufen = new JButton("Essen kaufen");
 		btnEssenKaufen.addActionListener(this);
+		
+		lblKosten[1][0] = new JLabel("Kosten: ");
+		GridBagConstraints gbc_lblKosten_1 = new GridBagConstraints();
+		gbc_lblKosten_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblKosten_1.gridx = 1;
+		gbc_lblKosten_1.gridy = 4;
+		pnlEssen.add(lblKosten[1][0], gbc_lblKosten_1);
+		
+		lblKosten[1][1] = new JLabel("100");
+		GridBagConstraints gbc_lblKostenValue_1 = new GridBagConstraints();
+		gbc_lblKostenValue_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblKostenValue_1.gridx = 2;
+		gbc_lblKostenValue_1.gridy = 4;
+		pnlEssen.add(lblKosten[1][1], gbc_lblKostenValue_1);
+		
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 5;
@@ -284,7 +314,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		pnlInventarEssen.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlInventarEssen = new GridBagConstraints();
 		gbc_pnlInventarEssen.gridwidth = 6;
-		gbc_pnlInventarEssen.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlInventarEssen.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlInventarEssen.fill = GridBagConstraints.BOTH;
 		gbc_pnlInventarEssen.gridx = 1;
 		gbc_pnlInventarEssen.gridy = 6;
@@ -330,6 +360,20 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		pnlGetraenke.add(pnlGetraenkeAuswahl, gbc_panel_7);
 
 		fillDrinks(pnlGetraenkeAuswahl);
+		
+		lblKosten[2][0] = new JLabel("Kosten: ");
+		GridBagConstraints gbc_lblKosten_2 = new GridBagConstraints();
+		gbc_lblKosten_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblKosten_2.gridx = 1;
+		gbc_lblKosten_2.gridy = 4;
+		pnlGetraenke.add(lblKosten[2][0], gbc_lblKosten_2);
+		
+		lblKosten[2][1] = new JLabel("100");
+		GridBagConstraints gbc_lblkostenvalue_2 = new GridBagConstraints();
+		gbc_lblkostenvalue_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblkostenvalue_2.gridx = 2;
+		gbc_lblkostenvalue_2.gridy = 4;
+		pnlGetraenke.add(lblKosten[2][1], gbc_lblkostenvalue_2);
 		GridBagConstraints gbc_btnTrinkenKaufen = new GridBagConstraints();
 		gbc_btnTrinkenKaufen.insets = new Insets(0, 0, 5, 5);
 		gbc_btnTrinkenKaufen.gridx = 5;
@@ -359,16 +403,19 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 
 		lblFehlermeldungTrinken.setVisible(false);
 
+		lblGeld[2][0] = new JLabel("Geld: ");
 		GridBagConstraints gbc_label_3 = new GridBagConstraints();
 		gbc_label_3.insets = new Insets(0, 0, 5, 5);
 		gbc_label_3.gridx = 2;
 		gbc_label_3.gridy = 1;
-		pnlGetraenke.add(lblGeld, gbc_label_3);
+		pnlGetraenke.add(lblGeld[2][0], gbc_label_3);
 
+		lblGeld[2][1] = new JLabel("100");
 		GridBagConstraints gbc_label_4 = new GridBagConstraints();
 		gbc_label_4.insets = new Insets(0, 0, 5, 5);
 		gbc_label_4.gridx = 3;
 		gbc_label_4.gridy = 1;
+		pnlGetraenke.add(lblGeld[2][1], gbc_label_4);
 
 		setVisible(true);
 	}
@@ -453,7 +500,10 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 	public void RefreshMoneyLabels() throws SQLException
 	{
 		Tamagotchi currentTamagotchi = blT.getCurrentUser().getTamagotchi();
-		lblGeldValue.setText(String.valueOf(currentTamagotchi.getGeld()));
+		for (int i = 0; i < 3; i++)
+		{
+			lblGeld[i][1].setText(String.valueOf(currentTamagotchi.getGeld()));
+		}
 		lblMedizinValue.setText(String.valueOf(currentTamagotchi.getMedizin()));
 	}
 
@@ -597,7 +647,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 			{
 				JSpinner Spinner = (JSpinner) ce.getSource();
 
-				lblKostenValue.setText("" + blS.getMedicinePrice((int) Spinner.getValue()) + "");
+				lblKosten[0][1].setText("" + blS.getMedicinePrice((int) Spinner.getValue()) + "");
 
 			}
 		} catch (SQLException e) {
