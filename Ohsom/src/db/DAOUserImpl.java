@@ -19,6 +19,9 @@ public class DAOUserImpl implements DAOUser {
 
 	}
 	
+	/**
+	 * Insert Statement zum Hinzufügen einer ConfigData
+	 */
 	public boolean addConfigData(TamagotchiConfig TamagotchiConfig) throws SQLException {
 		boolean isInsertingSuccessfull = false;
 		
@@ -35,6 +38,9 @@ public class DAOUserImpl implements DAOUser {
 		return isInsertingSuccessfull;
 	}
 
+	/**
+	 * Insert Statement zum Hinzufügen eines Highscores
+	 */
 	public boolean addHighscore(Highscore Highscore) throws SQLException {
 		boolean isInsertingSuccessfull = false;
 
@@ -49,6 +55,9 @@ public class DAOUserImpl implements DAOUser {
 		return isInsertingSuccessfull;
 	}
 
+	/**
+	 * Insert Statement zum Hinzufügen eines Users
+	 */
 	public boolean addUser(User User) throws SQLException {
 		boolean isInsertingSuccessfull = false;
 
@@ -87,6 +96,8 @@ public class DAOUserImpl implements DAOUser {
 
 	/**
 	 * SQL Statement zum LÃ¶schen eines Users
+	 * @param User der gelöscht werden soll
+	 * @return User erfolgreich gelöscht
 	 */
 	public boolean deleteUser(User User) throws SQLException {
 		boolean isDeletingSuccessfull = false;
@@ -180,12 +191,11 @@ public class DAOUserImpl implements DAOUser {
 		boolean isChangingSuccessfull = false;
 
 		PreparedStatement UserUpdatepstmt = null;
-		String UserUpdateSQL = "UPDATE user SET EMAIL = ?, PASSWORT = ? WHERE ID = ?";
+		String UserUpdateSQL = "UPDATE user SET PASSWORT = ? WHERE IDUSER = ?";
 
 		UserUpdatepstmt = DBDAO.getConnection().prepareStatement(UserUpdateSQL);
-		UserUpdatepstmt.setString(1, User.getEmail());
-		UserUpdatepstmt.setString(2, User.getPasswort());
-		UserUpdatepstmt.setInt(3, User.getId());
+		UserUpdatepstmt.setString(1, User.getPasswort());
+		UserUpdatepstmt.setInt(2, User.getId());
 
 		isChangingSuccessfull = DBDAO.SuccessfullInsertingChangingDeleting(UserUpdatepstmt);
 
@@ -212,6 +222,13 @@ public class DAOUserImpl implements DAOUser {
 		return isUpdatingSuccessfull;
 	}
 
+	/**
+	 * Select um einen einzelnen User mithilfe seiner Email oder seines Nicknames zu erhalten
+	 * @param SearchValue
+	 * @param searchingForNickname
+	 * @return User
+	 * @throws SQLException
+	 */
 	public User getUser(String SearchValue, boolean searchingForNickname) throws SQLException
 	{
 		PreparedStatement Userpstmt = null;

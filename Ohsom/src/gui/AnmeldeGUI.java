@@ -292,7 +292,7 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	/** 
-	 * ï¿½nderung des Labels fï¿½r Passwortsicherheit
+	 * Änderung des Labels für Passwortsicherheit
 	 */
 	public void RefreshPasswordSecurityPB()
 	{
@@ -305,7 +305,7 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 			lblPasswortStaerke.setText("schwach");
 			break;
 		case 2:
-			lblPasswortStaerke.setText("mï¿½ssig");
+			lblPasswortStaerke.setText("mässig");
 			break;
 		case 3:
 			lblPasswortStaerke.setText("ausreichend");
@@ -318,14 +318,23 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void keyPressed(KeyEvent arg0) {
 		RefreshPasswordSecurityPB();
 	}	
 
+	/**
+	 * 
+	 */
 	public void keyReleased(KeyEvent arg0) {
 		RefreshPasswordSecurityPB();
 	}
 
+	/**
+	 * 
+	 */
 	public void keyTyped(KeyEvent arg0) {
 		RefreshPasswordSecurityPB();
 	}

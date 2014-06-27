@@ -185,7 +185,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 		}
 		else
 		{
-			if(!blU.isUserDataValid(txtNickname.getText(), txtPasswort.getText()))
+			if(!blU.logUserIn(txtNickname.getText(), txtPasswort.getText()))
 			{
 				lblFehlermeldung.setText("Falsches Passwort f�r diesen Nickname.");
 			}
