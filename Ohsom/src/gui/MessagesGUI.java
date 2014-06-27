@@ -60,11 +60,6 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 
 	private JPanel panel_3;
 
-	private JPanel pnlPagingOptions;
-	private JLabel lblSeite;
-	private JButton btnZurueck;
-	private JButton btnVorwaerts;
-
 	public MessagesGUI() throws SQLException
 	{	
 		initialize();	
@@ -144,27 +139,6 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		btnRead.addActionListener(this);
 		pnlMessageOptions.add(btnRead);
 
-		pnlPagingOptions = new JPanel();
-		panel_3.add(pnlPagingOptions, BorderLayout.CENTER);
-
-		btnZurueck = new JButton("<< zurückblättern");
-
-		btnZurueck.setMargin(new Insets(0, 0, 0, 0));
-		btnZurueck.setContentAreaFilled(false);
-		btnZurueck.setBorderPainted(false);
-		btnZurueck.setOpaque(false);
-		pnlPagingOptions.add(btnZurueck);
-
-		lblSeite = new JLabel("S 1 / 1");
-		pnlPagingOptions.add(lblSeite);
-
-		btnVorwaerts = new JButton("vorwärtsblättern>>");
-
-		btnVorwaerts.setMargin(new Insets(0, 0, 0, 0));
-		btnVorwaerts.setContentAreaFilled(false);
-		btnVorwaerts.setBorderPainted(false);
-		btnVorwaerts.setOpaque(false);
-		pnlPagingOptions.add(btnVorwaerts);
 
 		panel_2 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
