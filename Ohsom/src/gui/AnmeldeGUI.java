@@ -318,14 +318,23 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void keyPressed(KeyEvent arg0) {
 		RefreshPasswordSecurityPB();
 	}	
 
+	/**
+	 * 
+	 */
 	public void keyReleased(KeyEvent arg0) {
 		RefreshPasswordSecurityPB();
 	}
 
+	/**
+	 * 
+	 */
 	public void keyTyped(KeyEvent arg0) {
 		RefreshPasswordSecurityPB();
 	}

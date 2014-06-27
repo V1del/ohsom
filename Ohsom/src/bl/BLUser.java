@@ -25,11 +25,20 @@ public class BLUser {
 	 */
 	public boolean isUserDataValid(String Nickname, String Passwort) throws SQLException
 	{
-		User currentUser = DAOU.getUser(Nickname, Passwort); 
+		User currentUser = DAOU.getUser(Nickname, Passwort);
 		setCurrentUser(currentUser);
-		
 		return !(currentUser == null);
 	}
+	
+	/**
+	 * Einloggen des Users
+	 * @return Erfolgreiches Einloggen
+	 */
+	public boolean logUserIn(String Nickname, String Passwort) throws SQLException
+	{
+		return isUserDataValid(Nickname, Passwort);
+	}
+	
 /**
  * Getter des aktuell eingeloggten Users
  * @return aktueller User

@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Gui fï¿½r die Configurationgui
+ * Gui für die Configurationgui
  * @author Snatsch
  *
  */
@@ -445,16 +445,6 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
-		//
-	}
-
-	@Override
-	public void keyReleased(KeyEvent ke) {
-		//
-	}
-
-	@Override
-	public void keyTyped(KeyEvent ke) {
 		JTextField currentTextField = (JTextField) ke.getSource();
 		if(currentTextField == txtPwNew)
 		{
@@ -471,7 +461,16 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 				currentTextField.setText("");
 			}
 		}
+	}
 
+	@Override
+	public void keyReleased(KeyEvent ke) {
+		//
+	}
+
+	@Override
+	public void keyTyped(KeyEvent ke) {
+		//
 	}
 	
 	/** 

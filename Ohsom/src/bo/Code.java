@@ -7,7 +7,7 @@ package bo;
  */
 public enum Code {
 	WERTE("Werte"),
-	FUETTERN("FÃ¼ttern"),
+	FUETTERN("Füttern"),
 	SCHLAFENLEGEN("Schlafen"),
 	TRINKEN("Trinken"),
 	SPIELEN("Spielen"),
