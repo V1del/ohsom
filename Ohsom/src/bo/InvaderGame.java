@@ -51,21 +51,21 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private static Color m_tWhite = new Color(255, 255, 255, 150);
 	
 
-	public static void main(String[] args) {
-		InvaderGame g = new InvaderGame();
-
-		try {
-			g.gameLoop();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		g.gameTest.dispose();
-
-	}
+//	public static void main(String[] args) {
+//		InvaderGame g = new InvaderGame();
+//
+//		try {
+//			g.gameLoop();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		g.gameTest.dispose();
+//
+//	}
 	
 //	public void setTimer(int seconds)
 //	{
@@ -196,6 +196,8 @@ public class InvaderGame extends Canvas implements KeyListener{
 			}
 			
 		}
+		if(!gameRunning)
+			gameTest.dispose();
 	}
 	
 	/**

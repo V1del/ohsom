@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 /**
- * Class to load images/objects to be used in the context of a rendering canvas
+ * Klasse um Bilder fürs Zeichnen auf den Canvas zu erstellen
  *
  * @author darot
  *
@@ -38,7 +38,7 @@ public class Sprite {
 	}
 
 	/**
-	 * Zeichen des Bilds
+	 * Zeichnen des Bilds
 	 * @param g
 	 * @param x
 	 * @param y

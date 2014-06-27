@@ -19,6 +19,12 @@ public abstract class InvaderObject {
 	Rectangle obj1 = new Rectangle();
 	Rectangle obj2 = new Rectangle();
 
+	/**
+	 * Konstruktor der ein InvaderObjekt erzeugt, mit angaben zur Bilddatei und x-y-Position auf der gezeichnet werden soll
+	 * @param fileLoc String für Dateipfad
+	 * @param x
+	 * @param y
+	 */
 	public InvaderObject(String fileLoc, int x, int y) {
 		this.sprite = SpriteResources.get().getSprite(fileLoc);
 
@@ -26,7 +32,11 @@ public abstract class InvaderObject {
 		this.y = y;
 
 	}
-
+	/**
+	 * Handlet Bewegung der einzelnen Objekte anhand vergangener Zeit, diese wird in Millisekunden angegeben um also einen
+	 * gescheiten Rückschluss auf die Position zu erhalten wird durch 1000 gerechnet
+	 * @param passedTime
+	 */
 	public void move(long passedTime) {
 		x += (passedTime * speedX) / 1000;
 		y += (passedTime * speedY) / 1000;
@@ -68,7 +78,11 @@ public abstract class InvaderObject {
 	public void setSpeedY(double speedY) {
 		this.speedY = speedY;
 	}
-
+	/**
+	 * Üperprüft Kollision eines Objektes mit einem anderen Objekt anhand der Grösse ihrer Bilderrechtecke
+	 * @param other
+	 * @return true - Falls Kollision stattgefunden
+	 */
 	public boolean checkCollision(InvaderObject other) {
 		obj1.setBounds((int) x,(int) y, sprite.getWidth(), sprite.getHeight());
 		obj2.setBounds((int) other.x, (int) other.y, other.sprite.getWidth(), other.sprite.getHeight());
@@ -84,7 +98,7 @@ public abstract class InvaderObject {
 	public abstract void confirmCollision(InvaderObject other) throws SQLException;
 
 	/**
-	 * Nur für Alienbewegung relevant, wird aber hier initialisiert 
+	 * Nur für Alienbewegung relevant, wird aber hier initialisiert damit man über alle Objekte loopen kann
 	 * @throws SQLException 
 	 */
 	public void switchDirection() throws SQLException {
