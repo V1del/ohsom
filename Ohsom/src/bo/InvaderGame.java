@@ -51,21 +51,21 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private static Color m_tWhite = new Color(255, 255, 255, 150);
 	
 
-//	public static void main(String[] args) {
-//		InvaderGame g = new InvaderGame();
-//
-//		try {
-//			g.gameLoop();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		g.gameTest.dispose();
-//
-//	}
+	public static void main(String[] args) {
+		InvaderGame g = new InvaderGame();
+
+		try {
+			g.gameLoop();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//g.gameTest.dispose();
+
+	}
 	
 //	public void setTimer(int seconds)
 //	{
@@ -81,6 +81,8 @@ public class InvaderGame extends Canvas implements KeyListener{
 	 */
 	public InvaderGame() {
 		gameTest.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		gameTest.requestFocus();
 
 		JPanel panel = (JPanel) gameTest.getContentPane();
 
@@ -91,6 +93,8 @@ public class InvaderGame extends Canvas implements KeyListener{
 		panel.add(this);
 
 		addKeyListener(this);
+		
+		
 
 		setIgnoreRepaint(true);
 
@@ -171,6 +175,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 			if(endOfGame) {
 				g.drawString(message, 200, 200);
 				g.drawString("Erreichte Punkte: " + points, 200, 230);
+				g.drawString("Drücke die Enter Taste um zum Tamagotchi zu gehen", 200, 260);
 			}
 
 
