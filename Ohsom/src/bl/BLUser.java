@@ -3,6 +3,8 @@ package bl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JProgressBar;
+
 import bo.*;
 import db.*;
 
@@ -143,6 +145,26 @@ public class BLUser {
 		if(isValidToPattern(Password, patternSpecial, BeforeAndAfter)) { PWStrength++;}
 
 		return PWStrength;
+	}
+	
+	/** 
+	 * Änderung des Labels für Passwortsicherheit
+	 */
+	public String getPasswordSecurityPB(int pwStrength)
+	{
+		switch(pwStrength)
+		{
+		case 1:
+			return "schwach";
+		case 2:
+			return "mässig";
+		case 3:
+			return "ausreichend";
+		case 4:
+			return "stark";
+		default:
+			return "nicht vorhanden";
+		}
 	}
 
 	/**

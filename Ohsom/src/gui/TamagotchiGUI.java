@@ -59,13 +59,13 @@ import java.io.IOException;
 public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener{
 
 	private Thread TamagotchiThread = new Thread(new TamagotchiThread(this));
-	
+
 	private Thread InvaderGameThread = new Thread(new InvaderGameThread());
 
 	private BLTamagotchi blT = null;
 
 	private BLNachrichten blN = null;
-	
+
 	private BLUser blU = null;
 
 	private JButton lblNeueNachrichten = new JButton("Neue Nachrichten");
@@ -190,6 +190,10 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		panel.setLayout(gbl_panel);
 
 		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
+		btnHelp.setMargin(new Insets(0, 20, 0, 0));
+		btnHelp.setContentAreaFilled(false);
+		btnHelp.setBorderPainted(false);
+		btnHelp.setOpaque(false);
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 5, 5);
 		gbc_button.gridx = 0;
@@ -197,7 +201,12 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		panel.add(btnHelp, gbc_button);
 
 		btnPref = new JButton(new ImageIcon("Sources/gfx/Configuration-icon.png"));
+		btnPref.setMargin(new Insets(0, 0, 0, 0));
+		btnPref.setContentAreaFilled(false);
+		btnPref.setBorderPainted(false);
+		btnPref.setOpaque(false);
 		btnPref.addActionListener(this);
+
 		GridBagConstraints gbc_btnPref = new GridBagConstraints();
 		gbc_btnPref.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPref.gridx = 1;
@@ -327,7 +336,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_valSchmutz.gridx = 6;
 		gbc_valSchmutz.gridy = 0;
 		pnlCondition.add(lblSchmutzigkeitValue, gbc_valSchmutz);
-		
+
 		lblZustand = new JLabel("Zustand:");
 		GridBagConstraints gbc_lblZustand = new GridBagConstraints();
 		gbc_lblZustand.anchor = GridBagConstraints.WEST;
@@ -372,7 +381,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_valMuede.gridx = 4;
 		gbc_valMuede.gridy = 1;
 		pnlCondition.add(lblMuedigkeitValue, gbc_valMuede);
-		
+
 		lblMedizin = new JLabel("Medizin:");
 		GridBagConstraints gbc_lblMedizin = new GridBagConstraints();
 		gbc_lblMedizin.anchor = GridBagConstraints.WEST;
@@ -387,7 +396,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_lblMedizinValue.gridx = 6;
 		gbc_lblMedizinValue.gridy = 1;
 		pnlCondition.add(lblMedizinValue, gbc_lblMedizinValue);
-		
+
 		lblEvolutionsstadium = new JLabel("Evolutionsstadium:");
 		GridBagConstraints gbc_lblEvolutionsstadium = new GridBagConstraints();
 		gbc_lblEvolutionsstadium.anchor = GridBagConstraints.WEST;
@@ -424,6 +433,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 
 		pnlInventar.setVisible(false);
 
+		pack();
 		setVisible(true);
 		requestFocusInWindow();
 	}
@@ -651,7 +661,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 			setEreignisLabel("Dein Tamagotchi ist bereits sauber");
 		}
 	}
-	
+
 	/**
 	 * Methode, um mit dem Tamagotchi zu spielen (Minispiel Start)
 	 * @throws SQLException
@@ -773,7 +783,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 			}
 			else if (ae.getSource() == lblNachrichtVerfassen)
 			{
-					NewMessageGUI nmgui = new NewMessageGUI(null);
+				NewMessageGUI nmgui = new NewMessageGUI(null);
 			}
 			else if (ae.getSource() == btnPref)
 			{
@@ -782,7 +792,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 			}
 			else if(ae.getSource() == btnHelp)
 			{
-				 Desktop.getDesktop().open(new File("Sources/Manual/Tamagotchi_Handbuch.docx"));
+				Desktop.getDesktop().open(new File("Sources/Manual/Tamagotchi_Handbuch.docx"));
 			}
 			else if(BtnTamagotchiMap.get(ae.getSource()) != null)
 			{
@@ -801,7 +811,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 			se.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Keyevents vom TamagotchiGUI
 	 * @param e

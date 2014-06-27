@@ -53,7 +53,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 	private Map<Integer, Nachricht> Messages = new HashMap<Integer, Nachricht>(); 
 
 	private MessageThread mThread = new MessageThread(this);
-	
+
 	private JPanel pnlMessageOptions;
 	private JButton btnDelete, btnRead;
 
@@ -69,17 +69,14 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 	public MessagesGUI() throws SQLException
 	{	
 		initialize();	
-		
-
-		mThread.start();
 	}
-	
+
 	public void initialize() throws SQLException {
 		new JDialog();
 		setTitle("Nachrichten");
 		setModal(true);
 		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
-		
+
 		pnlHeaderMessages = new JPanel();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		FlowLayout flowLayout = (FlowLayout) pnlHeaderMessages.getLayout();
@@ -89,12 +86,15 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
 		pnlHeaderMessages.add(btnHelp);
 		btnHelp.setHorizontalAlignment(SwingConstants.LEFT);
-		
+
 		lblWarning.setVisible(false);
 		lblWarning.setForeground(Color.red);
 		pnlHeaderMessages.add(lblWarning);
 
 		pnlNachrichten = new JPanel();
+	
+		//
+		
 		int allMessages = blN.getCountOfAllNachrichten();
 		int unreadMessages = blN.getCountOfUnreadNachrichten();
 		pnlNachrichten.setBorder(new TitledBorder(null, "Posteingang ("+ unreadMessages +"/" + allMessages + ")", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -105,7 +105,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		{
 			lblWarning.setVisible(true);
 		}
-		
+
 		scrollPane = new JScrollPane();
 		pnlNachrichten.add(scrollPane, BorderLayout.CENTER);
 
@@ -127,6 +127,8 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		tblNachrichten.getSelectionModel().addListSelectionListener(this);
 		scrollPane.setViewportView(tblNachrichten);
 
+		mThread.start();
+		
 		panel_3 = new JPanel();
 		panel_3.setLayout(new BorderLayout());
 		//FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
@@ -194,21 +196,27 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 	 */
 	public void refreshDialog() throws SQLException
 	{
-		tblNachrichten.setModel(new DefaultTableModel(
-				blN.getNachrichtenData(),
-				new String[] {
-					"id", "Schreiber", "gelesen", "Titel", "Zeitpunkt"
-				}
-				));
-		tblNachrichten.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tblNachrichten.getSelectionModel().addListSelectionListener(this);
 		int allMessages = blN.getCountOfAllNachrichten();
 		int unreadMessages = blN.getCountOfUnreadNachrichten();
 		pnlNachrichten.setBorder(new TitledBorder(null, "Posteingang ("+ unreadMessages +"/" + allMessages + ")", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		lblWarning.setVisible(allMessages == 20);
 		
-		this.repaint();
+		tblNachrichten.setModel(new DefaultTableModel(
+				blN.getNachrichtenData(),
+				new String[] {
+					"id", "Schreiber", "gelesen", "Titel", "Zeitpunkt"
+				}
+				));
+		tblNachrichten.getColumnModel().getColumn(0).setMinWidth(0);
+		tblNachrichten.getColumnModel().getColumn(0).setMaxWidth(0);
+		tblNachrichten.getColumnModel().getColumn(0).setWidth(0);
+
+		tblNachrichten.getColumnModel().getColumn(2).setPreferredWidth(240);
+		tblNachrichten.getColumnModel().getColumn(3).setPreferredWidth(182);
+		
+/*
+		this.repaint();*/
 	}
 
 	/**
@@ -223,7 +231,13 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 			}
 			else if(ae.getSource() == btnDelete)
 			{
-
+				if(currentlySelectedNachrichtIndex != 0)
+				{
+					if(blN.deleteNachricht(blN.getNachricht(currentlySelectedNachrichtIndex)))
+					{
+						// erfolgreich gelöscht
+					}
+				}
 			}
 			else if(ae.getSource() == btnRead)
 			{
@@ -240,7 +254,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 	}
 
 	/**
-	 * 
+	 * Überprüfen ob eine andere Reihe gewählt wurde
 	 */
 	@Override
 	public void valueChanged(ListSelectionEvent lse) {

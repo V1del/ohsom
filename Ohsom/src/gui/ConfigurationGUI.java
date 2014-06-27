@@ -425,7 +425,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Fï¿½llen der Map mit den Values
+	 * Füllen der Map mit den Values
 	 * @throws SQLException
 	 */
 	public void fillMap() throws SQLException
@@ -472,32 +472,16 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	public void keyTyped(KeyEvent ke) {
 		//
 	}
-	
+
 	/** 
 	 * Änderung des Labels für Passwortsicherheit
 	 */
 	public void RefreshPasswordSecurityPB()
 	{
 		String Password = txtPwNew.getText();
-		progressBar.setValue(blU.checkPasswordsStrength(Password));	
+		progressBar.setValue(blU.checkPasswordsStrength(Password));
 
-		switch(progressBar.getValue())
-		{
-		case 1:
-			lblPasswortStaerke.setText("schwach");
-			break;
-		case 2:
-			lblPasswortStaerke.setText("mässig");
-			break;
-		case 3:
-			lblPasswortStaerke.setText("ausreichend");
-			break;
-		case 4:
-			lblPasswortStaerke.setText("stark");
-			break;
-		default:
-			lblPasswortStaerke.setText("nicht vorhanden");
-		}
+		lblPasswortStaerke.setText(blU.getPasswordSecurityPB(progressBar.getValue()));
 	}
 
 	/**
@@ -508,7 +492,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	{
 		return (txtPwNew.getText().equals("") == false && txtNewPwWdh.getText().equals("") == false && txtPwOld.getText().equals("") == false && txtPwNew.getText().equals(txtNewPwWdh.getText()));
 	}
-	
+
 	/**
 	 * Methode zur Speicherung der PwData
 	 * @throws SQLException
@@ -524,7 +508,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 			{
 				blU.getCurrentUser().setPasswort(txtPwNew.getText());
 				blU.changeUser();
-		
+
 			}
 		}
 
@@ -535,7 +519,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 			lblFehlermeldung.setVisible(true);
 		}
 	}
-	
+
 	/**
 	 * Methode zur Speicherung der Config-Einstellungen
 	 * @throws SQLException

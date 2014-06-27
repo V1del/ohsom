@@ -297,25 +297,9 @@ public class AnmeldeGUI extends JFrame implements ActionListener, KeyListener {
 	public void RefreshPasswordSecurityPB()
 	{
 		String Password = txtPassword.getText();
-		progressBar.setValue(blU.checkPasswordsStrength(Password));	
-
-		switch(progressBar.getValue())
-		{
-		case 1:
-			lblPasswortStaerke.setText("schwach");
-			break;
-		case 2:
-			lblPasswortStaerke.setText("mässig");
-			break;
-		case 3:
-			lblPasswortStaerke.setText("ausreichend");
-			break;
-		case 4:
-			lblPasswortStaerke.setText("stark");
-			break;
-		default:
-			lblPasswortStaerke.setText("nicht vorhanden");
-		}
+		progressBar.setValue(blU.checkPasswordsStrength(Password));
+		
+		lblPasswortStaerke.setText(blU.getPasswordSecurityPB(progressBar.getValue()));
 	}
 
 	/**

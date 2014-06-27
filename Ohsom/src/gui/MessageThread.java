@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.SwingUtilities;
+
 /**
  * 
  * @author Snatsch
@@ -26,23 +28,32 @@ public class MessageThread extends Thread implements Runnable{
 	
 	public void run()
 	{
-		run(new Date(), 1*60);
+		run(new Date(), 1000*30); // eine Minute, um zu überprüfen
 	}
 	
-	public void run(Date StartTime, int During)
+	public void run(final Date StartTime, final int During)
 	{
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			  @Override
-			  public void run() {
-				  
-				  try {
-					mGui.refreshDialog();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			  }
-			}, StartTime, During);
+		//SwingUtilities.invokeLater(
+				//new Runnable() {
+
+				    //@Override
+				  //  public void run() {
+				    	Timer timer = new Timer();
+				    	timer.scheduleAtFixedRate(new TimerTask() {
+							  @Override
+							  public void run() {
+								  
+								  try {
+									mGui.refreshDialog();
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							  }
+							}, StartTime, During);
+				  //  }
+				//});
+				
+			
 	}
 }
