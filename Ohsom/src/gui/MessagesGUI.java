@@ -235,7 +235,7 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 				{
 					if(blN.deleteNachricht(blN.getNachricht(currentlySelectedNachrichtIndex)))
 					{
-						// erfolgreich gelöscht
+						refreshDialog();
 					}
 				}
 			}
@@ -259,10 +259,16 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 	@Override
 	public void valueChanged(ListSelectionEvent lse) {
 		int indexRow = tblNachrichten.getSelectedRow();
-		Object RowValues = tblNachrichten.getModel().getValueAt(indexRow, 0);
-		currentlySelectedNachrichtIndex = Integer.valueOf(String.valueOf(RowValues));
+		if(tblNachrichten.getModel().getRowCount() > 0)
+		{
+			Object RowValues = tblNachrichten.getModel().getValueAt(indexRow, 0);
+			currentlySelectedNachrichtIndex = Integer.valueOf(String.valueOf(RowValues));
 
-		pnlMessageOptions.setVisible(true);
-
+			pnlMessageOptions.setVisible(true);
+		}
+		else
+		{
+			pnlMessageOptions.setVisible(false);
+		}
 	}
 }
