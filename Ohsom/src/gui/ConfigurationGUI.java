@@ -88,7 +88,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	private JPasswordField txtPwNew;
 	private JPasswordField txtNewPwWdh;
 	private JPanel pnlPasswordSecurity;
-	private JLabel lblvalue;
+	private JLabel lblPasswortStaerke;
 	private JProgressBar progressBar;
 
 	/**
@@ -306,15 +306,15 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		txtFieldMap.put(Code.WERTE, txtWerteAnzeigen);
 		txtFieldMap.put(Code.WASCHEN, txtWaschen);
 		txtFieldMap.put(Code.SPIELEN, txtSpielen);
-		
+
 		pnlresetPassword = new JPanel();
 		tabbedPane.addTab("Passwort", null, pnlresetPassword, null);
 		pnlresetPassword.setLayout(new BorderLayout(20, 20));
-		
+
 		pnlSplit = new JPanel();
 		pnlresetPassword.add(pnlSplit, BorderLayout.CENTER);
 		pnlSplit.setLayout(new GridLayout(1, 2, 10, 0));
-		
+
 		panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Passwort \u00E4ndern", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlSplit.add(panel_4);
@@ -324,7 +324,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbl_pnlPassword.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_pnlPassword.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_4.setLayout(gbl_pnlPassword);
-		
+
 		lblAltesPasswort = new JLabel("Altes Passwort:");
 		GridBagConstraints gbc_lblAltesPasswort = new GridBagConstraints();
 		gbc_lblAltesPasswort.anchor = GridBagConstraints.WEST;
@@ -332,7 +332,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_lblAltesPasswort.gridx = 1;
 		gbc_lblAltesPasswort.gridy = 1;
 		panel_4.add(lblAltesPasswort, gbc_lblAltesPasswort);
-		
+
 		txtPwOld = new JPasswordField();
 		GridBagConstraints gbc_txtPwOld = new GridBagConstraints();
 		gbc_txtPwOld.insets = new Insets(0, 0, 5, 0);
@@ -340,7 +340,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_txtPwOld.gridx = 2;
 		gbc_txtPwOld.gridy = 1;
 		panel_4.add(txtPwOld, gbc_txtPwOld);
-		
+
 		lblNeuesPasswort = new JLabel("Neues Passwort: ");
 		GridBagConstraints gbc_lblNeuesPasswort = new GridBagConstraints();
 		gbc_lblNeuesPasswort.anchor = GridBagConstraints.WEST;
@@ -348,15 +348,16 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_lblNeuesPasswort.gridx = 1;
 		gbc_lblNeuesPasswort.gridy = 2;
 		panel_4.add(lblNeuesPasswort, gbc_lblNeuesPasswort);
-		
+
 		txtPwNew = new JPasswordField();
+		txtPwNew.addKeyListener(this);
 		GridBagConstraints gbc_txtPwNew = new GridBagConstraints();
 		gbc_txtPwNew.insets = new Insets(0, 0, 5, 0);
 		gbc_txtPwNew.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtPwNew.gridx = 2;
 		gbc_txtPwNew.gridy = 2;
 		panel_4.add(txtPwNew, gbc_txtPwNew);
-		
+
 		lblNeuesPasswortWdh = new JLabel("Neues Passwort wdh.: ");
 		GridBagConstraints gbc_lblNeuesPasswortWdh = new GridBagConstraints();
 		gbc_lblNeuesPasswortWdh.anchor = GridBagConstraints.WEST;
@@ -364,7 +365,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_lblNeuesPasswortWdh.gridx = 1;
 		gbc_lblNeuesPasswortWdh.gridy = 3;
 		panel_4.add(lblNeuesPasswortWdh, gbc_lblNeuesPasswortWdh);
-		
+
 		txtNewPwWdh = new JPasswordField();
 		GridBagConstraints gbc_txtNewPwWdh = new GridBagConstraints();
 		gbc_txtNewPwWdh.insets = new Insets(0, 0, 5, 0);
@@ -372,7 +373,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_txtNewPwWdh.gridx = 2;
 		gbc_txtNewPwWdh.gridy = 3;
 		panel_4.add(txtNewPwWdh, gbc_txtNewPwWdh);
-		
+
 		pnlPasswordSecurity = new JPanel();
 		pnlPasswordSecurity.setBorder(new TitledBorder(null, "Passwortsicherheit", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlSplit.add(pnlPasswordSecurity);
@@ -382,14 +383,14 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbl_pnlPasswordSecurity.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlPasswordSecurity.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		pnlPasswordSecurity.setLayout(gbl_pnlPasswordSecurity);
-		
-		lblvalue = new JLabel("lblValue");
-		GridBagConstraints gbc_lblvalue = new GridBagConstraints();
-		gbc_lblvalue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblvalue.gridx = 0;
-		gbc_lblvalue.gridy = 0;
-		pnlPasswordSecurity.add(lblvalue, gbc_lblvalue);
-		
+
+		lblPasswortStaerke = new JLabel("nicht vorhanden");
+		GridBagConstraints gbc_lblPasswortStaerke = new GridBagConstraints();
+		gbc_lblPasswortStaerke.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPasswortStaerke.gridx = 0;
+		gbc_lblPasswortStaerke.gridy = 0;
+		pnlPasswordSecurity.add(lblPasswortStaerke, gbc_lblPasswortStaerke);
+
 		progressBar = new JProgressBar();
 		progressBar.setMaximum(4);
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
@@ -397,27 +398,27 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_progressBar.gridx = 0;
 		gbc_progressBar.gridy = 1;
 		pnlPasswordSecurity.add(progressBar, gbc_progressBar);
-		
-		
-				panel_2 = new JPanel();
-				getContentPane().add(panel_2, BorderLayout.SOUTH);
-				FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
-				flowLayout.setHgap(20);
-				flowLayout.setAlignment(FlowLayout.LEFT);
-				
-						btnSpeichern = new JButton("Speichern");
-						btnSpeichern.addActionListener(this);
-						panel_2.add(btnSpeichern);
-						
-								btnAbbrechen = new JButton("Abbrechen");
-								btnAbbrechen.addActionListener(this);
-								panel_2.add(btnAbbrechen);
-								
-										lblFehlermeldung = new JLabel("Fehlermeldung");
-										lblFehlermeldung.setForeground(Color.RED);
-										lblFehlermeldung.setVisible(false);
-										panel_2.add(lblFehlermeldung);
-		
+
+
+		panel_2 = new JPanel();
+		getContentPane().add(panel_2, BorderLayout.SOUTH);
+		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
+		flowLayout.setHgap(20);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+
+		btnSpeichern = new JButton("Speichern");
+		btnSpeichern.addActionListener(this);
+		panel_2.add(btnSpeichern);
+
+		btnAbbrechen = new JButton("Abbrechen");
+		btnAbbrechen.addActionListener(this);
+		panel_2.add(btnAbbrechen);
+
+		lblFehlermeldung = new JLabel("Fehlermeldung");
+		lblFehlermeldung.setForeground(Color.RED);
+		lblFehlermeldung.setVisible(false);
+		panel_2.add(lblFehlermeldung);
+
 		fillMap();
 		pack();
 		setVisible(true);
@@ -455,10 +456,87 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	@Override
 	public void keyTyped(KeyEvent ke) {
 		JTextField currentTextField = (JTextField) ke.getSource();
+		if(currentTextField == txtPwNew)
+		{
+			RefreshPasswordSecurityPB();
+		}
+		else
+		{
+			if(ke.getKeyText(ke.getKeyCode()).length() == 1) 
+			{
+				currentTextField.setText(ke.getKeyText(ke.getKeyCode()));
+			} 
+			else 
+			{ 
+				currentTextField.setText("");
+			}
+		}
 
-		if(ke.getKeyText(ke.getKeyCode()).length() == 1) {currentTextField.setText(ke.getKeyText(ke.getKeyCode()));} else { currentTextField.setText("");}
+	}
+	
+	/** 
+	 * Änderung des Labels für Passwortsicherheit
+	 */
+	public void RefreshPasswordSecurityPB()
+	{
+		String Password = txtPwNew.getText();
+		progressBar.setValue(blU.checkPasswordsStrength(Password));	
+
+		switch(progressBar.getValue())
+		{
+		case 1:
+			lblPasswortStaerke.setText("schwach");
+			break;
+		case 2:
+			lblPasswortStaerke.setText("mässig");
+			break;
+		case 3:
+			lblPasswortStaerke.setText("ausreichend");
+			break;
+		case 4:
+			lblPasswortStaerke.setText("stark");
+			break;
+		default:
+			lblPasswortStaerke.setText("nicht vorhanden");
+		}
 	}
 
+	/**
+	 * Überprüfung der Validität der Daten, die eingegeben wurden
+	 * @return Sind die Daten valide?
+	 */
+	public boolean isPWDataValid()
+	{
+		return (txtPwNew.getText().equals("") == false && txtNewPwWdh.getText().equals("") == false && txtPwOld.getText().equals("") == false && txtPwNew.getText().equals(txtNewPwWdh.getText()));
+	}
+	
+	/**
+	 * Methode zur Speicherung der PwData
+	 * @throws SQLException
+	 */
+	public void savePWData() throws SQLException
+	{
+		boolean saveData = false;
+
+		if(isPWDataValid())
+		{
+			// Ist User mit diesen Daten in der Datenbank (Nickname stimmt sicher, doch hat User richtiges Passwort eingegeben?)
+			if(blU.isUserDataValid(blU.getCurrentUser().getNickname(), txtPwOld.getText()))
+			{
+				blU.getCurrentUser().setPasswort(txtPwNew.getText());
+				blU.changeUser();
+		
+			}
+		}
+
+
+		if(!saveData)
+		{
+			lblFehlermeldung.setText("Die Daten konnten nicht gespeichert werden.");
+			lblFehlermeldung.setVisible(true);
+		}
+	}
+	
 	/**
 	 * Methode zur Speicherung der Config-Einstellungen
 	 * @throws SQLException
@@ -494,10 +572,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		if(!saveData)
 		{
 			lblFehlermeldung.setText("Die Daten konnten nicht gespeichert werden.");
-		}
-		else 
-		{
-			this.dispose();
+			lblFehlermeldung.setVisible(true);
 		}
 	}
 
@@ -523,7 +598,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Actionevents fï¿½r das TamagotchiGUI
+	 * Actionevents für das TamagotchiGUI
 	 * @param ae ActionEvent
 	 */
 	@Override
@@ -532,6 +607,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 			if(ae.getSource() == btnSpeichern)
 			{
 				saveConfigData();
+				savePWData();
 			}
 			else
 			{

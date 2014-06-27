@@ -79,14 +79,6 @@ public class User {
 	}
 
 	/**
-	 * Setter Email
-	 * @param email
-	 */
-	public void setEmail(String email) {
-		Email = email;
-	}
-
-	/**
 	 * Getter Nickname
 	 * @return Nickname
 	 */
@@ -100,6 +92,14 @@ public class User {
 	 */
 	public String getPasswort() {
 		return Passwort;
+	}
+	
+	/**
+	 * Setter Passwort
+	 * @param passwort
+	 */
+	public void setPasswort(String passwort) {
+		Passwort = passwort;
 	}
 
 	/**

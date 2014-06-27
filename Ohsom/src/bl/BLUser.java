@@ -17,7 +17,7 @@ public class BLUser {
 	private User currentUser = Login.getInstance().getUserInstance();
 
 	/**
-	 * ÃœberprÃ¼fung der ValiditÃ¤t der Daten im Bezug auf das Vorhandensein in der Datenbank
+	 * Überprüfung der Validität der Daten im Bezug auf das Vorhandensein in der Datenbank
 	 * @param Nickname
 	 * @param Passwort
 	 * @return
@@ -267,6 +267,17 @@ public class BLUser {
 	{
 		DAOUserImpl DAOU = new DAOUserImpl();
 		return DAOU.getConfigData(currentUser.getId());
+	}
+	
+	/**
+	 * Update Methode für den User
+	 * @return Wurde User erfolgreich geupdatet
+	 * @throws SQLException
+	 */
+	public boolean changeUser() throws SQLException
+	{
+		return DAOU.updateUser(currentUser);
+		
 	}
 
 }
