@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 
+ * Businessobjekt für die TamagotchiConfig
  * @author vmuser
  *
  */
@@ -21,6 +21,11 @@ public class TamagotchiConfig {
 		private Code Code;
 		private char Hotkey;
 		
+		/**
+		 * Konstruktor für eine Configdatei aus der Datenbank
+		 * @param ConfigResultSet
+		 * @throws SQLException
+		 */
 		public TamagotchiConfig(ResultSet ConfigResultSet) throws SQLException
 		{
 			super();
@@ -29,29 +34,34 @@ public class TamagotchiConfig {
 			this.Hotkey = ConfigResultSet.getString("Hotkey").charAt(0);
 		}
 		
+		/**
+		 * Konstruktor für eine neue Configdatei
+		 * @param idUser
+		 * @param code
+		 */
 		public TamagotchiConfig(int idUser, String code) {
 			this.idUser = idUser;
 			this.Code = Code.getCodeByName(code);
 		}
 
 		/**
-		 * 
-		 * @return
+		 * Getter idUser
+		 * @return idUser
 		 */
 		public int getidUser() {
 			return idUser;
 		}
 
 		/**
-		 * 
-		 * @return
+		 * Getter Code
+		 * @return Code
 		 */
 		public Code getCode() {
 			return Code;
 		}
 		
 		/**
-		 * 
+		 * Setter Code
 		 * @param code
 		 */
 		public void setCode(String code) {
@@ -59,15 +69,15 @@ public class TamagotchiConfig {
 		}
 		
 		/**
-		 * 
-		 * @return
+		 * Getter Hotkey
+		 * @return Hotkey
 		 */
 		public char getHotkey() {
 			return Hotkey;
 		}
 		
 		/**
-		 * 
+		 * Setter Hotkey
 		 * @param hotkey
 		 */
 		public void setHotkey(char hotkey) {
