@@ -268,7 +268,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_lblGeld2.gridy = 1;
 		pnlEssen.add(lblGeld[1][0], gbc_lblGeld2);
 
-		lblGeld[1][1] = new JLabel("100");
+		lblGeld[1][1] = new JLabel("0");
 		GridBagConstraints gbc_label_2 = new GridBagConstraints();
 		gbc_label_2.insets = new Insets(0, 0, 5, 5);
 		gbc_label_2.gridx = 3;
@@ -297,7 +297,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_lblKosten_1.gridy = 4;
 		pnlEssen.add(lblKosten[1][0], gbc_lblKosten_1);
 		
-		lblKosten[1][1] = new JLabel("100");
+		lblKosten[1][1] = new JLabel("0");
 		GridBagConstraints gbc_lblKostenValue_1 = new GridBagConstraints();
 		gbc_lblKostenValue_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblKostenValue_1.gridx = 2;
@@ -655,6 +655,10 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 
 				lblKosten[0][1].setText("" + blS.getMedicinePrice((int) Spinner.getValue()) + "");
 
+			}
+			if(BtnAuswahlValuesMap.get(ce.getSource()) != null)
+			{
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
