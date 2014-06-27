@@ -130,8 +130,6 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	private JToggleButton[] btnInvList = {new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"), new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?")};
 
 	private JButton btnItemVerwenden = new JButton();
-	
-	private JButton lblLogout;
 
 	/**
 	 * Create the application.
@@ -260,20 +258,6 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 			btnReset.disable();
 		}
 		pnlActions.add(btnReset, gbc_btnReset);
-		
-		lblLogout = new JButton("Log Out");
-		lblLogout.setMargin(new Insets(0, 20, 0, 0));
-		lblLogout.setContentAreaFilled(false);
-		lblLogout.setBorderPainted(false);
-		lblLogout.setOpaque(false);
-		GridBagConstraints gbc_lblLogout = new GridBagConstraints();
-		gbc_lblLogout.anchor = GridBagConstraints.WEST;
-		gbc_lblLogout.gridwidth = 2;
-		gbc_lblLogout.insets = new Insets(0, 0, 0, 5);
-		gbc_lblLogout.gridx = 0;
-		gbc_lblLogout.gridy = 4;
-		
-		pnlActions.add(lblLogout, gbc_lblLogout);
 
 		JPanel panel_1 = new JPanel(new BorderLayout());
 		getContentPane().add(panel_1, BorderLayout.CENTER);
@@ -383,7 +367,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_lblBoringStateValue.gridy = 1;
 		pnlCondition.add(lblBoringStateValue, gbc_lblBoringStateValue);
 
-		lblMuedigkeit = new JLabel("mï¿½de?:");
+		lblMuedigkeit = new JLabel("mÃ¼de?:");
 		GridBagConstraints gbc_lblMuedigkeit = new GridBagConstraints();
 		gbc_lblMuedigkeit.anchor = GridBagConstraints.WEST;
 		gbc_lblMuedigkeit.insets = new Insets(0, 0, 5, 5);
@@ -391,7 +375,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_lblMuedigkeit.gridy = 1;
 		pnlCondition.add(lblMuedigkeit, gbc_lblMuedigkeit);
 
-		lblMuedigkeitValue = new JLabel("valMï¿½de");
+		lblMuedigkeitValue = new JLabel("valMÃ¼de");
 		GridBagConstraints gbc_valMuede = new GridBagConstraints();
 		gbc_valMuede.insets = new Insets(0, 0, 5, 5);
 		gbc_valMuede.gridx = 4;
@@ -454,7 +438,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * Befüllen des TamagotchiButtons - Panels
+	 * Befï¿½llen des TamagotchiButtons - Panels
 	 * @throws SQLException
 	 */
 	public void fillButtonArea() throws SQLException
@@ -481,7 +465,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * Refresh Tamagotchi Panel nach Ablauf des Timers um immer wieder den Zustand zu überprüfen
+	 * Refresh Tamagotchi Panel nach Ablauf des Timers um immer wieder den Zustand zu ï¿½berprï¿½fen
 	 * @throws SQLException
 	 */
 	public void refreshTamagotchiPanel() throws SQLException
@@ -591,7 +575,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * Tamagotchi zurücksetzen
+	 * Tamagotchi zurï¿½cksetzen
 	 * @param resetName
 	 * @throws SQLException
 	 */
@@ -669,7 +653,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		if(blT.washTamagotchi())
 		{
 			pnlTamagotchi.setShit(false);
-			setEreignisLabel("Dein Tamagotchi ist nun schï¿½n sauber");
+			setEreignisLabel("Dein Tamagotchi ist nun schÃ¶n sauber");
 		}
 		else
 		{
@@ -700,17 +684,17 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	public void layTamagotchiToSleep() throws SQLException
 	{
 		if(blT.layTamagotchiToSleep()) {
-			setEreignisLabel("Dein Tamagotchi schläft nun");
+			setEreignisLabel("Dein Tamagotchi schlÃ¤ft nun");
 		}
 		else
 		{
 			if(blT.getCurrentUser().getTamagotchi().isStillSleeping())
 			{
-				setEreignisLabel("Dein Tamagotchi schläft bereits");
+				setEreignisLabel("Dein Tamagotchi schlÃ¤ft bereits");
 			}
 			else
 			{
-				setEreignisLabel("Dein Tamagotchi ist nicht müde");	
+				setEreignisLabel("Dein Tamagotchi ist nicht mÃ¼de");	
 			}
 		}
 	}
@@ -741,7 +725,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * Code - Actions ausführen
+	 * Code - Actions ausfï¿½hren
 	 * @param CodeAction
 	 * @throws SQLException
 	 */
@@ -784,7 +768,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * ActionEvents für TamagotchiGui
+	 * ActionEvents fï¿½r TamagotchiGui
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		try {
