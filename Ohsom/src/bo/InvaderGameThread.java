@@ -7,8 +7,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Klasse für ein Invadergame
- * @author Snatsch
+ * Thread fÃ¼r Invader Game
+ * @author videl
  *
  */
 

@@ -36,6 +36,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	private BLUser blU = new BLUser();
 	private BLTamagotchi blT = new BLTamagotchi();
+	private JFrame gameTest = new JFrame("Space Invaders");
 	private BufferStrategy strategy;
 	private boolean gameRunning;
 	private ArrayList<InvaderObject> invobjects = new ArrayList<InvaderObject>();
@@ -84,7 +85,6 @@ public class InvaderGame extends Canvas implements KeyListener{
 	}
 
 	public InvaderGame() {
-		JFrame gameTest = new JFrame("Space invaders test");
 		gameTest.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JPanel panel = (JPanel) gameTest.getContentPane();
@@ -237,7 +237,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 	 * @throws SQLException
 	 */
 	public void lost() throws SQLException {
-		message = "You lost what a bummer";
+		message = "Du hast verloren, schade!";
 		
 		endOfGame = true;
 		
@@ -310,7 +310,13 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if(endOfGame)
+		{
+			if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				gameTest.dispose();
+		}
+			
+		
 
 	}
 
