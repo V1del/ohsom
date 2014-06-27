@@ -325,6 +325,8 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		lblFehlermeldungEssen = new JLabel("Fehlermeldung");
 		lblFehlermeldungEssen.setForeground(Color.RED);
 		GridBagConstraints gbc_lblFehlermeldungEssen = new GridBagConstraints();
+		gbc_lblFehlermeldungEssen.anchor = GridBagConstraints.WEST;
+		gbc_lblFehlermeldungEssen.gridwidth = 6;
 		gbc_lblFehlermeldungEssen.insets = new Insets(0, 0, 0, 5);
 		gbc_lblFehlermeldungEssen.gridx = 1;
 		gbc_lblFehlermeldungEssen.gridy = 7;
@@ -396,6 +398,8 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		lblFehlermeldungTrinken.setForeground(Color.RED);
 		GridBagConstraints gbc_lblFehlermeldungTrinken;
 		gbc_lblFehlermeldungTrinken = new GridBagConstraints();
+		gbc_lblFehlermeldungTrinken.anchor = GridBagConstraints.WEST;
+		gbc_lblFehlermeldungTrinken.gridwidth = 6;
 		gbc_lblFehlermeldungTrinken.insets = new Insets(0, 0, 0, 5);
 		gbc_lblFehlermeldungTrinken.gridx = 1;
 		gbc_lblFehlermeldungTrinken.gridy = 7;
@@ -417,7 +421,10 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_label_4.gridy = 1;
 		pnlGetraenke.add(lblGeld[2][1], gbc_label_4);
 
+		
+		RefreshMoneyLabels();
 		setVisible(true);
+		
 	}
 
 	/**

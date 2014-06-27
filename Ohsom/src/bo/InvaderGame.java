@@ -26,6 +26,12 @@ import javax.swing.JPanel;
 import bl.BLTamagotchi;
 import bl.BLUser;
 
+/**
+ * Kleines Space Invader Spiel, man kann sich mittels Highscore mit anderen Spielern messen.
+ * Einzige Möglichkeit im Spiel Geld zu verdienen
+ * @author videl
+ *
+ */
 public class InvaderGame extends Canvas implements KeyListener{
 
 	private BLUser blU = new BLUser();
@@ -46,6 +52,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private long shotDelay = 500;
 	private long lastFired;
 	private int Timer;
+	private boolean endOfGame = false;
 	
 	private static Font sanSerifFont = new Font("SanSerif", Font.PLAIN, 18);
 	private static Color m_tWhite = new Color(255, 255, 255, 150);
@@ -54,7 +61,15 @@ public class InvaderGame extends Canvas implements KeyListener{
 	/*public static void main(String[] args) {
 		InvaderGame g = new InvaderGame();
 
-		g.gameLoop();
+		try {
+			g.gameLoop();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}*/
 	
@@ -70,7 +85,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	public InvaderGame() {
 		JFrame gameTest = new JFrame("Space invaders test");
-		gameTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameTest.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JPanel panel = (JPanel) gameTest.getContentPane();
 
@@ -113,16 +128,19 @@ public class InvaderGame extends Canvas implements KeyListener{
 			
 			g.setFont(sanSerifFont);
 		    g.drawString("Punkte: " + points, 50, 30);
-			
-			for(InvaderObject invobj : invobjects)
-			{
-				invobj.move(passedTime);
-			}
-
+		    
+		    if(!endOfGame) {
+		    	for(InvaderObject invobj : invobjects)
+		    	{
+		    		invobj.move(passedTime);
+		    	}
+		    }
+		    
 			for(InvaderObject invobj : invobjects)
 			{
 				invobj.draw(g);
 			}
+		 
 
 			//Check for collision
 			for(int i=0; i < invobjects.size(); i++ )
@@ -147,6 +165,11 @@ public class InvaderGame extends Canvas implements KeyListener{
 				for (InvaderObject invobj : invobjects)
 					invobj.switchDirection();
 				isTimeForSwitch = false;
+			}
+			
+			if(endOfGame) {
+				g.drawString(message, 200, 200);
+				g.drawString("Erreichte Punkte: " + points, 200, 230);
 			}
 
 
@@ -174,6 +197,9 @@ public class InvaderGame extends Canvas implements KeyListener{
 		}
 	}
 	
+	/**
+	 * Initialisiert die Grafiken und Objekte des Spiels
+	 */
 	private void initInvaderObjects() {
 		ship = new Ship(this, "Sources/gfx/Raumschiff.png", 370, 550);
 		invobjects.add(ship);
@@ -189,7 +215,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 		}
 
 	}
-
+	
+	/**
+	 * Erstellt Schuss nach einer gewissen Kaltlaufzeit 
+	 */
 	public void shooting() {
 		if(System.currentTimeMillis() - lastFired < shotDelay)
 			return;
@@ -209,6 +238,8 @@ public class InvaderGame extends Canvas implements KeyListener{
 	 */
 	public void lost() throws SQLException {
 		message = "You lost what a bummer";
+		
+		endOfGame = true;
 		
 		getReward();
 
@@ -237,8 +268,10 @@ public class InvaderGame extends Canvas implements KeyListener{
 	 * @throws SQLException
 	 */
 	private void win() throws SQLException {
-		message = "Hey you win, motherfucking loser";
+		message = "Hey you win!";
 		points += 50;
+		endOfGame  = true;
+		
 		
 		getReward();
 		setHighscore();
@@ -283,6 +316,8 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if(endOfGame)
+			return;
 		if (e.getKeyCode() == KeyEvent.VK_LEFT )
 			keyLeft = true;
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
@@ -294,6 +329,8 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if(endOfGame)
+			return;
 		if (e.getKeyCode() == KeyEvent.VK_LEFT )
 			keyLeft = false;
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
