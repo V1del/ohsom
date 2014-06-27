@@ -22,6 +22,7 @@ import bo.User;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 
@@ -47,6 +48,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.GridLayout;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * GUI um mit deinem Tamagotchi zu spielen
@@ -600,55 +603,6 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * ActionEvents fï¿½r TamagotchiGui
-	 */
-	public void actionPerformed(ActionEvent ae) {
-		try {
-			if (ae.getSource() == lblNeueNachrichten)
-			{
-				MessagesGUI msggui = new MessagesGUI();
-			}
-			else if(ae.getSource() == btnReset)
-			{
-				setTamagotchi(true);
-			}
-			else if (ae.getSource() == lblNachrichtVerfassen)
-			{
-				try {
-					NewMessageGUI nmgui = new NewMessageGUI(null);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			else if (ae.getSource() == btnPref)
-			{
-				ConfigurationGUI cgui = new ConfigurationGUI();	
-				requestFocus();
-			}
-			else if(ae.getSource() == btnHelp)
-			{
-				// TODO: Hier sollte ein Handbuch aufgerufen werden
-			}
-			else if(BtnTamagotchiMap.get(ae.getSource()) != null)
-			{
-				reactToAction((Code) BtnTamagotchiMap.get(ae.getSource()));
-			}
-			else if(btnInvListValue.get(ae.getSource()) != null)
-			{
-				Item usedItem = (Item) btnInvListValue.get(ae.getSource());
-				giveItToTamagotchi(usedItem);
-			}
-
-			requestFocus();
-		}
-		catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-
-	/**
 	 * Methode um Tamagotchi ein Item zu geben und danach auf dem GUI auszugeben
 	 * @param Item
 	 * @throws SQLException
@@ -805,7 +759,51 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	}
 
 	/**
-	 * 
+	 * ActionEvents für TamagotchiGui
+	 */
+	public void actionPerformed(ActionEvent ae) {
+		try {
+			if (ae.getSource() == lblNeueNachrichten)
+			{
+				MessagesGUI msggui = new MessagesGUI();
+			}
+			else if(ae.getSource() == btnReset)
+			{
+				setTamagotchi(true);
+			}
+			else if (ae.getSource() == lblNachrichtVerfassen)
+			{
+					NewMessageGUI nmgui = new NewMessageGUI(null);
+			}
+			else if (ae.getSource() == btnPref)
+			{
+				ConfigurationGUI cgui = new ConfigurationGUI();	
+				requestFocus();
+			}
+			else if(ae.getSource() == btnHelp)
+			{
+				 Desktop.getDesktop().open(new File("Sources/Manual/Tamagotchi_Handbuch.docx"));
+			}
+			else if(BtnTamagotchiMap.get(ae.getSource()) != null)
+			{
+				reactToAction((Code) BtnTamagotchiMap.get(ae.getSource()));
+			}
+			else if(btnInvListValue.get(ae.getSource()) != null)
+			{
+				Item usedItem = (Item) btnInvListValue.get(ae.getSource());
+				giveItToTamagotchi(usedItem);
+			}
+
+			requestFocus();
+		}
+		catch (SQLException | IOException se) {
+			// TODO Auto-generated catch block
+			se.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Keyevents vom TamagotchiGUI
 	 * @param e
 	 */
 	@Override
