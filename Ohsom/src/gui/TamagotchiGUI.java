@@ -130,6 +130,8 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 	private JToggleButton[] btnInvList = {new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"), new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?"),new JToggleButton("?")};
 
 	private JButton btnItemVerwenden = new JButton();
+	
+	private JButton lblLogout;
 
 	/**
 	 * Create the application.
@@ -180,14 +182,14 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(20, 0));
 
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.WEST);
+		JPanel pnlActions = new JPanel();
+		getContentPane().add(pnlActions, BorderLayout.WEST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		pnlActions.setLayout(gbl_panel);
 
 		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
 		btnHelp.setMargin(new Insets(0, 20, 0, 0));
@@ -198,7 +200,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_button.insets = new Insets(0, 0, 5, 5);
 		gbc_button.gridx = 0;
 		gbc_button.gridy = 0;
-		panel.add(btnHelp, gbc_button);
+		pnlActions.add(btnHelp, gbc_button);
 
 		btnPref = new JButton(new ImageIcon("Sources/gfx/Configuration-icon.png"));
 		btnPref.setMargin(new Insets(0, 0, 0, 0));
@@ -211,7 +213,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_btnPref.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPref.gridx = 1;
 		gbc_btnPref.gridy = 0;
-		panel.add(btnPref, gbc_btnPref);
+		pnlActions.add(btnPref, gbc_btnPref);
 
 		//JLabel lblNeueNachrichten = new JLabel("Neue Nachrichten");
 
@@ -227,7 +229,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_lblNeueNachrichten.gridwidth = 2;
 		gbc_lblNeueNachrichten.gridx = 0;
 		gbc_lblNeueNachrichten.gridy = 1;
-		panel.add(lblNeueNachrichten, gbc_lblNeueNachrichten);
+		pnlActions.add(lblNeueNachrichten, gbc_lblNeueNachrichten);
 
 		//JLabel lblNachrichtVerfassen = new JLabel("Nachricht verfassen");
 		lblNachrichtVerfassen.setMargin(new Insets(0, 0, 0, 0));
@@ -243,7 +245,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_lblNachrichtVerfassen.gridx = 0;
 		gbc_lblNachrichtVerfassen.gridy = 2;
 
-		panel.add(lblNachrichtVerfassen, gbc_lblNachrichtVerfassen);
+		pnlActions.add(lblNachrichtVerfassen, gbc_lblNachrichtVerfassen);
 
 		btnReset = new JButton("Reset");
 		btnReset.addActionListener(this);
@@ -257,7 +259,21 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		{
 			btnReset.disable();
 		}
-		panel.add(btnReset, gbc_btnReset);
+		pnlActions.add(btnReset, gbc_btnReset);
+		
+		lblLogout = new JButton("Log Out");
+		lblLogout.setMargin(new Insets(0, 20, 0, 0));
+		lblLogout.setContentAreaFilled(false);
+		lblLogout.setBorderPainted(false);
+		lblLogout.setOpaque(false);
+		GridBagConstraints gbc_lblLogout = new GridBagConstraints();
+		gbc_lblLogout.anchor = GridBagConstraints.WEST;
+		gbc_lblLogout.gridwidth = 2;
+		gbc_lblLogout.insets = new Insets(0, 0, 0, 5);
+		gbc_lblLogout.gridx = 0;
+		gbc_lblLogout.gridy = 4;
+		
+		pnlActions.add(lblLogout, gbc_lblLogout);
 
 		JPanel panel_1 = new JPanel(new BorderLayout());
 		getContentPane().add(panel_1, BorderLayout.CENTER);
@@ -413,7 +429,6 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		gbc_lblEvolutionsstadiumValue.gridy = 1;
 		pnlCondition.add(lblEvolutionsstadiumValue, gbc_lblEvolutionsstadiumValue);
 
-
 		pnlInventar = new JPanel();
 		pnlInventar.setBorder(new TitledBorder(null, "Inventar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
@@ -432,7 +447,7 @@ public class TamagotchiGUI extends JFrame implements ActionListener, KeyListener
 		pnlCondition.setVisible(false);
 
 		pnlInventar.setVisible(false);
-
+		
 		pack();
 		setVisible(true);
 		requestFocusInWindow();

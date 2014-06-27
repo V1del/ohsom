@@ -42,7 +42,6 @@ import com.mysql.jdbc.Constants;
  */
 public class MessagesGUI extends JDialog implements ActionListener, ListSelectionListener {
 	private BLNachrichten blN = new BLNachrichten();
-	private JButton btnHelp;
 	private JPanel pnlHeaderMessages;
 	private JLabel lblWarning = new JLabel("Warning: Dein Postfach ist voll!");
 	private JPanel pnlNachrichten;
@@ -82,10 +81,6 @@ public class MessagesGUI extends JDialog implements ActionListener, ListSelectio
 		FlowLayout flowLayout = (FlowLayout) pnlHeaderMessages.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		getContentPane().add(pnlHeaderMessages, BorderLayout.NORTH);
-
-		btnHelp = new JButton(new ImageIcon("Sources/gfx/Help-icon.png"));
-		pnlHeaderMessages.add(btnHelp);
-		btnHelp.setHorizontalAlignment(SwingConstants.LEFT);
 
 		lblWarning.setVisible(false);
 		lblWarning.setForeground(Color.red);

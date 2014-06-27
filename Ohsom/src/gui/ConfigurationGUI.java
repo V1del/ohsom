@@ -99,6 +99,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	public ConfigurationGUI() throws SQLException {
 		new JDialog();
 		setTitle("Konfigurationseinstellung");
+		this.setIconImage(new ImageIcon("Sources/gfx/Icon_Ohsom.png").getImage());
 
 		setModal(true);
 		blU = new BLUser();
