@@ -198,7 +198,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 
-		JLabel lblWieVielMedizin = new JLabel("Wie viel Medizin m�chtest du kaufen?");
+		JLabel lblWieVielMedizin = new JLabel("Wie viel Medizin möchtest du kaufen?");
 		GridBagConstraints gbc_lblWieVielMedizin = new GridBagConstraints();
 		gbc_lblWieVielMedizin.insets = new Insets(0, 0, 5, 0);
 		gbc_lblWieVielMedizin.gridwidth = 2;
@@ -370,7 +370,7 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_lblKosten_2.gridy = 4;
 		pnlGetraenke.add(lblKosten[2][0], gbc_lblKosten_2);
 		
-		lblKosten[2][1] = new JLabel("100");
+		lblKosten[2][1] = new JLabel("0");
 		GridBagConstraints gbc_lblkostenvalue_2 = new GridBagConstraints();
 		gbc_lblkostenvalue_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblkostenvalue_2.gridx = 2;
