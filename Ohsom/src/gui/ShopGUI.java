@@ -420,6 +420,8 @@ public class ShopGUI extends JDialog implements ActionListener, ChangeListener{
 		gbc_label_4.gridx = 3;
 		gbc_label_4.gridy = 1;
 		pnlGetraenke.add(lblGeld[2][1], gbc_label_4);
+		
+		RefreshMoneyLabels();
 
 		setVisible(true);
 	}
