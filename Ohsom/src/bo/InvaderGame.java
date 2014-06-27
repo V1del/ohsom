@@ -2,24 +2,16 @@ package bo;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -52,14 +44,14 @@ public class InvaderGame extends Canvas implements KeyListener{
 	private boolean shoot;
 	private long shotDelay = 500;
 	private long lastFired;
-	private int Timer;
+//	private int Timer;
 	private boolean endOfGame = false;
 	
 	private static Font sanSerifFont = new Font("SanSerif", Font.PLAIN, 18);
 	private static Color m_tWhite = new Color(255, 255, 255, 150);
 	
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		InvaderGame g = new InvaderGame();
 
 		try {
@@ -71,19 +63,22 @@ public class InvaderGame extends Canvas implements KeyListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		g.gameTest.dispose();
 
-	}*/
-	
-	public void setTimer(int seconds)
-	{
-		this.Timer = seconds;
 	}
 	
-	public int getTimer()
-	{
-		return this.Timer;
-	}
-
+//	public void setTimer(int seconds)
+//	{
+//		this.Timer = seconds;
+//	}
+//	
+//	public int getTimer()
+//	{
+//		return this.Timer;
+//	}
+	/**
+	 * Konstruktor von InvaderGame, initialisiert das Fenster und Objekte
+	 */
 	public InvaderGame() {
 		gameTest.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -111,7 +106,12 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 		gameRunning = true;
 	}
-
+	
+	/**
+	 * Der GameLoop läuft solange ab, wie das Spiel am laufen ist und sorgt dafür das alles korrekt abläuft
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public void gameLoop() throws SQLException, IOException {
 		long lastLoopTime = System.currentTimeMillis();
 
@@ -141,7 +141,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 				invobj.draw(g);
 			}
 		 
-
+			if(!endOfGame) {
 			//Check for collision
 			for(int i=0; i < invobjects.size(); i++ )
 			{
@@ -156,6 +156,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 				}
 			}
+		  }
 
 			//Cleanup dead aliens
 			invobjects.removeAll(removeList);
@@ -217,7 +218,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 	}
 	
 	/**
-	 * Erstellt Schuss nach einer gewissen Kaltlaufzeit 
+	 * Erstellt Schuss nach einer gewissen Kaltlaufzeit welche anhand der momentanen Systemzeit festgelegt wird.
 	 */
 	public void shooting() {
 		if(System.currentTimeMillis() - lastFired < shotDelay)
@@ -244,7 +245,11 @@ public class InvaderGame extends Canvas implements KeyListener{
 		getReward();
 
 	}
-
+	
+	/**
+	 * Wird von Alienklasse aufgerufen um dem Spiel mitzuteilen, dass sie am Rand angekommen sind 
+	 * und die Richtung wechseln müssen 
+	 */
 	public void updateDirection() {
 		isTimeForSwitch = true;
 	}
@@ -310,20 +315,17 @@ public class InvaderGame extends Canvas implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if(endOfGame)
-		{
-			if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				gameTest.dispose();
-		}
-			
 		
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(endOfGame)
+		if(endOfGame) {
+			if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				gameRunning = false;
 			return;
+		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT )
 			keyLeft = true;
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)

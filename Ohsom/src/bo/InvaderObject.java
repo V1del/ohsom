@@ -75,11 +75,16 @@ public abstract class InvaderObject {
 
 		return obj1.intersects(obj2);
 	}
-
+	
+	/**
+	 * Confirm c
+	 * @param other
+	 * @throws SQLException
+	 */
 	public abstract void confirmCollision(InvaderObject other) throws SQLException;
 
 	/**
-	 * Only relevant for Alien movement, but defining here because we're going to use this as base class for our list
+	 * Nur für Alienbewegung relevant, wird aber hier initialisiert 
 	 * @throws SQLException 
 	 */
 	public void switchDirection() throws SQLException {
