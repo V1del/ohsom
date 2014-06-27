@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import db.DAOUserImpl;
+import bl.BLUser;
 import bo.User;
 
 /**
@@ -17,26 +18,26 @@ import bo.User;
  */
 public class OhsomTest {
 
-	private DAOUserImpl TestDAOU = null;
+	private BLUser blU = null;
 	private User TestUser = null;
 	
 	@Before
 	public void beforeTest()
 	{
-		TestDAOU = new DAOUserImpl();
-		TestUser = new User("TestUser", "leichtesPasswort", "test@email.ch");
+		blU = new BLUser();
+		TestUser = new User("OhsomTestUnitUser", "leichtesPasswort", "testNeu@email.ch"); // Dieser User wird neu angelegt
 	}
 	
 	@Test
 	public void test() throws SQLException {
 	// kann der User eingetragen werden
-		assertTrue(TestDAOU.addUser(TestUser));
+		assertTrue((blU.isUserDataValid(TestUser.getNickname(), TestUser.getPasswort())));
 	}
 	
 	@After
 	public void afterTest()
 	{
-		TestDAOU = null;
+		blU = null;
 		TestUser = null;
 	}
 

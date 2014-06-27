@@ -288,7 +288,7 @@ public class InvaderGame extends Canvas implements KeyListener{
 			
 			if(blT.changeTamagotchi(blU.getCurrentUser().getTamagotchi()))
 			{
-				System.out.println("Oh yeah");
+			
 			}
 		
 	}
