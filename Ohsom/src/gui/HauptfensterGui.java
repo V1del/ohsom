@@ -43,7 +43,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	JLabel lblFehlermeldung = new JLabel("");	
 	JPanel pnlHighscore = new JPanel(new BorderLayout());
 	JTable tblHighscore = new JTable();
-	JPanel pnlFooter = new JPanel();
+	JPanel pnlFooter = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	JButton btnCreate = new JButton("Create Account");
 	JButton btnPasswordForget = new JButton("Forgot Password?");
 
@@ -132,15 +132,15 @@ public class HauptfensterGui extends JFrame implements ActionListener {
         pnlFooter.add(btnCreate);
         
       //Modify Button L'n'F to look like a Label
-        btnPasswordForget.setMargin(new Insets(0, 0, 0, 0));
-        btnPasswordForget.setContentAreaFilled(false);
-        btnPasswordForget.setBorderPainted(false);
-        btnPasswordForget.setOpaque(false);
-        btnPasswordForget.setHorizontalAlignment(SwingConstants.RIGHT);
-        
-        btnPasswordForget.addActionListener(this);
-        
-        pnlFooter.add(btnPasswordForget);
+//        btnPasswordForget.setMargin(new Insets(0, 0, 0, 0));
+//        btnPasswordForget.setContentAreaFilled(false);
+//        btnPasswordForget.setBorderPainted(false);
+//        btnPasswordForget.setOpaque(false);
+//        btnPasswordForget.setHorizontalAlignment(SwingConstants.RIGHT);
+//        
+//        btnPasswordForget.addActionListener(this);
+//        
+//        pnlFooter.add(btnPasswordForget);
         
 		this.add(pnlFooter, BorderLayout.SOUTH);
 		
@@ -174,7 +174,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Prüfen, ob die Eingaben valide sind
+	 * Prï¿½fen, ob die Eingaben valide sind
 	 * @throws SQLException
 	 */
 	public void validateInput() throws SQLException
@@ -198,7 +198,7 @@ public class HauptfensterGui extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Prüfen, ob alle notwendigen Eingaben gemacht wurden
+	 * Prï¿½fen, ob alle notwendigen Eingaben gemacht wurden
 	 * @return
 	 */
 	public boolean isUserInputValid()

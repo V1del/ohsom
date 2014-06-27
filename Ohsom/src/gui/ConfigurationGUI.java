@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Gui für die Configurationgui
+ * Gui fï¿½r die Configurationgui
  * @author Snatsch
  *
  */
@@ -283,21 +283,21 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 		gbc_txtMedizin.gridy = 8;
 		pnlOptionen.add(txtMedizin, gbc_txtMedizin);
 
-		panel_3 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
-		flowLayout_1.setHgap(50);
-		tabbedPane.addTab("Tamagotchi", null, panel_3, null);
-
-		lblOwnTamagotchi = new JLabel("Eigenes Tamagotchi wÃ¤hlen");
-		panel_3.add(lblOwnTamagotchi);
-
-		txtDurchsuchen = new JTextField();
-		txtDurchsuchen.setText("Durchsuchen");
-		panel_3.add(txtDurchsuchen);
-		txtDurchsuchen.setColumns(10);
-
-		chosenImg = new Canvas();
-		panel_3.add(chosenImg);
+//		panel_3 = new JPanel();
+//		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+//		flowLayout_1.setHgap(50);
+//		tabbedPane.addTab("Tamagotchi", null, panel_3, null);
+//
+//		lblOwnTamagotchi = new JLabel("Eigenes Tamagotchi wÃ¤hlen");
+//		panel_3.add(lblOwnTamagotchi);
+//
+//		txtDurchsuchen = new JTextField();
+//		txtDurchsuchen.setText("Durchsuchen");
+//		panel_3.add(txtDurchsuchen);
+//		txtDurchsuchen.setColumns(10);
+//
+//		chosenImg = new Canvas();
+//		panel_3.add(chosenImg);
 
 		txtFieldMap.put(Code.FUETTERN, txtFuettern);
 		txtFieldMap.put(Code.TRINKEN, txtZuTrinkenGeben);
@@ -426,7 +426,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Füllen der Map mit den Values
+	 * Fï¿½llen der Map mit den Values
 	 * @throws SQLException
 	 */
 	public void fillMap() throws SQLException
@@ -475,7 +475,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/** 
-	 * Änderung des Labels für Passwortsicherheit
+	 * ï¿½nderung des Labels fï¿½r Passwortsicherheit
 	 */
 	public void RefreshPasswordSecurityPB()
 	{
@@ -486,7 +486,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Überprüfung der Validität der Daten, die eingegeben wurden
+	 * ï¿½berprï¿½fung der Validitï¿½t der Daten, die eingegeben wurden
 	 * @return Sind die Daten valide?
 	 */
 	public boolean isPWDataValid()
@@ -561,7 +561,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Prüfen ob eines der Textfelder bereits diesen Hotkey enthält
+	 * Prï¿½fen ob eines der Textfelder bereits diesen Hotkey enthï¿½lt
 	 * @param hotkey
 	 * @return
 	 */
@@ -582,7 +582,7 @@ public class ConfigurationGUI extends JDialog implements ActionListener, KeyList
 	}
 
 	/**
-	 * Actionevents für das TamagotchiGUI
+	 * Actionevents fï¿½r das TamagotchiGUI
 	 * @param ae ActionEvent
 	 */
 	@Override

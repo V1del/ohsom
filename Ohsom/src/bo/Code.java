@@ -7,7 +7,7 @@ package bo;
  */
 public enum Code {
 	WERTE("Werte"),
-	FUETTERN("Füttern"),
+	FUETTERN("FÃ¼ttern"),
 	SCHLAFENLEGEN("Schlafen"),
 	TRINKEN("Trinken"),
 	SPIELEN("Spielen"),
@@ -28,7 +28,7 @@ public enum Code {
 	}
 	
 	/**
-	 * Getter Code abhängig vom Namen
+	 * Getter Code abhï¿½ngig vom Namen
 	 * @param codeName
 	 * @return
 	 */
